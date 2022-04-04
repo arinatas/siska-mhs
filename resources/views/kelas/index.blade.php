@@ -235,7 +235,7 @@
                                       </td>
                                       @elseif($presensi->kehadiran[$i]->num_stat_pertemuan == 'I')
                                       <td>
-                                        <span class="badge rounded-pill bg-info">I</span>
+                                        <span class="badge rounded-pill bg-warning">I</span>
                                       </td>
                                       @elseif($presensi->kehadiran[$i]->num_stat_pertemuan == 'S')
                                       <td>
