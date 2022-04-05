@@ -32,6 +32,7 @@ class JadwalController extends Controller
         INNER JOIN uni_prodi z on a.str_kd_prodi = z.str_kd_prodi WHERE a.str_thn_ajaran='".$tahunAjar."' AND a.bol_semester='".$semester."' AND h.str_id_nim='".$nim."'
         ");
 
+        // ambil seluruh presensi mahasiswa by nim
         $presensis = DB::select("
         SELECT * FROM presensi_row_coloumn WHERE str_thn_ajaran='".$tahunAjar."' AND bol_semester='".$semester."' AND str_id_nim='".$nim."'");
         
@@ -52,6 +53,7 @@ class JadwalController extends Controller
             $presensiArray[$schedule->int_kd_perkuliahan_d] = $tempPresensi;
         }
 
+
         //maping ke tampilan
         foreach ($schedules as $schedule)
         {
@@ -62,7 +64,8 @@ class JadwalController extends Controller
             ];
 
         }
-        
+
+        //mengembalikan nilai ke tampilan
         return view('kelas.index', [
             'title' => 'Kelas',
             'active' => 'kelas',

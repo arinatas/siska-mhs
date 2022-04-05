@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\AkademikController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,8 +38,12 @@ Route::get('/categories', function() {
 
 Route::get('/login', [LoginController::class, 'index'])->middleware('guest')->name('login');
 Route::get('/', [LoginController::class, 'index'])->middleware('guest')->name('login');
+
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/logout', [LoginController::class, 'logout']);
+
+Route::get('password', [ChangePasswordController::class, 'edit'])->name('password.edit')->middleware('auth');
+Route::patch('password', [ChangePasswordController::class, 'update'])->name('password.edit')->middleware('auth');
 
 Route::get('/register', [RegisterController::class, 'index'])->middleware('auth');
 Route::post('/register', [RegisterController::class, 'store']);
@@ -49,6 +54,6 @@ Route::get('/dashboard', function() {
 })->middleware('auth');
 
 Route::get('/kelas', [JadwalController::class, 'index'])->middleware('auth');
+Route::get('/transkrip', [AkademikController::class, 'transkrip'])->middleware('auth');
+Route::get('/khs', [AkademikController::class, 'khs'])->middleware('auth');
 
-Route::get('password', [ChangePasswordController::class, 'edit'])->name('password.edit')->middleware('auth');
-Route::patch('password', [ChangePasswordController::class, 'update'])->name('password.edit')->middleware('auth');

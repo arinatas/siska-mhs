@@ -25,7 +25,7 @@
               <!--begin::Page title-->
               <div class="page-title d-flex flex-column me-3">
                 <!--begin::Title-->
-                <h1 class="d-flex text-white fw-bolder my-1 fs-3">Kelas</h1>
+                <h1 class="d-flex text-white fw-bolder my-1 fs-3">{{ $title }}</h1>
                 <!--end::Title-->
                 <!--begin::Breadcrumb-->
                 <ul
@@ -36,7 +36,7 @@
                     <a
                       href="#"
                       class="text-white text-hover-primary"
-                      >Perkuliahan</a
+                      >{{ $title }}</a
                     >
                   </li>
                   <!--end::Item-->
