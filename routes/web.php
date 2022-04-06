@@ -45,8 +45,8 @@ Route::post('/logout', [LoginController::class, 'logout']);
 Route::get('password', [ChangePasswordController::class, 'edit'])->name('password.edit')->middleware('auth');
 Route::patch('password', [ChangePasswordController::class, 'update'])->name('password.edit')->middleware('auth');
 
-Route::get('/register', [RegisterController::class, 'index'])->middleware('auth');
-Route::post('/register', [RegisterController::class, 'store']);
+// Route::get('/register', [RegisterController::class, 'index'])->middleware('auth');
+// Route::post('/register', [RegisterController::class, 'store']);
 
 // Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
 Route::get('/dashboard', function() {

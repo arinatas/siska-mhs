@@ -70,12 +70,43 @@ class AkademikController extends Controller
         GROUP BY 
         a.int_kd_perkuliahan_d");
 
+        // untuk penomeran tabel
+        $totalMatkul = 1;
+
+        //ambil tahun ajaran & smt terseleksi
+        $selectedTahun = $request->get('tahun');
+        $selectedSmt = $request->get('semester');
+
+        $allSks = [];
+        $totalBobot = [];
+
+        foreach ($khs as $value)
+        {
+            $allSks[] = $value->num_sks;
+            $totalBobot[] = $value->num_bobot * $value->num_sks;
+        }
+
+        // cek ketika dapat bobot dan sks dari tahun ajaran dan smt
+        if($totalBobot && $allSks != null)
+        {
+            $totalIps = array_sum($totalBobot) / array_sum($allSks);
+        }
+        else
+        {
+            $totalIps = 0;
+        }
+
         return view('akademik.khs.index', [
             'title' => 'Kartu Hasil Studi',
             'active' => 'Akademik',
             'tahunAjar' => $tahunAjarUniq,
+            'selectedTahun' => $selectedTahun,
             'semesters' => $semesterUniq,
+            'selectedSmt' => $selectedSmt,
             'khs' => $khs,
+            'totalMatkul' => $totalMatkul,
+            'allSks' => $allSks,
+            'totalIps' => $totalIps,
         ]); 
     }
 }

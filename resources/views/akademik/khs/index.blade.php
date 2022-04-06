@@ -47,7 +47,7 @@
                   <!--end::Item-->
                   <!--begin::Item-->
                   <li class="breadcrumb-item text-white opacity-75">
-                    Semester Genap 2021/2022
+                    {{ $selectedSmt }} {{ $selectedTahun }}
                   </li>
                   <!--end::Item-->
                 </ul>
@@ -88,7 +88,7 @@
                                 <div class="btn-group">
                                   <div class="input-group mb-3">
                                     <label class="input-group-text" for="inputGroupSelect01">Tahun Ajaran</label>
-                                    <select name="tahun" class="form-select" id="inputGroupSelect01">
+                                    <select name="tahun" value="{{ old('tahun') }}" class="form-select" id="inputGroupSelect01">
                                       @foreach ($tahunAjar as $tahun)
                                       <option value="{{ $tahun }}">{{ $tahun }}</option>
                                       @endforeach
@@ -102,7 +102,7 @@
                                     <div class="btn-group">
                                       <div class="input-group mb-3">
                                         <label class="input-group-text" for="inputGroupSelect01">Semester</label>
-                                        <select name="semester" class="form-select" id="inputGroupSelect01">
+                                        <select name="semester" value="{{ old('semester') }}" class="form-select" id="inputGroupSelect01">
                                           @foreach ($semesters as $smt)
                                           <option value="{{ $smt }}">{{ $smt }}</option>
                                           @endforeach
@@ -124,12 +124,12 @@
                         <div class="row text-center">
                             <div class="col-lg-6">
                                 <div class="alert alert-primary" role="alert">
-                                    SKS : <span class="badge badge-primary">23</span>
+                                    SKS : <span class="badge badge-primary">{{ array_sum($allSks) }}</span>
                                   </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="alert alert-success" role="alert">
-                                    IPS : <span class="badge badge-success">4</span>
+                                    IPS : <span class="badge badge-success">{{ number_format($totalIps, 2)}}</span>
                                   </div>
                             </div>
                         </div>
@@ -147,58 +147,45 @@
                                   class="fw-bolder fs-6 text-gray-800 text-center border-0 bg-light"
                                 >
                                   <th class="min-w-50px rounded-start">No</th>
-                                  <th class="min-w-150px">Kode MK</th>
+                                  <th class="min-w-100px">Kode MK</th>
                                   <th class="min-w-150px">Matakuliah</th>
                                   <th class="min-w-50px">SKS</th>
-                                  <th class="min-w-50px">Nilai</th>
-                                  <th class="min-w-50px rounded-end">Grade</th>
+                                  <th class="min-w-50px">Grade</th>
+                                  <th class="min-w-50px rounded-end">Nilai</th>
                                 </tr>
                               </thead>
                               <!--end::Table head-->
                               <!--begin::Table body-->
-                              <tbody class="border-bottom border-dashed">
+                              @foreach ($khs as $value)
+                              <tbody class="border-bottom border">
                                 <tr
                                   class="text-center"
                                 >
-                                  <td class="" >1</td>
-                                  <td>REK-ITA-P0120-si</td>
-                                  <td>Rekayasa Perangkat Lunak</td>
-                                  <td>3</td>
-                                  <td>A</td>
-                                  <td>4.00</td>
+                                  <td>{{ $totalMatkul++ }}</td>
+                                  <td>{{ $value->str_kd_mk }}</td>
+                                  <td>{{ $value->str_nm_mk }}</td>
+                                  <td>{{ $value->num_sks }}</td>
+                                  @if($value->str_na == 'A' || $value->str_na == 'A-')
+                                  <td>
+                                    <span class="badge rounded-pill bg-success">{{ $value->str_na }}</span>
+                                  </td>
+                                  @elseif($value->str_na == 'B+' || $value->str_na == 'B' || $value->str_na == 'B-')
+                                  <td>
+                                    <span class="badge rounded-pill bg-primary">{{ $value->str_na }}</span>
+                                  </td>
+                                  @elseif($value->str_na == 'C+' || $value->str_na == 'C')
+                                  <td>
+                                    <span class="badge rounded-pill bg-warning">{{ $value->str_na }}</span>
+                                  </td>
+                                  @else
+                                  <td>
+                                    <span class="badge rounded-pill bg-danger">{{ $value->str_na }}</span>
+                                  </td>
+                                  @endif
+                                  <td>{{ $value->num_bobot }}</td>
                                 </tr>
-                                <tr
-                                  class="text-center"
-                                >
-                                  <td class="" >1</td>
-                                  <td>REK-ITA-P0120-si</td>
-                                  <td>Rekayasa Perangkat Lunak</td>
-                                  <td>3</td>
-                                  <td>A</td>
-                                  <td>4.00</td>
-                                </tr>
-                                <tr
-                                  class="text-center"
-                                >
-                                  <td class="" >1</td>
-                                  <td>REK-ITA-P0120-si</td>
-                                  <td>Rekayasa Perangkat Lunak</td>
-                                  <td>3</td>
-                                  <td>A</td>
-                                  <td>4.00</td>
-                                </tr>
-                                <tr
-                                  class="text-center"
-                                >
-                                  <td class="" >1</td>
-                                  <td>REK-ITA-P0120-si</td>
-                                  <td>Rekayasa Perangkat Lunak</td>
-                                  <td>3</td>
-                                  <td>A</td>
-                                  <td>4.00</td>
-                                </tr>
-                                
                               </tbody>
+                              @endforeach
                               <!--end::Table body-->
                             </table>
                             <!--end::Table-->
