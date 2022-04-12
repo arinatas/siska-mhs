@@ -30,6 +30,8 @@ class AkademikController extends Controller
         AND a.str_kd_prodi = b.str_kd_prodi 
         AND b.str_id_kaprodi = c.str_id_kad ");
 
+        // dd( $mhsBio);
+
         $allSks = [];
         $totalBobot = [];
         $totalIpk = [];

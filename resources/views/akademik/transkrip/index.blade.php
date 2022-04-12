@@ -98,7 +98,15 @@
                                 <div class="d-flex align-items-center mb-2">
                                   <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">{{ auth()->user()->display_name }}</a>
                                   
-                                  <a href="#" class="btn btn-sm btn-light-success fw-bolder ms-2 fs-8 py-1 px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">Aktif</a>
+                                  @if ($mahasiswa[0]->status_aktif == "aktif")
+                                  <a href="#" class="btn btn-sm btn-light-success fw-bolder ms-2 fs-8 py-1 px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">{{ $mahasiswa[0]->status_aktif }}</a>
+                                  @elseif ($mahasiswa[0]->status_aktif == "cuti")
+                                  <a href="#" class="btn btn-sm btn-light-warning fw-bolder ms-2 fs-8 py-1 px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">{{ $mahasiswa[0]->status_aktif }}</a>
+                                  @elseif ($mahasiswa[0]->status_aktif == "lulus")
+                                  <a href="#" class="btn btn-sm btn-light-primary fw-bolder ms-2 fs-8 py-1 px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">{{ $mahasiswa[0]->status_aktif }}</a>
+                                  @else
+                                  <a href="#" class="btn btn-sm btn-light-danger fw-bolder ms-2 fs-8 py-1 px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">{{ $mahasiswa[0]->status_aktif }}</a>
+                                  @endif
                                 </div>
                                 <!--end::Name-->
                                 <!--begin::Info-->
