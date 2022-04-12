@@ -11,7 +11,6 @@ class JadwalController extends Controller
         // Mengambil nim user yang login
         $nim = auth()->user()->username;
 
-        // $getTahunAjaran = DB::select("select str_thn_ajaran from pablic_reset");
         $getDataTime = DB::select("select * from pablic_reset");
 
         $tahunAjar = $getDataTime[0]->str_thn_ajaran;

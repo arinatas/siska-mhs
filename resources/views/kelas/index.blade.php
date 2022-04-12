@@ -102,15 +102,12 @@
                                 <tr
                                   class="fw-bolder fs-6 text-gray-800 text-center border-0 bg-light"
                                 >
-                                  <th class="min-w-50px px-3 rounded-start">Kode MK</th>
-                                  <th class="min-w-150px">Matakuliah</th>
+                                  <th class="min-w-150px px-3 rounded-start">Matakuliah</th>
                                   <th class="min-w-150px">Dosen</th>
-                                  <th class="min-w-70px">Hari</th>
-                                  <th class="min-w-100px">Jam</th>
-                                  <th class="min-w-30px">Ruangan</th>
+                                  <th class="min-w-70px">Waktu</th>
+                                  <th class="min-w-50px">Ruangan</th>
                                   <th class="min-w-50px">Enrollment Key</th>
-                                  <th class="min-w-50px">Whatsapp</th>
-                                  <th class="min-w-50px px-3 rounded-end">Spada</th>
+                                  <th class="min-w-100px px-3 rounded-end">Link</th>
                                 </tr>
                               </thead>
                               <!--end::Table head-->
@@ -120,20 +117,16 @@
                                 <tr
                                   class="text-center"
                                 >
-                                  <td>
-                                    {{ $schedule->str_kd_mk }}
-                                  </td>
-                                  <td>
+                                  <td align="left" style="padding-left: 20px">
                                   {{ $schedule->str_nm_mk }}
+                                  <br>
+                                  <span>Kode: <b>{{ $schedule->str_kd_mk }}</b></span>
                                   </td>
-                                  <td>
+                                  <td align="left" style="padding-left: 20px">
                                   {{ $schedule->str_nm_kad }}
                                   </td>
                                   <td>
-                                  {{ $schedule->str_nama_hari }}
-                                  </td>
-                                  <td>
-                                  {{ $schedule->awal }} ~ {{ $schedule->akhir }}
+                                  {{ $schedule->str_nama_hari }} <br> {{ $schedule->awal }} ~ {{ $schedule->akhir }}
                                   </td>
                                   <td>
                                   {{ $schedule->str_nm_ruang }}
@@ -141,11 +134,9 @@
                                   <td>
                                   {{ $schedule->kode_spada }}
                                   </td>
-                                  <td>
-                                    <a href="{{ $schedule->link }}">link</a>
-                                  </td>
-                                  <td>
-                                    <a href="{{ $schedule->link_spada }}">link</a>
+                                  <td class="px-5" style="text-align-last: justify;">
+                                      <a href="{{ $schedule->link }}"><img src="/assets/media/logos/whatsapp.svg" width="30px" alt="SPADA"></a>
+                                      <a href="{{ $schedule->link_spada }}"><img src="/assets/media/logos/smallprimakara.png" width="25px" alt="SPADA"></a>
                                   </td>
                                 </tr>
                               </tbody>

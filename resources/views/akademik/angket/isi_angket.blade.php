@@ -47,7 +47,7 @@
                   <!--end::Item-->
                   <!--begin::Item-->
                   <li class="breadcrumb-item text-white opacity-75">
-                    {{ $selectedSmt }} {{ $selectedTahun }}
+                    Semester Genap 2021/2022
                   </li>
                   <!--end::Item-->
                 </ul>
@@ -77,71 +77,25 @@
                   <div class="card">
                     <!--begin::Body-->
                     <div class="card-body p-5 px-lg-19 py-lg-16">
-                      <!--begin::Content main-->
+                      <!--begin::Kop Pedagogik-->
                       <div class="mb-14">
                         <!--begin::Heading-->
-                        <div class="mb-15">
+                        <div class="mb-5">
                           <!--begin::Title-->
-                          <form method="GET">
-                            <div class="row"> 
-                              <div class="col-lg-6">
-                                <div class="btn-group">
-                                  <div class="input-group mb-3">
-                                    <label class="input-group-text" for="inputGroupSelect01">Tahun Ajaran</label>
-                                    <select name="tahun" value="{{ old('tahun') }}" class="form-select" id="inputGroupSelect01">
-                                      <option value="" selected>Pilih</option>
-                                      @foreach ($tahunAjar as $tahun)
-                                      <option value="{{ $tahun }}">{{ $tahun }}</option>
-                                      @endforeach
-                                    </select>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-lg-6">
-                                <div class="row">
-                                  <div class="col-lg-10">
-                                    <div class="btn-group">
-                                      <div class="input-group mb-3">
-                                        <label class="input-group-text" for="inputGroupSelect01">Semester</label>
-                                        <select name="semester" value="{{ old('semester') }}" class="form-select" id="inputGroupSelect01">
-                                          <option value="" selected>Pilih</option>
-                                          @foreach ($semesters as $smt)
-                                          <option value="{{ $smt }}">{{ $smt }}</option>
-                                          @endforeach
-                                        </select>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="col-lg-2 text-end">
-                                    <button type="submit" class="btn btn-primary">Cari</button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </form>
+                              <h3 class="fs-1x text-dark mb-6">
+                                Kopetensi Pedagogik
+                              </h3>
                           <!--end::Title-->
                         </div>
                         <!--end::Heading-->
                         <!--begin::Body-->
-                        <div class="row text-center">
-                            <div class="col-lg-6">
-                                <div class="alert alert-primary" role="alert">
-                                    SKS : <span class="badge badge-primary">{{ array_sum($allSks) }}</span>
-                                  </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="alert alert-success" role="alert">
-                                    IPS : <span class="badge badge-success">{{ number_format($totalIps, 2)}}</span>
-                                  </div>
-                            </div>
-                        </div>
                         <!--begin::Table-->
                         <div class="mb-14">
                           <!--begin::Table container-->
                           <div class="table-responsive">
                             <!--begin::Table-->
                             <table
-                              class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4"
+                              class="table  table-row-gray-300 align-middle gs-0 gy-4"
                             >
                               <!--begin::Table head-->
                               <thead>
@@ -149,45 +103,48 @@
                                   class="fw-bolder fs-6 text-gray-800 text-center border-0 bg-light"
                                 >
                                   <th class="min-w-50px rounded-start">No</th>
-                                  <th class="min-w-100px">Kode MK</th>
-                                  <th class="min-w-150px">Matakuliah</th>
-                                  <th class="min-w-50px">SKS</th>
-                                  <th class="min-w-50px">Grade</th>
-                                  <th class="min-w-50px rounded-end">Nilai</th>
+                                  <th class="min-w-250px">Pertanyaan</th>
+                                  <th class="min-w-50px rounded-end">Nilai Angket</th>
                                 </tr>
                               </thead>
                               <!--end::Table head-->
                               <!--begin::Table body-->
-                              @foreach ($khs as $value)
+							              {{-- @foreach ($schedules as $schedule) --}}
                               <tbody class="border-bottom border">
                                 <tr
                                   class="text-center"
                                 >
-                                  <td>{{ $totalMatkul++ }}</td>
-                                  <td>{{ $value->str_kd_mk }}</td>
-                                  <td>{{ $value->str_nm_mk }}</td>
-                                  <td>{{ $value->num_sks }}</td>
-                                  @if($value->str_na == 'A' || $value->str_na == 'A-')
                                   <td>
-                                    <span class="badge rounded-pill bg-success">{{ $value->str_na }}</span>
+                                    <span>1</span>
                                   </td>
-                                  @elseif($value->str_na == 'B+' || $value->str_na == 'B' || $value->str_na == 'B-')
                                   <td>
-                                    <span class="badge rounded-pill bg-primary">{{ $value->str_na }}</span>
+                                  <span>Kesiapan memberikan kuliah dan/atau praktek/praktikum</span>
                                   </td>
-                                  @elseif($value->str_na == 'C+' || $value->str_na == 'C')
                                   <td>
-                                    <span class="badge rounded-pill bg-warning">{{ $value->str_na }}</span>
+                                    <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                        <option selected>Pilih</option>
+                                        <option value="1">Sangat Kurang</option>
+                                        <option value="2">Kurang</option>
+                                        <option value="3">Baik</option>
+                                        <option value="4">Sangat Baik</option>
+                                      </select>
                                   </td>
-                                  @else
+                                </tr>
+                                <tr
+                                  class="text-center"
+                                >
                                   <td>
-                                    <span class="badge rounded-pill bg-danger">{{ $value->str_na }}</span>
+                                    <span>2</span>
                                   </td>
-                                  @endif
-                                  <td>{{ $value->num_bobot }}</td>
+                                  <td>
+                                  <span>Kesiapan memberikan kuliah dan/atau praktek/praktikum</span>
+                                  </td>
+                                  <td>
+                                  nilai here
+                                  </td>
                                 </tr>
                               </tbody>
-                              @endforeach
+							                {{-- @endforeach --}}
                               <!--end::Table body-->
                             </table>
                             <!--end::Table-->
@@ -195,13 +152,6 @@
                           <!--end::Table container-->
                         </div>
                         <!--end::Table-->
-                        <!-- printbtn -->
-                        <div class="row">
-                            <div class="col text-end">
-                                <button type="button" class="btn btn-primary disabled">Print</button>
-                            </div>
-                        </div>
-                        <!-- end printbtn -->
                       </div>
                       <!--end::Card-->
                     </div>
