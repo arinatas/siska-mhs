@@ -75,6 +75,19 @@ class AkademikController extends Controller
     {
         $nim = auth()->user()->username;
 
+        // get data mahasiswa
+        $mhsBio = DB::select("
+        select 
+        * 
+        from 
+        mhs_mahasiswa a, 
+        uni_prodi b, 
+        uni_karidos c 
+        where 
+        str_id_nim = '".$nim."' 
+        AND a.str_kd_prodi = b.str_kd_prodi 
+        AND b.str_id_kaprodi = c.str_id_kad ");
+
         $transkrips = DB::select("
         SELECT *
         FROM `v_transkrip`
@@ -89,8 +102,31 @@ class AkademikController extends Controller
             $semester[] = $transkrip->bol_semester;
         }
 
-        $tahunAjarUniq = array_unique($tahunAjar);
-        $semesterUniq = array_unique($semester);
+        $tahunAjarUniq = array_values(array_unique($tahunAjar));
+        $semesterUniq = array_values(array_unique($semester));
+
+        //cek semester brp untuk teks
+        $tahunSemester = substr($request->get('tahun'), -2);
+        $tahunAngkatan = substr($mhsBio[0]->str_angkatan, -2);
+
+        if ($request->get('semester') == "Ganjil")
+        {
+            $semesterText = ((int)$tahunSemester - (int)$tahunAngkatan) * 2 - 1;
+        }
+        elseif ($request->get('semester') == "Genap")
+        {
+            $semesterText = ((int)$tahunSemester - (int)$tahunAngkatan) * 2;
+        }
+        elseif ($request->get('semester') == "SP")
+        {
+            $smtNumber1 = ((int)$tahunSemester - (int)$tahunAngkatan) * 2;
+            $smtNumber2 = ((int)$tahunSemester - (int)$tahunAngkatan) * 2 + 1;
+            $semesterText = "Antara $smtNumber1 - $smtNumber2";
+        }
+        else
+        {
+            $semesterText = null;
+        }
 
         $khs = DB::select("
         SELECT 
@@ -154,6 +190,7 @@ class AkademikController extends Controller
             'totalMatkul' => $totalMatkul,
             'allSks' => $allSks,
             'totalIps' => $totalIps,
+            'semesterText' => $semesterText,
         ]); 
     }
 

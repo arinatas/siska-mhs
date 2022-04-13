@@ -124,12 +124,17 @@
                         <!--end::Heading-->
                         <!--begin::Body-->
                         <div class="row text-center">
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
+                                <div class="alert alert-info" role="alert">
+                                    Semester : <span class="badge badge-info">{{ $semesterText }}</span>
+                                  </div>
+                            </div>
+                            <div class="col-lg-4">
                                 <div class="alert alert-primary" role="alert">
                                     SKS : <span class="badge badge-primary">{{ array_sum($allSks) }}</span>
                                   </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="alert alert-success" role="alert">
                                     IPS : <span class="badge badge-success">{{ number_format($totalIps, 2)}}</span>
                                   </div>
