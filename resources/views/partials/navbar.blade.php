@@ -158,7 +158,7 @@
                           <div class="menu-item">
                             <a
                               class="menu-link py-3"
-                              href="#"
+                              href="/krs"
                               title="KRS"
                               data-bs-toggle="tooltip"
                               data-bs-trigger="hover"

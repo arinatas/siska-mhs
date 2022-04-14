@@ -55,6 +55,7 @@ Route::get('/dashboard', function() {
 
 Route::get('/kelas', [JadwalController::class, 'index'])->middleware('auth');
 Route::get('/khs', [AkademikController::class, 'khs'])->middleware('auth');
+Route::get('/krs', [AkademikController::class, 'krs'])->middleware('auth');
 Route::get('/transkrip', [AkademikController::class, 'transkrip'])->middleware('auth');
 Route::get('/angket', [AkademikController::class, 'angketList'])->middleware('auth');
 Route::get('/isi_angket', [AkademikController::class, 'isiAngket'])->middleware('auth');

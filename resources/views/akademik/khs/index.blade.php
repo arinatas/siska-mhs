@@ -46,9 +46,11 @@
                   </li>
                   <!--end::Item-->
                   <!--begin::Item-->
+                  @if ($selectedSmt && $selectedTahun != null)
                   <li class="breadcrumb-item text-white opacity-75">
-                    {{ $selectedSmt }} {{ $selectedTahun }}
+                    <span class="badge rounded-pill bg-light text-dark">{{ $selectedSmt }} {{ $selectedTahun }}</span>
                   </li>
+                  @endif
                   <!--end::Item-->
                 </ul>
                 <!--end::Breadcrumb-->
@@ -83,39 +85,31 @@
                         <div class="mb-15">
                           <!--begin::Title-->
                           <form method="GET">
-                            <div class="row"> 
-                              <div class="col-lg-6">
-                                <div class="btn-group">
-                                  <div class="input-group mb-3">
-                                    <label class="input-group-text" for="inputGroupSelect01">Tahun Ajaran</label>
-                                    <select name="tahun" value="{{ old('tahun') }}" class="form-select" id="inputGroupSelect01">
-                                      <option value="" selected>Pilih</option>
+                            <div class="row">
+                              <div class="d-flex my-1 justify-content-end">
+                                <!--begin::Actions-->
+                                <div class="d-flex my-0">
+                                  <!--begin::Select-->
+                                  <select name="tahun" data-control="tahun" data-hide-search="true" data-placeholder="Tahun Ajaran" class="form-select form-select-white form-select-sm w-150px">
+                                    <option value="" selected>Tahun Ajaran</option>
                                       @foreach ($tahunAjar as $tahun)
-                                      <option value="{{ $tahun }}">{{ $tahun }}</option>
+                                      <option value="{{ $tahun }}" {{ ($tahun == $selectedTahun) ? 'selected' : ''}}>{{ $tahun }}</option>
                                       @endforeach
-                                    </select>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-lg-6">
-                                <div class="row">
-                                  <div class="col-lg-10">
-                                    <div class="btn-group">
-                                      <div class="input-group mb-3">
-                                        <label class="input-group-text" for="inputGroupSelect01">Semester</label>
-                                        <select name="semester" value="{{ old('semester') }}" class="form-select" id="inputGroupSelect01">
-                                          <option value="" selected>Pilih</option>
+                                  </select>
+                                  <!--end::Select-->
+                                  <!--begin::Select-->
+                                  <select name="semester" value="{{ old('semester') }}" data-control="semester" data-hide-search="true" data-placeholder="Semester" class="form-select form-select-white form-select-sm w-110px">
+                                    <option value="" selected>Semester</option>
                                           @foreach ($semesters as $smt)
-                                          <option value="{{ $smt }}">{{ $smt }}</option>
+                                          <option value="{{ $smt }}" {{ ($smt == $selectedSmt) ? 'selected' : ''}}>{{ $smt }}</option>
                                           @endforeach
-                                        </select>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="col-lg-2 text-end">
-                                    <button type="submit" class="btn btn-primary">Cari</button>
+                                  </select>
+                                  <!--end::Select-->
+                                  <div class="d-flex">
+                                    <button class="btn btn-sm btn-primary me-3" type="submit">Cari</button>
                                   </div>
                                 </div>
+                                <!--end::Actions-->
                               </div>
                             </div>
                           </form>

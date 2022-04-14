@@ -237,4 +237,12 @@ class AkademikController extends Controller
             'active' => 'Akademik',
         ]); 
     }
+    
+    public function krs()
+    {
+        return view('akademik.krs.index', [
+            'title' => 'KRS',
+            'active' => 'Akademik',
+        ]); 
+    }
 }
