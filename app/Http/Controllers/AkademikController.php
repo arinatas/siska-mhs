@@ -30,14 +30,10 @@ class AkademikController extends Controller
         AND a.str_kd_prodi = b.str_kd_prodi 
         AND b.str_id_kaprodi = c.str_id_kad ");
 
-        // dd( $mhsBio);
-
         $allSks = [];
         $totalBobot = [];
         $totalIpk = [];
         $sksLulus = [];
-
-        // dd($transkrips);
 
         foreach ($transkrips as $value)
         {
@@ -49,9 +45,16 @@ class AkademikController extends Controller
         }
 
         // cek ketika dapat bobot dan sks dari tahun ajaran dan smt
-        if($totalBobot && $allSks != null)
+        if($totalBobot && $allSks)
         {
-            $totalIpk = array_sum($totalBobot) / array_sum($allSks);
+            if(array_sum($totalBobot) > 0 && array_sum($allSks) > 0)
+            {
+                $totalIpk = array_sum($totalBobot) / array_sum($allSks);
+            }
+            else
+            {
+                $totalIpk = 0;
+            }
         }
         else
         {
@@ -88,22 +91,40 @@ class AkademikController extends Controller
         AND a.str_kd_prodi = b.str_kd_prodi 
         AND b.str_id_kaprodi = c.str_id_kad ");
 
-        $transkrips = DB::select("
-        SELECT *
-        FROM `v_transkrip`
-        WHERE (`nim` = '".$nim."')");
+        //get tahun ajaran & smt sekarang
+        $getDataTime = DB::select("select * from pablic_reset");
 
-        $tahunAjar = [];
-        $semester = [];
+        $tahunAjarNow = (int)substr($getDataTime[0]->str_thn_ajaran, -4);
+        $tahunMasukMhs = $mhsBio[0]->str_angkatan;
 
-        foreach ($transkrips as $transkrip)
+        $loopTahun = $tahunAjarNow - $tahunMasukMhs;
+        for($i=1; $i<=$loopTahun; $i++)
         {
-            $tahunAjar[] = $transkrip->str_thn_ajaran;
-            $semester[] = $transkrip->bol_semester;
+            if($i<=14)
+            {
+                $tahunAjarUniq[] = $tahunMasukMhs ."/". ($tahunMasukMhs + 1);
+            }
+            $tahunMasukMhs++;
         }
 
-        $tahunAjarUniq = array_values(array_unique($tahunAjar));
-        $semesterUniq = array_values(array_unique($semester));
+        $semesterUniq = ["Ganjil", "Genap", "SP"];
+        
+
+        // //ambil tahun ajaran dan smt dari transkrip
+        // $transkrips = DB::select("
+        // SELECT *
+        // FROM `v_transkrip`
+        // WHERE (`nim` = '".$nim."')");
+
+        // foreach ($transkrips as $transkrip)
+        // {
+        //     $tahunAjar[] = $transkrip->str_thn_ajaran;
+        //     $semester[] = $transkrip->bol_semester;
+        // }
+
+        // $tahunAjarUniq = array_values(array_unique($tahunAjar));
+        // $semesterUniq = array_values(array_unique($semester));
+
 
         //cek semester brp untuk teks
         $tahunSemester = substr($request->get('tahun'), -2);
@@ -156,7 +177,7 @@ class AkademikController extends Controller
         // untuk penomeran tabel
         $totalMatkul = 1;
 
-        //ambil tahun ajaran & smt terseleksi
+        //ambil tahun ajaran & smt terpilih
         $selectedTahun = $request->get('tahun');
         $selectedSmt = $request->get('semester');
 
@@ -170,9 +191,16 @@ class AkademikController extends Controller
         }
 
         // cek ketika dapat bobot dan sks dari tahun ajaran dan smt
-        if($totalBobot && $allSks != null)
+        if($totalBobot || $allSks )
         {
-            $totalIps = array_sum($totalBobot) / array_sum($allSks);
+            if(array_sum($totalBobot) > 0 && array_sum($allSks) > 0)
+            {
+                $totalIps = array_sum($totalBobot) / array_sum($allSks);
+            }
+            else
+            {
+                $totalIps = 0; 
+            }
         }
         else
         {
