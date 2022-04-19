@@ -69,8 +69,6 @@ class AkademikController extends Controller
             'allSks' => $allSks,
             'sksLulus' => $sksLulus,
             'mahasiswa' => $mhsBio,
-
-
         ]); 
     }
 
@@ -90,6 +88,7 @@ class AkademikController extends Controller
         str_id_nim = '".$nim."' 
         AND a.str_kd_prodi = b.str_kd_prodi 
         AND b.str_id_kaprodi = c.str_id_kad ");
+        //end
 
         //get tahun ajaran & smt sekarang
         $getDataTime = DB::select("select * from pablic_reset");
@@ -108,6 +107,7 @@ class AkademikController extends Controller
         }
 
         $semesterUniq = ["Ganjil", "Genap", "SP"];
+        //end
         
 
         // //ambil tahun ajaran dan smt dari transkrip
@@ -148,6 +148,7 @@ class AkademikController extends Controller
         {
             $semesterText = null;
         }
+        //end
 
         $khs = DB::select("
         SELECT 
@@ -219,6 +220,7 @@ class AkademikController extends Controller
             'allSks' => $allSks,
             'totalIps' => $totalIps,
             'semesterText' => $semesterText,
+            'mahasiswa' => $mhsBio,
         ]); 
     }
 

@@ -131,23 +131,21 @@
                                   </svg><!--end::Svg Icon--></span>
                                   <!--end::Svg Icon-->{{ $mahasiswa[0]->str_nm_prodi; }}</a>
                                   <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary mb-2">
-                                  <!--begin::Svg Icon | path: icons/duotune/communication/com011.svg-->
-                                  <span class="svg-icon svg-icon-4 me-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                      <path opacity="0.3" d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19Z" fill="black" />
-                                      <path d="M21 5H2.99999C2.69999 5 2.49999 5.10005 2.29999 5.30005L11.2 13.3C11.7 13.7 12.4 13.7 12.8 13.3L21.7 5.30005C21.5 5.10005 21.3 5 21 5Z" fill="black" />
-                                    </svg>
-                                  </span>
-                                  <!--end::Svg Icon-->{{ auth()->user()->email }}</a>
+                                    <span class="svg-icon svg-icon-4 me-1">
+                                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                          <rect x="0" y="0" width="24" height="24"/>
+                                          <path d="M7.5,4 L7.5,19 L16.5,19 L16.5,4 L7.5,4 Z M7.71428571,2 L16.2857143,2 C17.2324881,2 18,2.8954305 18,4 L18,20 C18,21.1045695 17.2324881,22 16.2857143,22 L7.71428571,22 C6.76751186,22 6,21.1045695 6,20 L6,4 C6,2.8954305 6.76751186,2 7.71428571,2 Z" fill="#000000" fill-rule="nonzero"/>
+                                          <polygon fill="#000000" opacity="0.3" points="7.5 4 7.5 19 16.5 19 16.5 4"/>
+                                      </g>
+                                      </svg>
+                                    </span>
+                                  <!--end::Svg Icon-->{{ auth()->user()->phone }}</a>
                                 </div>
                                 <!--end::Info-->
                               </div>
                               <!--end::User-->
-                              <!--begin::Actions-->
-                              <div class="d-flex my-4">
-                                <a href="#" class="btn btn-sm btn-primary me-3 disabled" data-bs-toggle="modal" data-bs-target="#kt_modal_offer_a_deal">Cetak Transkrip</a>
-                              </div>
-                              <!--end::Actions-->
+
                             </div>
                             <!--end::Title-->
                             <!--begin::Stats-->
@@ -242,12 +240,17 @@
                       <!--begin::Content main-->
                       <div class="mb-14">
                         <!--begin::Heading-->
-                        <div class="mb-15">
+                        <div class="mb-15 d-flex justify-content-between">
                           <!--begin::Title-->
-                          <h1 class="fs-2x text-dark mb-6">
+                          <h1 class="fs-2x text-dark">
                             Daftar Mata Kuliah
                           </h1>
                           <!--end::Title-->
+                          <!--begin::Actions-->
+                          <div class="d-flex">
+                            <a href="#" class="btn btn-sm btn-primary me-3 disabled" data-bs-toggle="modal" data-bs-target="#kt_modal_offer_a_deal">Cetak Transkrip</a>
+                          </div>
+                          <!--end::Actions-->
                         </div>
                         <!--end::Heading-->
                         <!--begin::Body-->
