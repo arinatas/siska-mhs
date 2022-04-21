@@ -240,7 +240,7 @@
                                   <th class="min-w-150px">Matakuliah</th>
                                   <th class="min-w-50px">SKS</th>
                                   <th class="min-w-50px">Grade</th>
-                                  <th class="min-w-50px rounded-end">Nilai</th>
+                                  <th class="min-w-50px rounded-end">Bobot</th>
                                 </tr>
                               </thead>
                               <!--end::Table head-->

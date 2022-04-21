@@ -270,9 +270,17 @@ class AkademikController extends Controller
     
     public function krs()
     {
+        $nim = auth()->user()->username;
+
+        $transkrips = DB::select("
+        SELECT *
+        FROM `v_transkrip`
+        WHERE (`nim` = '".$nim."')");
+
         return view('akademik.krs.index', [
             'title' => 'KRS',
             'active' => 'Akademik',
+            'transkrips' => $transkrips
         ]); 
     }
 }

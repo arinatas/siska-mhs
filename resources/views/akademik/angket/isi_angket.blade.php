@@ -77,6 +77,34 @@
                   <div class="card">
                     <!--begin::Body-->
                     <div class="card-body p-5 px-lg-19 py-lg-16">
+                      {{-- ket --}}
+                      <div class="notice d-flex bg-light-info rounded border-info border border-dashed mb-9 p-6">
+												<!--begin::Icon-->
+												<!--begin::Svg Icon | path: icons/duotune/general/gen044.svg-->
+												<span class="svg-icon svg-icon-2tx svg-icon-info me-4">
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+														<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
+														<rect x="11" y="14" width="7" height="2" rx="1" transform="rotate(-90 11 14)" fill="black" />
+														<rect x="11" y="17" width="2" height="2" rx="1" transform="rotate(-90 11 17)" fill="black" />
+													</svg>
+												</span>
+												<!--end::Svg Icon-->
+												<!--end::Icon-->
+												<!--begin::Wrapper-->
+												<div class="d-flex flex-stack flex-grow-1">
+													<!--begin::Content-->
+													<div class="fw-bold">
+														<h3 class="text-gray-900 fw-bolder">Keterangan Penilaian</h3>
+														<div class="fs-6 badge bg-info m-1">  <b>1 {!! "&nbsp;" !!}:{!! "&nbsp;" !!} Sangat Kurang</b></div>
+														<div class="fs-6 badge bg-info m-1">  <b>2 {!! "&nbsp;" !!}:{!! "&nbsp;" !!} Kurang</b> </div>
+														<div class="fs-6 badge bg-info m-1">  <b>3 {!! "&nbsp;" !!}:{!! "&nbsp;" !!} Baik</b></div>
+														<div class="fs-6 badge bg-info m-1">  <b>4 {!! "&nbsp;" !!}:{!! "&nbsp;" !!} Sangat Baik</b></div>
+														<br />
+													</div>
+													<!--end::Content-->
+												</div>
+												<!--end::Wrapper-->
+											</div>
                       <!--begin::Kop Pedagogik-->
                       <div class="mb-14">
                         <!--begin::Heading-->
@@ -115,53 +143,25 @@
                                   class="text-center"
                                 >
                                   <td>
-                                    <span>1</span>
-                                  </td>
-                                  <td>
-                                  <span>Kesiapan memberikan kuliah dan/atau praktek/praktikum</span>
-                                  </td>
-                                  <td>
-                                    <div class="form-check form-check-inline">
-                                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1">
-                                      <label class="form-check-label" for="inlineRadio1">Sangat Kurang</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2">
-                                      <label class="form-check-label" for="inlineRadio2">Kurang</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3">
-                                      <label class="form-check-label" for="inlineRadio3">Baik</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="4">
-                                      <label class="form-check-label" for="inlineRadio4">Sangat Baik</label>
-                                    </div>
-                                  </td>
-                                </tr>
-                                <tr
-                                  class="text-center"
-                                >
-                                  <td>
                                     <span>2</span>
                                   </td>
                                   <td>
                                   <span>Kesiapan memberikan kuliah dan/atau praktek/praktikum</span>
                                   </td>
                                   <td>
-                                    <div class="form-check form-check-inline">
+                                    <div class="form-check form-check-inline m-2">
                                       <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1">
                                       <label class="form-check-label" for="inlineRadio1">1</label>
                                     </div>
-                                    <div class="form-check form-check-inline">
+                                    <div class="form-check form-check-inline m-2">
                                       <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2">
                                       <label class="form-check-label" for="inlineRadio2">2</label>
                                     </div>
-                                    <div class="form-check form-check-inline">
+                                    <div class="form-check form-check-inline m-2">
                                       <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3">
                                       <label class="form-check-label" for="inlineRadio3">3</label>
                                     </div>
-                                    <div class="form-check form-check-inline">
+                                    <div class="form-check form-check-inline m-2">
                                       <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="4">
                                       <label class="form-check-label" for="inlineRadio4">4</label>
                                     </div>
