@@ -2,6 +2,17 @@
 
 @section('container')
 
+  <script>
+    function NeutralComment()
+    {
+      document.getElementById("komentar").value= 'Tidak ada komentar.';
+    }
+    function PositiveComment()
+    {
+      document.getElementById("komentar").value= 'Dosen mengajar sudah baik.';
+    }
+  </script>
+
   <!--begin::Body-->
   <body
     id="kt_body"
@@ -120,7 +131,7 @@
                         <!--begin::Table-->
                         <div class="mb-14">
                           <!--begin::Table container-->
-                          <div class="table-responsive">
+                          <div class="table-responsive mb-3">
                             <!--begin::Table-->
                             <table
                               class="table  table-row-gray-300 align-middle gs-0 gy-4"
@@ -131,7 +142,7 @@
                                   class="fw-bolder fs-6 text-gray-800 text-center border-0 bg-light"
                                 >
                                   <th class="min-w-50px rounded-start">No</th>
-                                  <th class="min-w-250px">Pertanyaan</th>
+                                  <th class="min-w-100px">Pertanyaan</th>
                                   <th class="min-w-50px rounded-end">Nilai Angket</th>
                                 </tr>
                               </thead>
@@ -172,6 +183,15 @@
                               <!--end::Table body-->
                             </table>
                             <!--end::Table-->
+                          </div>
+                          
+                          <div class="form-floating">
+                            <textarea name="komentar" class="form-control" placeholder="Leave a comment here" id="komentar" style="height: 100px"></textarea>
+                            <label for="komentar">Kritik & Saran</label>
+                          </div>
+                          <div class="dflex mt-2">
+                            <span type="button" onclick="NeutralComment()" class="badge rounded-pill bg-primary">Tidak ada kritik.</span>
+                            <span type="button" onclick="PositiveComment()" class="badge rounded-pill bg-success">Dosen mengajar sudah baik.</span>
                           </div>
                           <!--end::Table container-->
                         </div>

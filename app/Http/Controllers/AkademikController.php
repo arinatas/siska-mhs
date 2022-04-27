@@ -293,7 +293,7 @@ class AkademikController extends Controller
         $pertanyaanLists = $response->data->pertanyaan;
         $angketTerisi = $response->data->data_pengisian_angket;
 
-        dd($getAngketData);
+        // dd($getAngketData);
 
         // $url = "http://localhost:8000/get_pertanyaan.php?id_jadwal_edom=3&nim=".$nim."&tahun_ajaran=".$tahunAjar."&semester=".$semester."";
 
