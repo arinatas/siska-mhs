@@ -242,7 +242,7 @@
                         <!--begin::Heading-->
                         <div class="mb-15 d-flex justify-content-between">
                           <!--begin::Title-->
-                          <h1 class="fs-2x text-dark">
+                          <h1 class="fs-1x text-dark mt-1">
                             Daftar Mata Kuliah
                           </h1>
                           <!--end::Title-->
@@ -258,9 +258,11 @@
                         <div class="mb-14">
                           <!--begin::Table container-->
                           <div class="table-responsive">
+                            {{-- cek transkrip kosong ~ mahasiswa baru --}}
+                            @if ($transkrips)
                             <!--begin::Table-->
                             <table
-                              class="table  table-row-gray-300 align-middle gs-0 gy-4"
+                            class="table  table-row-gray-300 align-middle gs-0 gy-4"
                             >
                               <!--begin::Table head-->
                               <thead>
@@ -316,6 +318,34 @@
                               <!--end::Table body-->
                             </table>
                             <!--end::Table-->
+                            @else
+                            <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed mb-9 p-6">
+                              <!--begin::Icon-->
+                              <!--begin::Svg Icon | path: icons/duotune/general/gen044.svg-->
+                              <span class="svg-icon svg-icon-2tx svg-icon-primary me-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                  <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
+                                  <rect x="11" y="14" width="7" height="2" rx="1" transform="rotate(-90 11 14)" fill="black" />
+                                  <rect x="11" y="17" width="2" height="2" rx="1" transform="rotate(-90 11 17)" fill="black" />
+                                </svg>
+                              </span>
+                              <!--end::Svg Icon-->
+                              <!--end::Icon-->
+                              <!--begin::Wrapper-->
+                              <div class="d-flex flex-stack flex-grow-1">
+                                <!--begin::Content-->
+                                <div class="fw-bold">
+                                  <h4 class="text-gray-900 fw-bolder">Belum Ada Transkrip</h4>
+                                  <div class="fs-6 text-gray-700">Hallo <b>{{ auth()->user()->display_name }}</b>, belum ada transkrip nilai untuk semester ini.
+                                    <br />
+                                    {{-- <a class="fw-bolder" href="#">Learn more</a> --}}
+                                  </div>
+                                </div>
+                                <!--end::Content-->
+                              </div>
+                              <!--end::Wrapper-->
+                            </div>
+                            @endif
                           </div>
                           <!--end::Table container-->
                         </div>

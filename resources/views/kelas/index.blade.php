@@ -93,6 +93,8 @@
                         <div class="mb-14">
                           <!--begin::Table container-->
                           <div class="table-responsive">
+                            {{-- cek table jadwal kosong --}}
+                            @if ($schedules)
                             <!--begin::Table-->
                             <table
                               class="table  table-row-gray-300 align-middle gs-0 gy-4"
@@ -132,7 +134,7 @@
                                   {{ $schedule->str_nm_ruang }}
                                   </td>
                                   <td>
-                                  {{ $schedule->kode_spada }}
+                                  {{ $schedule->group_spada }}
                                   </td>
                                   <td class="px-5" style="text-align-last: justify;">
                                       <a href="{{ $schedule->link }}"><img src="/assets/media/logos/whatsapp.svg" width="30px" alt="SPADA"></a>
@@ -144,6 +146,34 @@
                               <!--end::Table body-->
                             </table>
                             <!--end::Table-->
+                            @else
+                            <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
+                              <!--begin::Icon-->
+                              <!--begin::Svg Icon | path: icons/duotune/general/gen044.svg-->
+                              <span class="svg-icon svg-icon-2tx svg-icon-warning me-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                  <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
+                                  <rect x="11" y="14" width="7" height="2" rx="1" transform="rotate(-90 11 14)" fill="black" />
+                                  <rect x="11" y="17" width="2" height="2" rx="1" transform="rotate(-90 11 17)" fill="black" />
+                                </svg>
+                              </span>
+                              <!--end::Svg Icon-->
+                              <!--end::Icon-->
+                              <!--begin::Wrapper-->
+                              <div class="d-flex flex-stack flex-grow-1">
+                                <!--begin::Content-->
+                                <div class="fw-bold">
+                                  <h4 class="text-gray-900 fw-bolder">Tidak Ada Jadwal Kuliah</h4>
+                                  <div class="fs-6 text-gray-700">Hallo <b>{{ auth()->user()->display_name }}</b>, kamu mungkin tidak mengambil KRS pada semester ini.
+                                    <br />
+                                    {{-- <a class="fw-bolder" href="#">Learn more</a> --}}
+                                  </div>
+                                </div>
+                                <!--end::Content-->
+                              </div>
+                              <!--end::Wrapper-->
+                            </div>
+                            @endif
                           </div>
                           <!--end::Table container-->
                         </div>
@@ -176,6 +206,8 @@
                         <div class="mb-14">
                           <!--begin::Table container-->
                           <div class="table-responsive">
+                            {{-- cek tabel presensi jika kosong --}}
+                            @if ($presensis)
                             <!--begin::Table-->
                             <table
                               class="table  table-row-gray-300 align-middle gs-0 gy-4"
@@ -245,6 +277,34 @@
                               <!--end::Table body-->
                             </table>
                             <!--end::Table-->
+                            @else
+                            <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
+                              <!--begin::Icon-->
+                              <!--begin::Svg Icon | path: icons/duotune/general/gen044.svg-->
+                              <span class="svg-icon svg-icon-2tx svg-icon-warning me-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                  <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
+                                  <rect x="11" y="14" width="7" height="2" rx="1" transform="rotate(-90 11 14)" fill="black" />
+                                  <rect x="11" y="17" width="2" height="2" rx="1" transform="rotate(-90 11 17)" fill="black" />
+                                </svg>
+                              </span>
+                              <!--end::Svg Icon-->
+                              <!--end::Icon-->
+                              <!--begin::Wrapper-->
+                              <div class="d-flex flex-stack flex-grow-1">
+                                <!--begin::Content-->
+                                <div class="fw-bold">
+                                  <h4 class="text-gray-900 fw-bolder">Data Presensi Tidak Ada</h4>
+                                  <div class="fs-6 text-gray-700">Hallo <b>{{ auth()->user()->display_name }}</b>, kamu mungkin tidak mengambil KRS pada semester ini.
+                                    <br />
+                                    {{-- <a class="fw-bolder" href="#">Learn more</a> --}}
+                                  </div>
+                                </div>
+                                <!--end::Content-->
+                              </div>
+                              <!--end::Wrapper-->
+                            </div>
+                            @endif
                           </div>
                           <!--end::Table container-->
                         </div>
