@@ -108,13 +108,13 @@
                       <!--begin::Kop Pedagogik-->
                       <div class="mb-14">
                         <!--begin::Heading-->
-                        <div class="mb-5">
+                        {{-- <div class="mb-5">
                           <!--begin::Title-->
                               <h3 class="fs-1x text-dark mb-6">
                                 Kopetensi Pedagogik
                               </h3>
                           <!--end::Title-->
-                        </div>
+                        </div> --}}
                         <!--end::Heading-->
                         <!--begin::Body-->
                         <!--begin::Table-->
@@ -137,38 +137,38 @@
                               </thead>
                               <!--end::Table head-->
                               <!--begin::Table body-->
-							              {{-- @foreach ($schedules as $schedule) --}}
+							              @foreach ($pertanyaanLists as $pertanyaan)
                               <tbody class="border-bottom border">
                                 <tr
                                   class="text-center"
                                 >
                                   <td>
-                                    <span>2</span>
+                                    <span>{{ $tableNumber++ }}</span>
                                   </td>
-                                  <td>
-                                  <span>Kesiapan memberikan kuliah dan/atau praktek/praktikum</span>
+                                  <td align="left" style="padding-left: 20px">
+                                  <b>{{ $pertanyaan->pertanyaan }}</b>
                                   </td>
                                   <td>
                                     <div class="form-check form-check-inline m-2">
-                                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1">
+                                      <input class="form-check-input" type="radio" name="jawabanNo.{{ $tableNumber }}" id="inlineRadio1" value="1">
                                       <label class="form-check-label" for="inlineRadio1">1</label>
                                     </div>
                                     <div class="form-check form-check-inline m-2">
-                                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2">
+                                      <input class="form-check-input" type="radio" name="jawabanNo.{{ $tableNumber }}" id="inlineRadio2" value="2">
                                       <label class="form-check-label" for="inlineRadio2">2</label>
                                     </div>
                                     <div class="form-check form-check-inline m-2">
-                                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3">
+                                      <input class="form-check-input" type="radio" name="jawabanNo.{{ $tableNumber }}" id="inlineRadio3" value="3">
                                       <label class="form-check-label" for="inlineRadio3">3</label>
                                     </div>
                                     <div class="form-check form-check-inline m-2">
-                                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="4">
+                                      <input class="form-check-input" type="radio" name="jawabanNo.{{ $tableNumber }}" id="inlineRadio4" value="4">
                                       <label class="form-check-label" for="inlineRadio4">4</label>
                                     </div>
                                   </td>
                                 </tr>
                               </tbody>
-							                {{-- @endforeach --}}
+							                @endforeach
                               <!--end::Table body-->
                             </table>
                             <!--end::Table-->

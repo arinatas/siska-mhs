@@ -58,5 +58,5 @@ Route::get('/khs', [AkademikController::class, 'khs'])->middleware('auth');
 Route::get('/krs', [AkademikController::class, 'krs'])->middleware('auth');
 Route::get('/transkrip', [AkademikController::class, 'transkrip'])->middleware('auth');
 Route::get('/angket', [AkademikController::class, 'angketList'])->middleware('auth');
-Route::get('/isi_angket', [AkademikController::class, 'isiAngket'])->middleware('auth');
+Route::get('/angket/{kelas:int_kd_perkuliahan_d}', [AkademikController::class, 'isiAngket'])->middleware('auth');
 
