@@ -293,8 +293,6 @@ class AkademikController extends Controller
         $pertanyaanLists = $response->data->pertanyaan;
         $angketTerisi = $response->data->data_pengisian_angket;
 
-        // dd($getAngketData);
-
         // $url = "http://localhost:8000/get_pertanyaan.php?id_jadwal_edom=3&nim=".$nim."&tahun_ajaran=".$tahunAjar."&semester=".$semester."";
 
 
@@ -303,7 +301,82 @@ class AkademikController extends Controller
             'active' => 'Akademik',
             'tableNumber' => $tableNumber,
             'pertanyaanLists' => $pertanyaanLists,
+
         ]); 
+    }
+
+    public function sendAngket(Request $request)
+    {
+        // $test = $request->all();
+
+        $ID = 1;
+        $questionScores = array();
+
+        for($i = 1; $i<=30; $i++) {
+            if($request->has('skorPertanyaanID_'.$ID)){
+                   $questionScores[] = [
+                        "id" => $ID,
+                        "score" => $request->get('skorPertanyaanID_'.$ID)
+                   ];
+                }
+            $ID++;
+        }
+
+        foreach($questionScores as $questionScore) {
+            $idQuestion = $questionScore["id"];
+            $skor = $questionScore["score"];
+            
+            //panggil API disini
+            $dataJawab = [
+            'nim' => $request->get('nim'),
+            'id_mk' => $request->get('id_mk'),
+            'id_pertanyaan' => $idQuestion,
+            'tahun_ajaran' => $request->get('tahun_ajaran'),
+            'semester' => $request->get('semester'),
+            'id_dosen' => $request->get('id_dosen'),
+            'id_prodi' => $request->get('id_prodi'),
+            'id_kelas' => $request->get('id_kelas'),
+            'skor' => $skor,
+            ];
+            
+            //api post jawaban
+            $urlJawab = 'http://localhost:8000/post_jawaban.php';
+            $postdataJawab = http_build_query($dataJawab);
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $urlJawab);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $postdataJawab);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $response = curl_exec($ch);
+            curl_close($ch);
+            $response = json_decode($response);
+            
+            }
+
+        //data post jawaban
+        $dataKomentar = array(
+            'nim' => $request->get('nim'),
+            'id_mk' => $request->get('id_mk'),
+            'tahun_ajaran' => $request->get('tahun_ajaran'),
+            'semester' => $request->get('semester'),
+            'id_dosen' => $request->get('id_dosen'),
+            'id_prodi' => $request->get('id_prodi'),
+            'id_kelas' => $request->get('id_kelas'),
+            'komentar' => $request->get('komentar'),
+        );
+
+        //api post jawaban
+        $url = 'http://localhost:8000/post_komentar.php';
+        $postdataKomentar = http_build_query($dataKomentar);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postdataKomentar);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        $response = json_decode($response);
+
     }
     
     public function krs()

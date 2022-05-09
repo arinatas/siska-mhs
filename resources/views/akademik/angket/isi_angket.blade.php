@@ -16,7 +16,7 @@
   <!--begin::Body-->
   <body
     id="kt_body"
-    style="background-image: url(/assets/media/patterns/header-bg.jpg)"
+    style="background-image: url(/assets/media/patterns/header-bg.jpg);"
     class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled"
   >
     <!--begin::Main-->
@@ -128,79 +128,122 @@
                         </div> --}}
                         <!--end::Heading-->
                         <!--begin::Body-->
-                        <!--begin::Table-->
-                        <div class="mb-14">
-                          <!--begin::Table container-->
-                          <div class="table-responsive mb-3">
-                            <!--begin::Table-->
-                            <table
-                              class="table  table-row-gray-300 align-middle gs-0 gy-4"
-                            >
-                              <!--begin::Table head-->
-                              <thead>
-                                <tr
-                                  class="fw-bolder fs-6 text-gray-800 text-center border-0 bg-light"
-                                >
-                                  <th class="min-w-50px rounded-start">No</th>
-                                  <th class="min-w-100px">Pertanyaan</th>
-                                  <th class="min-w-50px rounded-end">Nilai Angket</th>
-                                </tr>
-                              </thead>
-                              <!--end::Table head-->
-                              <!--begin::Table body-->
-							                @foreach ($pertanyaanLists as $pertanyaan)
-                              <tbody class="border-bottom border">
-                                <tr
-                                  class="text-center"
-                                >
-                                  <td>
-                                    <span>{{ $tableNumber++ }}</span>
-                                  </td>
-                                  <td align="left" style="padding-left: 20px">
-                                  <b>{{ $pertanyaan->pertanyaan }}</b>
-                                  </td>
-                                  <td>
-                                    <div class="form-check form-check-inline m-2">
-                                      <input class="form-check-input" type="radio" name="jawabanNo.{{ $tableNumber }}" id="inlineRadio1" value="1">
-                                      <label class="form-check-label" for="inlineRadio1">1</label>
-                                    </div>
-                                    <div class="form-check form-check-inline m-2">
-                                      <input class="form-check-input" type="radio" name="jawabanNo.{{ $tableNumber }}" id="inlineRadio2" value="2">
-                                      <label class="form-check-label" for="inlineRadio2">2</label>
-                                    </div>
-                                    <div class="form-check form-check-inline m-2">
-                                      <input class="form-check-input" type="radio" name="jawabanNo.{{ $tableNumber }}" id="inlineRadio3" value="3">
-                                      <label class="form-check-label" for="inlineRadio3">3</label>
-                                    </div>
-                                    <div class="form-check form-check-inline m-2">
-                                      <input class="form-check-input" type="radio" name="jawabanNo.{{ $tableNumber }}" id="inlineRadio4" value="4">
-                                      <label class="form-check-label" for="inlineRadio4">4</label>
-                                    </div>
-                                  </td>
-                                </tr>
-                              </tbody>
-							                @endforeach
-                              <!--end::Table body-->
-                            </table>
-                            <!--end::Table-->
+                        <!--begin::Form-->
+                        <form action="/angket" method="POST">
+                          @csrf
+                          <div class="mb-14">
+                            <!--begin::Table container-->
+                            <div class="table-responsive mb-3">
+                              <!--begin::Table-->
+                              <table
+                                class="table  table-row-gray-300 align-middle gs-0 gy-4"
+                              >
+                                <!--begin::Table head-->
+                                <thead>
+                                  <tr
+                                    class="fw-bolder fs-6 text-gray-800 text-center border-0 bg-light"
+                                  >
+                                    <th class="min-w-50px rounded-start">No</th>
+                                    <th class="min-w-100px">Pertanyaan</th>
+                                    <th class="min-w-50px rounded-end">Nilai Angket</th>
+                                  </tr>
+                                </thead>
+                                <!--end::Table head-->
+                                <!--begin::Table body-->
+                                {{-- <tbody class="border-bottom border">
+                                  <tr
+                                    class="text-center"
+                                  >
+                                    <td>
+                                      <span>{{ $tableNumber++ }}</span>
+                                    </td>
+                                    <td align="left" style="padding-left: 20px">
+                                    <b>{{ $pertanyaanLists[0]->pertanyaan }}</b>
+                                    </td>
+                                    <div class="mb-14">
+                                    <td>
+                                      <div class="form-check form-check-inline m-2">
+                                        <input class="form-check-input" type="radio" name="skorPertanyaanID.{{ $pertanyaanLists[0]->id_pertanyaan }}" id="inlineRadio1" value="1" required>
+                                        <label class="form-check-label" for="inlineRadio1">1</label>
+                                      </div>
+                                      <div class="form-check form-check-inline m-2">
+                                        <input class="form-check-input" type="radio" name="skorPertanyaanID.{{ $pertanyaanLists[0]->id_pertanyaan }}" id="inlineRadio2" value="2">
+                                        <label class="form-check-label" for="inlineRadio2">2</label>
+                                      </div>
+                                      <div class="form-check form-check-inline m-2">
+                                        <input class="form-check-input" type="radio" name="skorPertanyaanID.{{ $pertanyaanLists[0]->id_pertanyaan }}" id="inlineRadio3" value="3">
+                                        <label class="form-check-label" for="inlineRadio3">3</label>
+                                      </div>
+                                      <div class="form-check form-check-inline m-2">
+                                        <input class="form-check-input" type="radio" name="skorPertanyaanID.{{ $pertanyaanLists[0]->id_pertanyaan }}" id="inlineRadio4" value="4">
+                                        <label class="form-check-label" for="inlineRadio4">4</label>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody> --}}
+                                @foreach ($pertanyaanLists as $pertanyaan)
+                                <tbody class="border-bottom border">
+                                  <tr
+                                    class="text-center"
+                                  >
+                                    <td>
+                                      <span>{{ $tableNumber++ }}</span>
+                                    </td>
+                                    <td align="left" style="padding-left: 20px">
+                                    <b>{{ $pertanyaan->pertanyaan }}</b>
+                                    </td>
+                                    <div class="mb-14">
+                                    <td>
+                                      <div class="form-check form-check-inline m-2">
+                                        <input class="form-check-input" type="radio" name="skorPertanyaanID.{{ $pertanyaan->id_pertanyaan }}" id="inlineRadio1" value="1" required>
+                                        <label class="form-check-label" for="inlineRadio1">1</label>
+                                      </div>
+                                      <div class="form-check form-check-inline m-2">
+                                        <input class="form-check-input" type="radio" name="skorPertanyaanID.{{ $pertanyaan->id_pertanyaan }}" id="inlineRadio2" value="2">
+                                        <label class="form-check-label" for="inlineRadio2">2</label>
+                                      </div>
+                                      <div class="form-check form-check-inline m-2">
+                                        <input class="form-check-input" type="radio" name="skorPertanyaanID.{{ $pertanyaan->id_pertanyaan }}" id="inlineRadio3" value="3">
+                                        <label class="form-check-label" for="inlineRadio3">3</label>
+                                      </div>
+                                      <div class="form-check form-check-inline m-2">
+                                        <input class="form-check-input" type="radio" name="skorPertanyaanID.{{ $pertanyaan->id_pertanyaan }}" id="inlineRadio4" value="4">
+                                        <label class="form-check-label" for="inlineRadio4">4</label>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                                @endforeach
+                                <!--end::Table body-->
+                              </table>
+                                    <input type="hidden" name="nim" value="12030230230">
+                                    <input type="hidden" name="id_mk" value="M1234">
+                                    <input type="hidden" name="tahun_ajaran" value="2021/2022">
+                                    <input type="hidden" name="semester" value="Genap">
+                                    <input type="hidden" name="id_dosen" value="SP0010">
+                                    <input type="hidden" name="id_prodi" value="003">
+                                    <input type="hidden" name="id_kelas" value="1">
+                                    <input type="hidden" name="id_pertanyaan" value="{{ $pertanyaanLists[0]->id_pertanyaan }}">
+                              <!--end::Table-->
+                            </div>
+                            
+                            <div class="form-floating">
+                              <textarea name="komentar" class="form-control" placeholder="Leave a comment here" id="komentar" style="height: 100px" required></textarea>
+                              <label for="komentar">Kritik & Saran</label>
+                            </div>
+                            <div class="dflex mt-2" style="margin-left: 10px">
+                              <span type="button" onclick="NeutralComment()" class="badge rounded-pill bg-primary">Tidak ada kritik.</span>
+                              <span style="margin-left: 3px" type="button" onclick="PositiveComment()" class="badge rounded-pill bg-success">Dosen mengajar sudah baik.</span>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col text-end">
+                                  <button type="submit" style="background-color: #003764" class="btn btn-outline-light text-light font-weight-bold px-9 py-4">Submit</button>
+                                </div>
+                            </div>
+                            <!--end::Table container-->
                           </div>
-                          
-                          <div class="form-floating">
-                            <textarea name="komentar" class="form-control" placeholder="Leave a comment here" id="komentar" style="height: 100px"></textarea>
-                            <label for="komentar">Kritik & Saran</label>
-                          </div>
-                          <div class="dflex mt-2">
-                            <span type="button" onclick="NeutralComment()" class="badge rounded-pill bg-primary">Tidak ada kritik.</span>
-                            <span type="button" onclick="PositiveComment()" class="badge rounded-pill bg-success">Dosen mengajar sudah baik.</span>
-                          </div>
-                          <div class="row">
-                              <div class="col text-end">
-                                  <button type="button" class="btn btn-primary disabled">Print</button>
-                              </div>
-                          </div>
-                          <!--end::Table container-->
-                        </div>
-                        <!--end::Table-->
+                        </form>
+                        <!--end::Form-->
                       </div>
                       <!--end::Card-->
                     </div>
