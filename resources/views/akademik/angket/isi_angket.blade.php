@@ -216,14 +216,13 @@
                                 @endforeach
                                 <!--end::Table body-->
                               </table>
-                                    <input type="hidden" name="nim" value="12030230230">
-                                    <input type="hidden" name="id_mk" value="M1234">
-                                    <input type="hidden" name="tahun_ajaran" value="2021/2022">
-                                    <input type="hidden" name="semester" value="Genap">
-                                    <input type="hidden" name="id_dosen" value="SP0010">
-                                    <input type="hidden" name="id_prodi" value="003">
-                                    <input type="hidden" name="id_kelas" value="1">
-                                    <input type="hidden" name="id_pertanyaan" value="{{ $pertanyaanLists[0]->id_pertanyaan }}">
+                                    <input type="hidden" name="nim" value="{{ auth()->user()->username }}">
+                                    <input type="hidden" name="id_mk" value="{{ $dataAngket[0]->str_kd_mk }}">
+                                    <input type="hidden" name="tahun_ajaran" value="{{ $dataAngket[0]->str_thn_ajaran }}">
+                                    <input type="hidden" name="semester" value="{{ $dataAngket[0]->bol_semester }}">
+                                    <input type="hidden" name="id_dosen" value="{{ $dataAngket[0]->str_id_kad }}">
+                                    <input type="hidden" name="id_prodi" value="{{ $dataAngket[0]->str_kd_prodi }}">
+                                    <input type="hidden" name="id_kelas" value="{{ $dataAngket[0]->int_kd_kelas }}">
                               <!--end::Table-->
                             </div>
                             
