@@ -110,8 +110,7 @@
                               </thead>
                               <!--end::Table head-->
                               <!--begin::Table body-->
-							              @foreach ($schedules as $schedule)
-                              {{-- {{ dd($schedule->str_kd_mk) }} --}}
+							              @foreach ($angketLists as $angket)
                               <tbody class="border-bottom border">
                                 <tr
                                   class="text-center"
@@ -120,13 +119,13 @@
                                     {{ $tableNumber++ }}
                                   </td>
                                   <td>
-                                    {{ $schedule->str_nm_mk }}
+                                    {{ $angket->str_nm_mk }}
                                   </td>
                                   <td>
-                                    {{ $schedule->str_nm_kad }}
+                                    {{ $angket->str_nm_kad }}
                                   </td>
                                   <td>
-                                    <a href="/angket/{{ $schedule->int_kd_perkuliahan_d }}">
+                                    <a href="/angket/{{ $angket->int_kd_perkuliahan_d }}">
                                       <span class="svg-icon svg-icon-success svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Communication/Write.svg-->
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                           <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">

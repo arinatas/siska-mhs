@@ -63,8 +63,9 @@
     <link href="/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
     <link href="/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
 
+      {{-- sweet alert --}}
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    {{-- <title>WPU Blog | {{ $title }}</title> --}}
   </head>
   <body>
 

@@ -226,13 +226,13 @@ class AkademikController extends Controller
 
     public function angketList()
     {
+        // untuk penomeran tabel
+        $tableNumber = 1;
+
         // Mengambil nim user yang login
         $nim = auth()->user()->username;
 
         $getDataTime = DB::select("select * from pablic_reset");
-
-        // untuk penomeran tabel
-        $tableNumber = 1;
 
         $tahunAjar = $getDataTime[0]->str_thn_ajaran;
         $semester = $getDataTime[0]->bol_semester;
@@ -271,84 +271,95 @@ class AkademikController extends Controller
             $kodeMkAngketDone[] = $value->id_mk;
         }
         
-        $newSchedule = [];
+        $newAngketList = [];
 
+        // cari matkul yg telah terisi angketnya dan di skip
         foreach ($schedules as $value)
         {
             if (in_array($value->str_kd_mk, $kodeMkAngketDone)) {
                 continue;
             }
-            $newSchedule[] = $value;
+            $newAngketList[] = $value;
         }
 
         return view('akademik.angket.index', [
             'title' => 'Angket',
             'active' => 'Akademik',
-            'schedules' => $newSchedule,
+            'angketLists' => $newAngketList,
             'tableNumber' => $tableNumber,
-            'angketTerisi' => $kodeMkAngketDone,
         ]); 
     }
     
     public function isiAngket($kelas)
     {
-        // Ambil detail matakuliah
-        $getAngketData = DB::select("
-        SELECT a.str_kd_prodi, a.int_kd_kls_buka, a.str_kd_mk, b.int_kd_kelas, a.str_thn_ajaran, a.bol_semester, z.str_nm_prodi, b.int_kd_perkuliahan_d, b.str_nm_kelas, c.str_kd_mk, c.str_nm_mk, e.str_nm_kad, e.str_id_kad, d.str_nama_hari, f.str_nm_ruang, MID(b.time_jam_awal, 1, 5) as awal, MID(b.time_jam_akhir, 1, 5) as akhir, g.num_sks, g.num_kd_semester, b.num_jml_buka, b.num_jml_peserta, a.str_desc, l.link_spada, l.kode_spada, l.group_spada, m.link FROM aka_perkuliahan a INNER JOIN aka_perkuliahan_detail b ON a.str_kd_perkuliahan = b.str_kd_perkuliahan INNER JOIN aka_matakuliah c ON a.str_kd_mk = c.str_kd_mk INNER JOIN mst_hari d ON b.int_hari = d.str_kd_hari INNER JOIN uni_karidos e ON b.str_id_dosen = e.str_id_kad INNER JOIN aka_ruang f ON b.num_kd_ruang = f.num_kd_ruang INNER JOIN aka_matakuliah_detail g ON a.str_kd_mk = g.str_kd_mk AND a.`str_kd_prodi` = g.`str_kd_prodi` LEFT JOIN link_spada l ON l.int_kd_perkuliahan_d = b.int_kd_perkuliahan_d LEFT JOIN aka_perkuliahan_detail_link m ON m.id_perkuliahan_detail = b.int_kd_perkuliahan_d INNER JOIN uni_prodi z on a.str_kd_prodi = z.str_kd_prodi WHERE b.int_kd_perkuliahan_d= '".$kelas."'
-        ");
-
-        // ambil tahun ajaran dan semester
-        $getDataTime = DB::select("select * from pablic_reset");
-        $tahunAjar = $getDataTime[0]->str_thn_ajaran;
-        $semester = $getDataTime[0]->bol_semester;
-
         // Mengambil nim user yang login
         $nim = auth()->user()->username;
-
         // untuk penomeran tabel
         $tableNumber = 1;
 
-        // API ambil pertanyaan untuk edom
-        $url = "http://localhost:8000/get_pertanyaan.php?id_jadwal_edom=3&nim=".$nim."&tahun_ajaran=".$tahunAjar."&semester=".$semester."";
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($ch);
-        curl_close($ch);
+        $getDataTime = DB::select("select * from pablic_reset");
 
-        $response = json_decode($response);
+        $tahunAjar = $getDataTime[0]->str_thn_ajaran;
+        $semester = $getDataTime[0]->bol_semester;
 
-        $pertanyaanLists = $response->data->pertanyaan;
-        $angketTerisi = $response->data->data_pengisian_angket;
+        // Ambil detail matakuliah
+        $getAngketData = DB::select("
+        SELECT a.str_kd_prodi,a.int_kd_kls_buka,a.str_kd_mk,b.int_kd_kelas,a.str_thn_ajaran,a.bol_semester,z.str_nm_prodi,b.int_kd_perkuliahan_d,b.str_nm_kelas,c.str_kd_mk,c.str_nm_mk,e.str_nm_kad,e.str_id_kad,d.str_nama_hari,f.str_nm_ruang,MID(b.time_jam_awal,1,5) as awal,MID(b.time_jam_akhir,1,5) as akhir,g.num_sks,g.num_kd_semester,b.num_jml_buka,b.num_jml_peserta,a.str_desc, l.link_spada, l.kode_spada,l.group_spada, m.link FROM aka_perkuliahan a 
+        INNER JOIN aka_perkuliahan_detail b ON a.str_kd_perkuliahan = b.str_kd_perkuliahan 
+        INNER JOIN aka_matakuliah c ON a.str_kd_mk = c.str_kd_mk 
+        INNER JOIN mst_hari d ON b.int_hari = d.str_kd_hari 
+        INNER JOIN uni_karidos e ON b.str_id_dosen = e.str_id_kad 
+        INNER JOIN aka_ruang f ON b.num_kd_ruang = f.num_kd_ruang 
+        INNER JOIN aka_krs h ON b.int_kd_perkuliahan_d =h.int_kd_perkuliahan_d
+        INNER JOIN aka_matakuliah_detail g ON a.str_kd_mk = g.str_kd_mk AND a.`str_kd_prodi` = g.`str_kd_prodi` 
+        LEFT JOIN link_spada l ON l.int_kd_perkuliahan_d = b.int_kd_perkuliahan_d
+        LEFT JOIN aka_perkuliahan_detail_link m ON m.id_perkuliahan_detail = b.int_kd_perkuliahan_d 
+        INNER JOIN uni_prodi z on a.str_kd_prodi = z.str_kd_prodi WHERE a.str_thn_ajaran='".$tahunAjar."' AND a.bol_semester='".$semester."' AND h.str_id_nim='".$nim."' AND b.int_kd_perkuliahan_d='".$kelas."'
+        ");
+
+        // dd($getAngketData);
+
+        if ($getAngketData)
+        {
+            // API ambil pertanyaan untuk edom
+            $url = "http://localhost:8000/get_pertanyaan.php?id_jadwal_edom=3&nim=".$nim."&tahun_ajaran=".$tahunAjar."&semester=".$semester."";
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $response = curl_exec($ch);
+            curl_close($ch);
+
+            $response = json_decode($response);
+
+            $pertanyaanLists = $response->data->pertanyaan;
+
+            return view('akademik.angket.isi_angket', [
+                'title' => 'Angket',
+                'active' => 'Akademik',
+                'tableNumber' => $tableNumber,
+                'pertanyaanLists' => $pertanyaanLists,
+                'dataAngket' => $getAngketData,
+            ]); 
+        } else {
+            return redirect()->back();
+        }
 
 
-        // $url = "http://localhost:8000/get_pertanyaan.php?id_jadwal_edom=3&nim=".$nim."&tahun_ajaran=".$tahunAjar."&semester=".$semester."";
-
-
-        return view('akademik.angket.isi_angket', [
-            'title' => 'Angket',
-            'active' => 'Akademik',
-            'tableNumber' => $tableNumber,
-            'pertanyaanLists' => $pertanyaanLists,
-            'dataAngket' => $getAngketData,
-
-        ]); 
+        
     }
 
     public function sendAngket(Request $request)
     {
-        // $test = $request->all();
-
         $ID = 1;
         $questionScores = array();
 
         for($i = 1; $i<=30; $i++) {
             if($request->has('skorPertanyaanID_'.$ID)){
-                   $questionScores[] = [
-                        "id" => $ID,
-                        "score" => $request->get('skorPertanyaanID_'.$ID)
-                   ];
-                }
+                $questionScores[] = [
+                    "id" => $ID,
+                    "score" => $request->get('skorPertanyaanID_'.$ID)
+                ];
+            }
             $ID++;
         }
 
@@ -380,7 +391,6 @@ class AkademikController extends Controller
             $response = curl_exec($ch);
             curl_close($ch);
             $response = json_decode($response);
-            
             }
 
         //data post jawaban
