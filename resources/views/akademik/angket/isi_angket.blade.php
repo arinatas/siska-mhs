@@ -1,6 +1,7 @@
 @extends('layouts.main')
 
 @section('container')
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
   function NeutralComment()
@@ -11,6 +12,25 @@
   {
     document.getElementById("komentar").value= 'Dosen mengajar sudah baik.';
   }
+  function submitForm(form) {
+    Swal.fire({
+      title: 'Apakah kamu yakin?',
+      text: "Data yang telah diisi tidak bisa diubah lagi!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya',
+      cancelButtonText: 'Tidak',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        form.submit();
+      }
+    });
+    return false;
+  }
+  
 </script>
 
   <!--begin::Body-->
@@ -105,7 +125,7 @@
 												<div class="d-flex flex-stack flex-grow-1">
 													<!--begin::Content-->
 													<div class="fw-bold">
-														<h3 class="text-gray-900 fw-bolder">Keterangan Penilaian</h3>
+														<h3 class="text-gray-900 fw-bolder">Kriteria Penilaian</h3>
 														<div class="fs-6 badge bg-info m-1">  <b>1 {!! "&nbsp;" !!}:{!! "&nbsp;" !!} Sangat Kurang</b></div>
 														<div class="fs-6 badge bg-info m-1">  <b>2 {!! "&nbsp;" !!}:{!! "&nbsp;" !!} Kurang</b> </div>
 														<div class="fs-6 badge bg-info m-1">  <b>3 {!! "&nbsp;" !!}:{!! "&nbsp;" !!} Baik</b></div>
@@ -129,7 +149,7 @@
                         <!--end::Heading-->
                         <!--begin::Body-->
                         <!--begin::Form-->
-                        <form action="/angket" method="POST">
+                        <form action="/angket" method="POST" onsubmit="return submitForm(this);">
                           @csrf
                           <div class="mb-14">
                             <!--begin::Table container-->
@@ -194,6 +214,7 @@
                                     </td>
                                     <div class="mb-14">
                                     <td>
+                                    <input type="hidden" name="pertanyaanID.{{ $pertanyaan->id_pertanyaan }}" value="{{ $pertanyaan->pertanyaan }}">
                                       <div class="form-check form-check-inline m-2">
                                         <input class="form-check-input" type="radio" name="skorPertanyaanID.{{ $pertanyaan->id_pertanyaan }}" id="inlineRadio1" value="1" required>
                                         <label class="form-check-label" for="inlineRadio1">1</label>
@@ -215,14 +236,14 @@
                                 </tbody>
                                 @endforeach
                                 <!--end::Table body-->
+                                <input type="hidden" name="nim" value="{{ auth()->user()->username }}">
+                                <input type="hidden" name="id_mk" value="{{ $dataAngket[0]->str_kd_mk }}">
+                                <input type="hidden" name="tahun_ajaran" value="{{ $dataAngket[0]->str_thn_ajaran }}">
+                                <input type="hidden" name="semester" value="{{ $dataAngket[0]->bol_semester }}">
+                                <input type="hidden" name="id_dosen" value="{{ $dataAngket[0]->str_id_kad }}">
+                                <input type="hidden" name="id_prodi" value="{{ $dataAngket[0]->str_kd_prodi }}">
+                                <input type="hidden" name="id_kelas" value="{{ $dataAngket[0]->int_kd_kelas }}">
                               </table>
-                                    <input type="hidden" name="nim" value="{{ auth()->user()->username }}">
-                                    <input type="hidden" name="id_mk" value="{{ $dataAngket[0]->str_kd_mk }}">
-                                    <input type="hidden" name="tahun_ajaran" value="{{ $dataAngket[0]->str_thn_ajaran }}">
-                                    <input type="hidden" name="semester" value="{{ $dataAngket[0]->bol_semester }}">
-                                    <input type="hidden" name="id_dosen" value="{{ $dataAngket[0]->str_id_kad }}">
-                                    <input type="hidden" name="id_prodi" value="{{ $dataAngket[0]->str_kd_prodi }}">
-                                    <input type="hidden" name="id_kelas" value="{{ $dataAngket[0]->int_kd_kelas }}">
                               <!--end::Table-->
                             </div>
                             
@@ -236,6 +257,8 @@
                             </div>
                             <div class="row mt-3">
                                 <div class="col text-end">
+                                  <!-- Button trigger modal -->
+                                  {{-- <button type="submit" style="background-color: #003764" class="btn btn-outline-light text-light font-weight-bold px-9 py-4">Submit</button> --}}
                                   <button type="submit" style="background-color: #003764" class="btn btn-outline-light text-light font-weight-bold px-9 py-4">Submit</button>
                                 </div>
                             </div>
