@@ -8,6 +8,15 @@
     style="background-image: url(/assets/media/patterns/header-bg.jpg)"
     class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled"
   >
+  @if (\Session::has('angketNotfound'))
+    <script>
+        Swal.fire(
+          '{!! \Session::get('angketNotfound') !!}',
+          'Isi lah angket pada list yang telah ditentukan!',
+          'warning'
+        )
+    </script>
+  @endif
     <!--begin::Main-->
     <!--begin::Root-->
     <div class="d-flex flex-column flex-root">

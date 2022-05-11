@@ -347,7 +347,9 @@ class AkademikController extends Controller
                 'dataAngket' => $getAngketData,
             ]); 
         } else {
-            return redirect()->back();
+            // redirect back
+            // return redirect()->back()->with('angketNotfound', 'Angket tidak ditemukan');
+            return redirect('/angket')->with('angketNotfound', 'Angket Tidak Ditemukan!');
         }
 
 
@@ -356,6 +358,7 @@ class AkademikController extends Controller
 
     public function sendAngket(Request $request)
     {
+        dd($request);
         $ID = 1;
         $questionScores = array();
 
