@@ -358,7 +358,6 @@ class AkademikController extends Controller
 
     public function sendAngket(Request $request)
     {
-        dd($request);
         $ID = 1;
         $questionScores = array();
 
