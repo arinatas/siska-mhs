@@ -8,6 +8,15 @@
     style="background-image: url(/assets/media/patterns/header-bg.jpg)"
     class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled"
   >
+  @if (\Session::has('angketDone'))
+    <script>
+        Swal.fire(
+          'Angket telah terisi!',
+          '{!! \Session::get('angketDone') !!}',
+          'success'
+        )
+    </script>
+  @endif
     <!--begin::Main-->
     <!--begin::Root-->
     <div class="d-flex flex-column flex-root">

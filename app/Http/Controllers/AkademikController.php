@@ -282,12 +282,18 @@ class AkademikController extends Controller
             $newAngketList[] = $value;
         }
 
-        return view('akademik.angket.index', [
-            'title' => 'Angket',
-            'active' => 'Akademik',
-            'angketLists' => $newAngketList,
-            'tableNumber' => $tableNumber,
-        ]); 
+        if ($newAngketList)
+        {
+            return view('akademik.angket.index', [
+                'title' => 'Angket',
+                'active' => 'Akademik',
+                'angketLists' => $newAngketList,
+                'tableNumber' => $tableNumber,
+            ]); 
+        } else
+        {
+            return redirect('/khs')->with('angketDone', 'Terimakasih telah mengisi angket');
+        }
     }
     
     public function isiAngket($kelas)
