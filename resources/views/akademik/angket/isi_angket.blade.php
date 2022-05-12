@@ -240,7 +240,7 @@
                                 <input type="hidden" name="semester" value="{{ $dataAngket[0]->bol_semester }}">
                                 <input type="hidden" name="id_dosen" value="{{ $dataAngket[0]->str_id_kad }}">
                                 <input type="hidden" name="id_prodi" value="{{ $dataAngket[0]->str_kd_prodi }}">
-                                <input type="hidden" name="id_kelas" value="{{ $dataAngket[0]->int_kd_kelas }}">
+                                <input type="hidden" name="id_kelas" value="{{ $dataAngket[0]->int_kd_perkuliahan_d }}">
                               </table>
                               <!--end::Table-->
                             </div>
