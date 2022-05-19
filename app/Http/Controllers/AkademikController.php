@@ -298,6 +298,8 @@ class AkademikController extends Controller
                 $newAngketList[] = $value;
             }
 
+            session(['angketLeft' => $newAngketList]);
+
             return view('akademik.angket.index', [
                 'title' => 'Angket',
                 'active' => 'Akademik',

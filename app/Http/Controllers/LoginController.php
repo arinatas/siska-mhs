@@ -52,8 +52,11 @@ class LoginController extends Controller
                 'password' => hash('sha512', $credentials['password']),
         ])->first();
 
-        // cek angket yg sudah terisi
-        $schedules = DB::select("
+        // cek kalau ga ada redirect ke login
+        if(!is_null($user)){
+
+            // cek angket yg sudah terisi
+            $schedules = DB::select("
                 SELECT a.str_kd_prodi,a.int_kd_kls_buka,a.str_kd_mk,b.int_kd_kelas,a.str_thn_ajaran,a.bol_semester,z.str_nm_prodi,b.int_kd_perkuliahan_d,b.str_nm_kelas,c.str_kd_mk,c.str_nm_mk,e.str_nm_kad,d.str_nama_hari,f.str_nm_ruang,MID(b.time_jam_awal,1,5) as awal,MID(b.time_jam_akhir,1,5) as akhir,g.num_sks,g.num_kd_semester,b.num_jml_buka,b.num_jml_peserta,a.str_desc, l.link_spada, l.kode_spada,l.group_spada, m.link FROM aka_perkuliahan a 
                 INNER JOIN aka_perkuliahan_detail b ON a.str_kd_perkuliahan = b.str_kd_perkuliahan 
                 INNER JOIN aka_matakuliah c ON a.str_kd_mk = c.str_kd_mk 
@@ -97,41 +100,24 @@ class LoginController extends Controller
                     $angketLeft[] = $value;
                 }
 
-                // dd($angketLeft);
+                session(['angketLeft' => $angketLeft]);
 
-        // // using bcrypt
-        // if (Auth::attempt($credentials)) {
-        //     $request->session()->regenerate();
- 
-        //     return redirect()->intended('/dashboard');
-        // }
-
-        // old check before angket
-        // if(!is_null($user)){
-        //     if(Auth::login($user)){
-        //         $request->session()->regenerate();
-        //     return redirect()->intended('/kelas');
-        //     }
-        // }
-
-        // cek kalau ga ada redirect ke login
-        if(!is_null($user)){
-            // cek kalo angket aktif
-            if($angketAktif){
-                // cek sisa angket, jika kosong
-                if($angketLeft){
-                    Auth::login($user);
-                    $request->session()->regenerate();
-                    return redirect()->intended('/angket');
-                } else {
+                // cek kalo angket aktif
+                if($angketAktif){
+                    // cek sisa angket, jika kosong
+                    if($angketLeft){
+                        Auth::login($user);
+                        $request->session()->regenerate();
+                        return redirect()->intended('/angket');
+                    } else {
+                        Auth::login($user);
+                        $request->session()->regenerate();
+                        return redirect()->intended('/kelas');
+                    }
+                }
                     Auth::login($user);
                     $request->session()->regenerate();
                     return redirect()->intended('/kelas');
-                }
-            }
-                Auth::login($user);
-                $request->session()->regenerate();
-                return redirect()->intended('/kelas');
         } else {
             return back()->with('loginError', 'Login Failed.');
         }

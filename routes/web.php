@@ -21,10 +21,6 @@ use App\Http\Controllers\AkademikController;
 */
 
 
-Route::get('/about', [PostController::class, 'aboutme'])->middleware('auth');
-
-Route::get('/posts', [PostController::class, 'index'])->middleware('auth');
-
 // halaman single post
 Route::get('/posts/{post:slug}', [PostController::class, 'show']);
 
@@ -42,22 +38,22 @@ Route::get('/', [LoginController::class, 'index'])->middleware('guest')->name('l
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/logout', [LoginController::class, 'logout']);
 
-Route::get('password', [ChangePasswordController::class, 'edit'])->name('password.edit')->middleware('auth');
-Route::patch('password', [ChangePasswordController::class, 'update'])->name('password.edit')->middleware('auth');
+Route::get('password', [ChangePasswordController::class, 'edit'])->name('password.edit')->middleware(['auth', 'angket.checker']);
+Route::patch('password', [ChangePasswordController::class, 'update'])->name('password.edit')->middleware(['auth', 'angket.checker']);
 
-// Route::get('/register', [RegisterController::class, 'index'])->middleware('auth');
+// Route::get('/register', [RegisterController::class, 'index'])->middleware(['auth', 'angket.checker']);
 // Route::post('/register', [RegisterController::class, 'store']);
 
-// Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
+// Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'angket.checker']);
 Route::get('/dashboard', function() {
     return view('dashboard.index');
-})->middleware('auth');
+})->middleware(['auth', 'angket.checker']);
 
-Route::get('/kelas', [JadwalController::class, 'index'])->middleware('auth');
-Route::get('/khs', [AkademikController::class, 'khs'])->middleware('auth');
-Route::get('/krs', [AkademikController::class, 'krs'])->middleware('auth');
-Route::get('/transkrip', [AkademikController::class, 'transkrip'])->middleware('auth');
-Route::get('/angket', [AkademikController::class, 'angketList'])->middleware('auth');
-Route::get('/angket/{int_kd_perkuliahan_d}', [AkademikController::class, 'isiAngket'])->middleware('auth');
-Route::post('/angket', [AkademikController::class, 'sendAngket'])->middleware('auth');
+Route::get('/kelas', [JadwalController::class, 'index'])->middleware(['auth', 'angket.checker']);
+Route::get('/khs', [AkademikController::class, 'khs'])->middleware(['auth', 'angket.checker']);
+Route::get('/krs', [AkademikController::class, 'krs'])->middleware(['auth', 'angket.checker']);
+Route::get('/transkrip', [AkademikController::class, 'transkrip'])->middleware(['auth', 'angket.checker']);
+Route::get('/angket', [AkademikController::class, 'angketList'])->middleware(['auth']);
+Route::get('/angket/{int_kd_perkuliahan_d}', [AkademikController::class, 'isiAngket'])->middleware(['auth']);
+Route::post('/angket', [AkademikController::class, 'sendAngket'])->middleware(['auth']);
 
