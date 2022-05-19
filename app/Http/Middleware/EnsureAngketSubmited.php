@@ -17,9 +17,11 @@ class EnsureAngketSubmited
     public function handle(Request $request, Closure $next)
     {
         $angketLeft = session('angketLeft');
-        if(count($angketLeft) > 0){
-            return redirect('/angket');
-        } else
+        if($angketLeft){
+            if(count($angketLeft) > 0){
+                return redirect('/angket');
+            }
+        }
         return $next($request);
     }
 }
