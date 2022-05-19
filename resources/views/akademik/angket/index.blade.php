@@ -17,10 +17,19 @@
         )
     </script>
   @endif
+  @if (\Session::has('angketSubmited'))
+    <script>
+        Swal.fire(
+          'Berhasil!',
+          '{!! \Session::get('angketNotfound') !!}',
+          'success'
+        )
+    </script>
+  @endif
   @if ($angketLefts == null)
     <script>
         Swal.fire(
-          'Angket telah terisi!',
+          'Angket Telah Terisi Semua!',
           'Terimakasih telah mengisi angket',
           'success'
         )

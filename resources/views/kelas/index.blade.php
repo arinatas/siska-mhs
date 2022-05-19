@@ -8,6 +8,15 @@
     style="background-image: url(/assets/media/patterns/header-bg.jpg)"
     class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled"
   >
+  @if (\Session::has('angketNotYet'))
+    <script>
+        Swal.fire(
+          '{!! \Session::get('angketNotYet') !!}',
+          'Masa pengisian angket belum dibuka!',
+          'warning'
+        )
+    </script>
+  @endif
     <!--begin::Main-->
     <!--begin::Root-->
     <div class="d-flex flex-column flex-root">
