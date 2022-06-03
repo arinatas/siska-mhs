@@ -233,7 +233,7 @@ class AkademikController extends Controller
         $nim = auth()->user()->username;
 
         // Panggil API untuk get list jadwal angket
-        $url = "http://localhost:8000/get_jadwal_by_id.php";
+        $url = "http://103.80.88.77:8000/get_jadwal_by_id.php";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -269,7 +269,7 @@ class AkademikController extends Controller
             ");
 
             // API ambil angket yg telah ter~isi
-            $url = "http://localhost:8000/get_pertanyaan.php?id_jadwal_edom=".$angketAktif->id_jadwal_edom."&nim=".$nim."&tahun_ajaran=".$angketAktif->tahun_ajaran."&semester=".$angketAktif->semester."";
+            $url = "http://103.80.88.77:8000/get_pertanyaan.php?id_jadwal_edom=".$angketAktif->id_jadwal_edom."&nim=".$nim."&tahun_ajaran=".$angketAktif->tahun_ajaran."&semester=".$angketAktif->semester."";
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -309,6 +309,7 @@ class AkademikController extends Controller
                 'tableNumber' => $tableNumber,
             ]);
         } else {
+            session()->forget(['angketLeft']);
             return redirect('/kelas')->with('angketNotYet', 'No schedule found!');
         }
 
@@ -328,7 +329,7 @@ class AkademikController extends Controller
         $semester = $getDataTime[0]->bol_semester;
         
         // API ambil pertanyaan untuk edom
-        $url = "http://localhost:8000/get_pertanyaan.php?id_jadwal_edom=3&nim=".$nim."&tahun_ajaran=".$tahunAjar."&semester=".$semester."";
+        $url = "http://103.80.88.77:8000/get_pertanyaan.php?id_jadwal_edom=3&nim=".$nim."&tahun_ajaran=".$tahunAjar."&semester=".$semester."";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -407,7 +408,7 @@ class AkademikController extends Controller
             ];
             
             //api post jawaban
-            $urlJawab = 'http://localhost:8000/post_jawaban.php';
+            $urlJawab = 'http://103.80.88.77:8000/post_jawaban.php';
             $postdataJawab = http_build_query($dataJawab);
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $urlJawab);
@@ -432,7 +433,7 @@ class AkademikController extends Controller
         );
 
         //api post jawaban
-        $url = 'http://localhost:8000/post_komentar.php';
+        $url = 'http://103.80.88.77:8000/post_komentar.php';
         $postdataKomentar = http_build_query($dataKomentar);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -453,7 +454,7 @@ class AkademikController extends Controller
             $dataJawab = $request->all();
 
             //api post jawaban
-            $urlJawab = 'http://localhost:8000/post_jawaban.php';
+            $urlJawab = 'http://103.80.88.77:8000/post_jawaban.php';
             $postdataJawab = http_build_query($dataJawab);
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $urlJawab);

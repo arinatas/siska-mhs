@@ -26,7 +26,7 @@ class LoginController extends Controller
         ]);
 
         // Panggil API untuk list jadwal angket
-        $url = "http://localhost:8000/get_jadwal_by_id.php";
+        $url = "http://103.80.88.77:8000/get_jadwal_by_id.php";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -72,7 +72,7 @@ class LoginController extends Controller
                     ");
 
                     // API ambil angket yg telah ter~isi
-                    $url = "http://localhost:8000/get_pertanyaan.php?id_jadwal_edom=".$angketAktif->id_jadwal_edom."&nim=".$user->username."&tahun_ajaran=".$angketAktif->tahun_ajaran."&semester=".$angketAktif->semester."";
+                    $url = "http://103.80.88.77:8000/get_pertanyaan.php?id_jadwal_edom=".$angketAktif->id_jadwal_edom."&nim=".$user->username."&tahun_ajaran=".$angketAktif->tahun_ajaran."&semester=".$angketAktif->semester."";
                     $ch = curl_init();
                     curl_setopt($ch, CURLOPT_URL, $url);
                     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
