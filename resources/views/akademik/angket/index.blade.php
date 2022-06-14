@@ -21,7 +21,7 @@
     <script>
         Swal.fire(
           'Berhasil!',
-          '{!! \Session::get('angketNotfound') !!}',
+          '{!! \Session::get('angketSubmited') !!}',
           'success'
         )
     </script>
