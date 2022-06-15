@@ -2,6 +2,16 @@
 
 @section('container')
 
+@if (\Session::has('angketDone'))
+<script>
+    Swal.fire(
+      '{!! \Session::get('angketDone') !!}',
+      'Terimakasih telah mengisi angket',
+      'success'
+    )
+</script>
+@endif
+
   <!--begin::Body-->
   <body
     id="kt_body"
@@ -13,6 +23,15 @@
         Swal.fire(
           '{!! \Session::get('angketNotYet') !!}',
           'Masa pengisian angket belum dibuka!',
+          'warning'
+        )
+    </script>
+  @endif
+  @if (\Session::has('falseAngket'))
+    <script>
+        Swal.fire(
+          'Ups!',
+          '{!! \Session::get('falseAngket') !!}',
           'warning'
         )
     </script>

@@ -26,7 +26,7 @@
         )
     </script>
   @endif
-  @if ($angketLefts == null)
+  {{-- @if ($angketLefts == null)
     <script>
         Swal.fire(
           'Angket Telah Terisi Semua!',
@@ -34,7 +34,7 @@
           'success'
         )
     </script>
-  @endif
+  @endif --}}
     <!--begin::Main-->
     <!--begin::Root-->
     <div class="d-flex flex-column flex-root">

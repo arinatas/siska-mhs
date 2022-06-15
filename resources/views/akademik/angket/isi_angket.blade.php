@@ -251,8 +251,8 @@
                               <label for="komentar">Kritik & Saran</label>
                             </div>
                             <div class="dflex mt-2" style="margin-left: 10px">
-                              <span type="button" onclick="NeutralComment()" class="badge rounded-pill bg-primary">Tidak ada kritik.</span>
-                              <span style="margin-left: 3px" type="button" onclick="PositiveComment()" class="badge rounded-pill bg-success">Dosen mengajar sudah baik.</span>
+                              {{-- <span type="button" onclick="NeutralComment()" class="badge rounded-pill bg-primary">Tidak ada kritik.</span> --}}
+                              {{-- <span style="margin-left: 3px" type="button" onclick="PositiveComment()" class="badge rounded-pill bg-success">Dosen mengajar sudah baik.</span> --}}
                             </div>
                             <div class="row mt-3">
                                 <div class="col text-end">
