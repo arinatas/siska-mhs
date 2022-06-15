@@ -106,8 +106,8 @@
                                 >
                                   <th class="min-w-50px px-3 rounded-start">Matakuliah</th>
                                   <th class="min-w-150px">Dosen</th>
-                                  <th class="min-w-100px">Waktu</th>
-                                  <th class="min-w-50px">SKS/SMT</th>
+                                  <th class="min-w-100px">Waktu & Ruangan</th>
+                                  <th class="min-w-50px">SKS & Semester</th>
                                   <th class="min-w-50px px-3 rounded-end">Action</th>
                                 </tr>
                               </thead>
@@ -123,11 +123,11 @@
                                   <td>
                                   A A Istri Ita Paramitha, S.Pd.,M.Kom.
                                   </td>
-                                  <td>
+                                  <td >
                                   Senin, 13.01 - 15.00 <br> (R.3B)
                                   </td>
                                   <td>
-                                    3/IV
+                                    3 (IV)
                                   </td>
                                   <td>
                                     <a href="">
@@ -249,7 +249,7 @@
                                               <th class="min-w-50px">Matakuliah (Kode MK)</th>
                                               <th class="min-w-100">Hari, Jam & Ruangan</th>
                                               <th class="min-w-50px">SKS & Semester</th>
-                                              <th class="min-w-10px">Action</th>
+                                              <th class="min-w-10px">Ambil</th>
                                             </tr>
                                           </thead>
                                           <!--end::Head-->
@@ -266,7 +266,9 @@
                                               {{ $transkrip->num_sks }}  (I)
                                               </td>
                                               <td>
-                                              <button>Ambil</button>
+												<div class="form-check">
+													<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+												  </div>
                                               </td>
                                             </tr>
                                             @endforeach
