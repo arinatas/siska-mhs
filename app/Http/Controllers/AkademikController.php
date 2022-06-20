@@ -150,30 +150,75 @@ class AkademikController extends Controller
         }
         //end
 
-        $khs = DB::select("
+        // $khs = DB::select("
+        // SELECT 
+        // d.str_kd_mk, 
+        // d.str_nm_mk, 
+        // e.num_sks, 
+        // if(f.str_na IS NOT NULL, f.str_na, 'F') as str_na, 
+        // if(
+        //     f.num_bobot IS NOT NULL, f.num_bobot, 
+        //     0.00
+        // ) AS num_bobot 
+        // FROM 
+        // aka_krs a 
+        // LEFT JOIN aka_perkuliahan_detail b ON a.int_kd_perkuliahan_d = b.int_kd_perkuliahan_d 
+        // LEFT JOIN aka_perkuliahan c ON b.str_kd_perkuliahan = c.str_kd_perkuliahan 
+        // LEFT JOIN aka_matakuliah d ON c.str_kd_mk = d.str_kd_mk 
+        // LEFT JOIN aka_matakuliah_detail e ON d.str_kd_mk = e.str_kd_mk 
+        // LEFT JOIN aka_nilai f ON a.int_kd_perkuliahan_d = f.int_kd_perkuliahan_d 
+        // AND a.str_id_nim = f.str_id_nim 
+        // WHERE 
+        // a.str_id_nim = '".$nim."' 
+        // AND a.str_thn_ajaran = '".$request->get('tahun')."' 
+        // AND a.bol_semester = '".$request->get('semester')."'
+        // GROUP BY 
+        // a.int_kd_perkuliahan_d");
+
+        //ambil nilai uts/uas/tugas/keaktifan
+        $nilaiEach = DB::select("
         SELECT 
-        d.str_kd_mk, 
-        d.str_nm_mk, 
-        e.num_sks, 
-        if(f.str_na IS NOT NULL, f.str_na, 'F') as str_na, 
-        if(
-            f.num_bobot IS NOT NULL, f.num_bobot, 
-            0.00
-        ) AS num_bobot 
+        aka_nilai.str_kd_mk,
+        aka_matakuliah.str_nm_mk,
+        aka_nilai.str_na,
+        aka_nilai.num_bobot,
+        aka_nilai_detail.dec_nilai,
+        uni_mtr_nilai.str_nm_mtr_nilai,
+        
+        (
+            SELECT 
+            aka_matakuliah_detail.num_sks 
+            FROM 
+            aka_matakuliah_detail 
+            WHERE 
+            aka_matakuliah_detail.str_kd_mk = aka_nilai.str_kd_mk 
+            AND aka_matakuliah_detail.str_kd_prodi = mhs_mahasiswa.str_kd_prodi
+        ) as num_sks 
         FROM 
-        aka_krs a 
-        LEFT JOIN aka_perkuliahan_detail b ON a.int_kd_perkuliahan_d = b.int_kd_perkuliahan_d 
-        LEFT JOIN aka_perkuliahan c ON b.str_kd_perkuliahan = c.str_kd_perkuliahan 
-        LEFT JOIN aka_matakuliah d ON c.str_kd_mk = d.str_kd_mk 
-        LEFT JOIN aka_matakuliah_detail e ON d.str_kd_mk = e.str_kd_mk 
-        LEFT JOIN aka_nilai f ON a.int_kd_perkuliahan_d = f.int_kd_perkuliahan_d 
-        AND a.str_id_nim = f.str_id_nim 
+        aka_nilai 
+        LEFT JOIN aka_nilai_detail ON aka_nilai.int_kd_nilai = aka_nilai_detail.int_kd_nilai 
+        LEFT join uni_mtr_nilai ON aka_nilai_detail.int_id_mtr_nilai = uni_mtr_nilai.int_id_mtr_nilai 
+        LEFT JOIN aka_matakuliah ON aka_nilai.str_kd_mk = aka_matakuliah.str_kd_mk 
+        LEFT JOIN mhs_mahasiswa ON aka_nilai.str_id_nim = mhs_mahasiswa.str_id_nim 
         WHERE 
-        a.str_id_nim = '".$nim."' 
-        AND a.str_thn_ajaran = '".$request->get('tahun')."' 
-        AND a.bol_semester = '".$request->get('semester')."'
-        GROUP BY 
-        a.int_kd_perkuliahan_d");
+        aka_nilai.str_id_nim = '".$nim."' 
+        AND aka_nilai.str_thn_ajaran = '".$request->get('tahun')."' 
+        AND aka_nilai.bol_semester = '".$request->get('semester')."'
+        ");
+
+        $nilai=array();
+        
+        // separate data uts/uas/tugas/keaktifan
+        foreach($nilaiEach as $value){
+            $nilai[$value->str_kd_mk]['kode_mk']=$value->str_kd_mk;
+            $nilai[$value->str_kd_mk]['matkul']=$value->str_nm_mk;
+            $nilai[$value->str_kd_mk]['grade']=$value->str_na;
+            $nilai[$value->str_kd_mk]['bobot']=$value->num_bobot;
+            $nilai[$value->str_kd_mk]['sks']=$value->num_sks;
+            $nilai[$value->str_kd_mk][$value->str_nm_mtr_nilai]=$value->dec_nilai;
+        }
+        // change index from text (kode perkuliahan) to index        
+        $nilai = array_values($nilai);
 
         // untuk penomeran tabel
         $totalMatkul = 1;
@@ -185,10 +230,10 @@ class AkademikController extends Controller
         $allSks = [];
         $totalBobot = [];
 
-        foreach ($khs as $value)
+        foreach ($nilai as $value)
         {
-            $allSks[] = $value->num_sks;
-            $totalBobot[] = $value->num_bobot * $value->num_sks;
+            $allSks[] = $value["sks"];
+            $totalBobot[] = $value["bobot"] * $value["sks"];
         }
 
         // cek ketika dapat bobot dan sks dari tahun ajaran dan smt
@@ -215,7 +260,7 @@ class AkademikController extends Controller
             'selectedTahun' => $selectedTahun,
             'semesters' => $semesterUniq,
             'selectedSmt' => $selectedSmt,
-            'khs' => $khs,
+            'khs' => $nilai,
             'totalMatkul' => $totalMatkul,
             'allSks' => $allSks,
             'totalIps' => $totalIps,
@@ -238,7 +283,7 @@ class AkademikController extends Controller
         $semesterNow = $getTahunAjaran[0]->bol_semester_krs;
 
         // Panggil API untuk mendapatkan jadwal angket
-        $url = "http://27.112.79.162:8000/get_jadwal_by_request.php?semester=".$semesterNow."&tahun_ajaran=".$tahunNow."";
+        $url = "http://103.80.88.77:8000/get_jadwal_by_request.php?semester=".$semesterNow."&tahun_ajaran=".$tahunNow."";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -266,7 +311,7 @@ class AkademikController extends Controller
             ");
 
             // API ambil angket yg telah ter~isi
-            $url = "http://27.112.79.162:8000/get_pertanyaan.php?id_jadwal_edom=".$response->data[0]->id_jadwal_edom."&nim=".$nim."&tahun_ajaran=".$response->data[0]->tahun_ajaran."&semester=".$response->data[0]->semester."";
+            $url = "http://103.80.88.77:8000/get_pertanyaan.php?id_jadwal_edom=".$response->data[0]->id_jadwal_edom."&nim=".$nim."&tahun_ajaran=".$response->data[0]->tahun_ajaran."&semester=".$response->data[0]->semester."";
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -339,7 +384,7 @@ class AkademikController extends Controller
         $semester = $getDataTime[0]->bol_semester;
 
         // Panggil API untuk mendapatkan jadwal angket
-        $url = "http://27.112.79.162:8000/get_jadwal_by_request.php?semester=".$semester."&tahun_ajaran=".$tahunAjar."";
+        $url = "http://103.80.88.77:8000/get_jadwal_by_request.php?semester=".$semester."&tahun_ajaran=".$tahunAjar."";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -350,7 +395,7 @@ class AkademikController extends Controller
 
         if ($response->status == true){
             // API ambil pertanyaan untuk edom
-            $url = "http://27.112.79.162:8000/get_pertanyaan.php?id_jadwal_edom=".$response->data[0]->id_jadwal_edom."&nim=".$nim."&tahun_ajaran=".$tahunAjar."&semester=".$semester."";
+            $url = "http://103.80.88.77:8000/get_pertanyaan.php?id_jadwal_edom=".$response->data[0]->id_jadwal_edom."&nim=".$nim."&tahun_ajaran=".$tahunAjar."&semester=".$semester."";
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -403,7 +448,7 @@ class AkademikController extends Controller
             $dataJawab = $request->all();
 
             //api post jawaban
-            $urlJawab = 'http://27.112.79.162:8000/post_jawaban.php';
+            $urlJawab = 'http://103.80.88.77:8000/post_jawaban.php';
             $postdataJawab = http_build_query($dataJawab);
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $urlJawab);

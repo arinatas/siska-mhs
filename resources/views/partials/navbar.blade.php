@@ -83,12 +83,13 @@
                       id="#kt_header_menu"
                       data-kt-menu="true"
                     >
+                    {{-- here show & active harus di handle untuk kelihatan aktif --}}
                       <div
                         data-kt-menu-placement="bottom-start"
-                        class="menu-item here show menu-lg-down-accordion me-lg-1"
+                        class="menu-item {{ ($active === "Dashboard") ? 'here show' : '' }} menu-lg-down-accordion me-lg-1"
                       >
                         <a
-                          class="menu-link active py-3"
+                          class="menu-link py-3"
                           href="#"
                         >
                           <span class="menu-title">Dashboard</span>
@@ -97,7 +98,7 @@
                       </div>
                       <div
                         data-kt-menu-placement="bottom-start"
-                        class="menu-item here show menu-lg-down-accordion me-lg-1"
+                        class="menu-item {{ ($active === "Kelas") ? 'here show' : '' }} menu-lg-down-accordion me-lg-1"
                       >
                         <a
                           class="menu-link py-3"
@@ -110,7 +111,7 @@
                       <div
                         data-kt-menu-trigger="click"
                         data-kt-menu-placement="bottom-start"
-                        class="menu-item menu-lg-down-accordion me-lg-1"
+                        class="menu-item {{ ($active === "Akademik") ? 'here show' : '' }} menu-lg-down-accordion me-lg-1"
                       >
                         <span class="menu-link py-3">
                           <span class="menu-title">Akademik</span>
@@ -299,7 +300,7 @@
                       <div
                         data-kt-menu-trigger="click"
                         data-kt-menu-placement="bottom-start"
-                        class="menu-item menu-lg-down-accordion me-lg-1"
+                        class="menu-item {{ ($active === "Kemahasiswaan") ? 'here show' : '' }} menu-lg-down-accordion me-lg-1"
                       >
                         <span class="menu-link py-3">
                           <span class="menu-title">Kemahasiswaan</span>
@@ -495,7 +496,7 @@
                       <div
                         data-kt-menu-trigger="click"
                         data-kt-menu-placement="bottom-start"
-                        class="menu-item menu-lg-down-accordion me-lg-1"
+                        class="menu-item {{ ($active === "Administrasi") ? 'here show' : '' }} menu-lg-down-accordion me-lg-1"
                       >
                         <span class="menu-link py-3">
                           <span class="menu-title">Administrasi</span>

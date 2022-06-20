@@ -67,7 +67,7 @@ class JadwalController extends Controller
         //mengembalikan nilai ke tampilan
         return view('kelas.index', [
             'title' => 'Kelas',
-            'active' => 'kelas',
+            'active' => 'Kelas',
             // get jadwal
             'schedules' =>  $schedules,
             'presensis' => $mhsPresensi

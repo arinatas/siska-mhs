@@ -236,11 +236,14 @@
                                   class="fw-bolder fs-6 text-gray-800 text-center border-0 bg-light"
                                 >
                                   <th class="min-w-50px rounded-start">No</th>
-                                  <th class="min-w-100px">Kode MK</th>
-                                  <th class="min-w-150px">Matakuliah</th>
+                                  <th class="min-w-100px">Matakuliah & Kode MK</th>
+                                  <th class="min-w-50px">Tugas</th>
+                                  <th class="min-w-50px">Keaktifan</th>
+                                  <th class="min-w-50px">UTS</th>
+                                  <th class="min-w-50px">UAS</th>
                                   <th class="min-w-50px">SKS</th>
-                                  <th class="min-w-50px">Grade</th>
-                                  <th class="min-w-50px rounded-end">Bobot</th>
+                                  <th class="min-w-50px">Bobot</th>
+                                  <th class="min-w-50px rounded-end">Grade</th>
                                 </tr>
                               </thead>
                               <!--end::Table head-->
@@ -252,27 +255,31 @@
                                     class="text-center"
                                   >
                                     <td>{{ $totalMatkul++ }}</td>
-                                    <td>{{ $value->str_kd_mk }}</td>
-                                    <td>{{ $value->str_nm_mk }}</td>
-                                    <td>{{ $value->num_sks }}</td>
-                                    @if($value->str_na == 'A' || $value->str_na == 'A-')
+                                    <td>{{ $value["matkul"] }} <b>({{ $value["kode_mk"] }})</b></td>
+                                    <td>{{ (int)$value["Tugas"] }}</td>
+                                    <td>{{ (int)$value["Keaktifan"] }}</td>
+                                    <td>{{ (int)$value["UTS"] }}</td>
+                                    <td>{{ (int)$value["UAS"] }}</td>
+                                    <td>{{ $value["sks"] }}</td>
+                                    <td>{{ $value["bobot"] }}</td>
+                                    @if($value["grade"] == 'A' || $value["grade"] == 'A-')
                                     <td>
-                                      <span class="badge rounded-pill bg-success">{{ $value->str_na }}</span>
+                                      <span class="badge rounded-pill bg-success">{{ $value["grade"] }}</span>
                                     </td>
-                                    @elseif($value->str_na == 'B+' || $value->str_na == 'B' || $value->str_na == 'B-')
+                                    @elseif($value["grade"] == 'B+' || $value["grade"] == 'B' || $value["grade"] == 'B-')
                                     <td>
-                                      <span class="badge rounded-pill bg-primary">{{ $value->str_na }}</span>
+                                      <span class="badge rounded-pill bg-primary">{{ $value["grade"] }}</span>
                                     </td>
-                                    @elseif($value->str_na == 'C+' || $value->str_na == 'C')
+                                    @elseif($value["grade"] == 'C+' || $value["grade"] == 'C')
                                     <td>
-                                      <span class="badge rounded-pill bg-warning">{{ $value->str_na }}</span>
+                                      <span class="badge rounded-pill bg-warning">{{ $value["grade"] }}</span>
                                     </td>
                                     @else
                                     <td>
-                                      <span class="badge rounded-pill bg-danger">{{ $value->str_na }}</span>
+                                      <span class="badge rounded-pill bg-danger">{{ $value["grade"] }}</span>
                                     </td>
                                     @endif
-                                    <td>{{ $value->num_bobot }}</td>
+                                    
                                   </tr>
                                 </tbody>
                                 @endforeach
