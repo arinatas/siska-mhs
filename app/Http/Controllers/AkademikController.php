@@ -176,50 +176,49 @@ class AkademikController extends Controller
         a.int_kd_perkuliahan_d");
 
         //ambil nilai uts/uas/tugas/keaktifan
-        $nilaiEach = DB::select("
-        SELECT 
-        aka_nilai.str_id_nim,
-        aka_nilai.str_kd_mk,
-        aka_matakuliah.str_nm_mk,
-        aka_nilai.str_na,
-        aka_nilai.num_bobot,
-        aka_nilai_detail.dec_nilai,
-        uni_mtr_nilai.str_nm_mtr_nilai,
-        
-        (
-            SELECT 
-            aka_matakuliah_detail.num_sks 
-            FROM 
-            aka_matakuliah_detail 
-            WHERE 
-            aka_matakuliah_detail.str_kd_mk = aka_nilai.str_kd_mk 
-            AND aka_matakuliah_detail.str_kd_prodi = mhs_mahasiswa.str_kd_prodi
-        ) as num_sks 
-        FROM 
-        aka_nilai 
-        LEFT JOIN aka_nilai_detail ON aka_nilai.int_kd_nilai = aka_nilai_detail.int_kd_nilai 
-        LEFT join uni_mtr_nilai ON aka_nilai_detail.int_id_mtr_nilai = uni_mtr_nilai.int_id_mtr_nilai 
-        LEFT JOIN aka_matakuliah ON aka_nilai.str_kd_mk = aka_matakuliah.str_kd_mk 
-        LEFT JOIN mhs_mahasiswa ON aka_nilai.str_id_nim = mhs_mahasiswa.str_id_nim 
-        WHERE 
-        aka_nilai.str_id_nim = '".$nim."' 
-        AND aka_nilai.str_thn_ajaran = '".$request->get('tahun')."' 
-        AND aka_nilai.bol_semester = '".$request->get('semester')."'
-        ");
+            // $nilaiEach = DB::select("
+            // SELECT 
+            // aka_nilai.str_id_nim,
+            // aka_nilai.str_kd_mk,
+            // aka_matakuliah.str_nm_mk,
+            // aka_nilai.str_na,
+            // aka_nilai.num_bobot,
+            // aka_nilai_detail.dec_nilai,
+            // uni_mtr_nilai.str_nm_mtr_nilai, 
+            // (
+            //     SELECT 
+            //     aka_matakuliah_detail.num_sks 
+            //     FROM 
+            //     aka_matakuliah_detail 
+            //     WHERE 
+            //     aka_matakuliah_detail.str_kd_mk = aka_nilai.str_kd_mk 
+            //     AND aka_matakuliah_detail.str_kd_prodi = mhs_mahasiswa.str_kd_prodi
+            // ) as num_sks 
+            // FROM 
+            // aka_nilai 
+            // LEFT JOIN aka_nilai_detail ON aka_nilai.int_kd_nilai = aka_nilai_detail.int_kd_nilai 
+            // LEFT join uni_mtr_nilai ON aka_nilai_detail.int_id_mtr_nilai = uni_mtr_nilai.int_id_mtr_nilai 
+            // LEFT JOIN aka_matakuliah ON aka_nilai.str_kd_mk = aka_matakuliah.str_kd_mk 
+            // LEFT JOIN mhs_mahasiswa ON aka_nilai.str_id_nim = mhs_mahasiswa.str_id_nim 
+            // WHERE 
+            // aka_nilai.str_id_nim = '".$nim."' 
+            // AND aka_nilai.str_thn_ajaran = '".$request->get('tahun')."' 
+            // AND aka_nilai.bol_semester = '".$request->get('semester')."'
+            // ");
 
-        $nilai=array();
-        
-        // separate data uts/uas/tugas/keaktifan
-        foreach($nilaiEach as $value){
-            $nilai[$value->str_kd_mk]['kode_mk']=$value->str_kd_mk;
-            $nilai[$value->str_kd_mk]['matkul']=$value->str_nm_mk;
-            $nilai[$value->str_kd_mk]['grade']=$value->str_na;
-            $nilai[$value->str_kd_mk]['bobot']=$value->num_bobot;
-            $nilai[$value->str_kd_mk]['sks']=$value->num_sks;
-            $nilai[$value->str_kd_mk][$value->str_nm_mtr_nilai]=$value->dec_nilai;
-        }
-        // change index from text (kode perkuliahan) to index        
-        $nilai = array_values($nilai);
+            // $nilai=array();
+            
+            // // separate data uts/uas/tugas/keaktifan
+            // foreach($nilaiEach as $value){
+            //     $nilai[$value->str_kd_mk]['kode_mk']=$value->str_kd_mk;
+            //     $nilai[$value->str_kd_mk]['matkul']=$value->str_nm_mk;
+            //     $nilai[$value->str_kd_mk]['grade']=$value->str_na;
+            //     $nilai[$value->str_kd_mk]['bobot']=$value->num_bobot;
+            //     $nilai[$value->str_kd_mk]['sks']=$value->num_sks;
+            //     $nilai[$value->str_kd_mk][$value->str_nm_mtr_nilai]=$value->dec_nilai;
+            // }
+            // // change index from text (kode perkuliahan) to index        
+            // $nilai = array_values($nilai);
 
         // untuk penomeran tabel
         $totalMatkul = 1;
