@@ -150,34 +150,35 @@ class AkademikController extends Controller
         }
         //end
 
-        // $khs = DB::select("
-        // SELECT 
-        // d.str_kd_mk, 
-        // d.str_nm_mk, 
-        // e.num_sks, 
-        // if(f.str_na IS NOT NULL, f.str_na, 'F') as str_na, 
-        // if(
-        //     f.num_bobot IS NOT NULL, f.num_bobot, 
-        //     0.00
-        // ) AS num_bobot 
-        // FROM 
-        // aka_krs a 
-        // LEFT JOIN aka_perkuliahan_detail b ON a.int_kd_perkuliahan_d = b.int_kd_perkuliahan_d 
-        // LEFT JOIN aka_perkuliahan c ON b.str_kd_perkuliahan = c.str_kd_perkuliahan 
-        // LEFT JOIN aka_matakuliah d ON c.str_kd_mk = d.str_kd_mk 
-        // LEFT JOIN aka_matakuliah_detail e ON d.str_kd_mk = e.str_kd_mk 
-        // LEFT JOIN aka_nilai f ON a.int_kd_perkuliahan_d = f.int_kd_perkuliahan_d 
-        // AND a.str_id_nim = f.str_id_nim 
-        // WHERE 
-        // a.str_id_nim = '".$nim."' 
-        // AND a.str_thn_ajaran = '".$request->get('tahun')."' 
-        // AND a.bol_semester = '".$request->get('semester')."'
-        // GROUP BY 
-        // a.int_kd_perkuliahan_d");
+        $khs = DB::select("
+        SELECT 
+        d.str_kd_mk, 
+        d.str_nm_mk, 
+        e.num_sks, 
+        if(f.str_na IS NOT NULL, f.str_na, 'F') as str_na, 
+        if(
+            f.num_bobot IS NOT NULL, f.num_bobot, 
+            0.00
+        ) AS num_bobot 
+        FROM 
+        aka_krs a 
+        LEFT JOIN aka_perkuliahan_detail b ON a.int_kd_perkuliahan_d = b.int_kd_perkuliahan_d 
+        LEFT JOIN aka_perkuliahan c ON b.str_kd_perkuliahan = c.str_kd_perkuliahan 
+        LEFT JOIN aka_matakuliah d ON c.str_kd_mk = d.str_kd_mk 
+        LEFT JOIN aka_matakuliah_detail e ON d.str_kd_mk = e.str_kd_mk 
+        LEFT JOIN aka_nilai f ON a.int_kd_perkuliahan_d = f.int_kd_perkuliahan_d 
+        AND a.str_id_nim = f.str_id_nim 
+        WHERE 
+        a.str_id_nim = '".$nim."' 
+        AND a.str_thn_ajaran = '".$request->get('tahun')."' 
+        AND a.bol_semester = '".$request->get('semester')."'
+        GROUP BY 
+        a.int_kd_perkuliahan_d");
 
         //ambil nilai uts/uas/tugas/keaktifan
         $nilaiEach = DB::select("
         SELECT 
+        aka_nilai.str_id_nim,
         aka_nilai.str_kd_mk,
         aka_matakuliah.str_nm_mk,
         aka_nilai.str_na,
@@ -230,10 +231,10 @@ class AkademikController extends Controller
         $allSks = [];
         $totalBobot = [];
 
-        foreach ($nilai as $value)
+        foreach ($khs as $value)
         {
-            $allSks[] = $value["sks"];
-            $totalBobot[] = $value["bobot"] * $value["sks"];
+            $allSks[] = $value->num_sks;
+            $totalBobot[] = $value->num_bobot * $value->num_sks;
         }
 
         // cek ketika dapat bobot dan sks dari tahun ajaran dan smt
@@ -260,7 +261,7 @@ class AkademikController extends Controller
             'selectedTahun' => $selectedTahun,
             'semesters' => $semesterUniq,
             'selectedSmt' => $selectedSmt,
-            'khs' => $nilai,
+            'khs' => $khs,
             'totalMatkul' => $totalMatkul,
             'allSks' => $allSks,
             'totalIps' => $totalIps,
