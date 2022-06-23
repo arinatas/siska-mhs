@@ -2,16 +2,6 @@
 
 @section('container')
 
-@if (\Session::has('angketDone'))
-<script>
-    Swal.fire(
-      '{!! \Session::get('angketDone') !!}',
-      'Terimakasih telah mengisi angket',
-      'success'
-    )
-</script>
-@endif
-
   <!--begin::Body-->
   <body
     id="kt_body"
@@ -35,6 +25,15 @@
           'warning'
         )
     </script>
+  @endif
+  @if (\Session::has('angketDone'))
+  <script>
+      Swal.fire(
+        '{!! \Session::get('angketDone') !!}',
+        'Terimakasih telah mengisi angket',
+        'success'
+      )
+  </script>
   @endif
     <!--begin::Main-->
     <!--begin::Root-->
@@ -235,76 +234,414 @@
                           <!--begin::Table container-->
                           <div class="table-responsive">
                             {{-- cek tabel presensi jika kosong --}}
-                            @if ($presensis)
-                            <!--begin::Table-->
-                            <table
-                              class="table  table-row-gray-300 align-middle gs-0 gy-4"
-                            >
-                              <!--begin::Table head-->
-                              <thead>
-                                <tr
-                                  class="fw-bolder fs-6 text-gray-800 text-center border-0 bg-light"
-                                >
-                                  <th class="min-w-150px px-3 rounded-start">Matakuliah</th>
-                                  <th class="min-w-50px">P01</th>
-                                  <th class="min-w-50px">P02</th>
-                                  <th class="min-w-50px">P03</th>
-                                  <th class="min-w-50px">P04</th>
-                                  <th class="min-w-50px">P05</th>
-                                  <th class="min-w-50px">P06</th>
-                                  <th class="min-w-50px">P07</th>
-                                  <th class="min-w-50px">P08</th>
-                                  <th class="min-w-50px">P09</th>
-                                  <th class="min-w-50px">P10</th>
-                                  <th class="min-w-50px">P11</th>
-                                  <th class="min-w-50px">P12</th>
-                                  <th class="min-w-50px">P13</th>
-                                  <th class="min-w-50px px-3 rounded-end">P14</th>
-                                </tr>
-                              </thead>
-                              <!--end::Table head-->
-                              <!--begin::Table body-->
-							              @foreach ($presensis as $presensi)
-                              <tbody class="border-bottom border">
-                                <tr
-                                  class="text-center"
-                                >
-                                  <td class="min-w-150px">
-                                    {{ $presensi->str_nm_mk }}
-                                  </td>
-                                  @for ($i = 1; $i <= 14; $i++)
-                                    {{-- cek apakah mhs punya kehadiran --}}
-                                    @if(array_key_exists($i, $presensi->kehadiran))
-                                      {{-- kalo nilai "h" dimunculkan --}}
-                                      @if($presensi->kehadiran[$i]->num_stat_pertemuan == 'H')
-                                      <td>
-                                        <span class="badge rounded-pill bg-primary">H</span>
-                                      </td>
-                                      @elseif($presensi->kehadiran[$i]->num_stat_pertemuan == 'A')
-                                      <td>
-                                        <span class="badge rounded-pill bg-danger">A</span>
-                                      </td>
-                                      @elseif($presensi->kehadiran[$i]->num_stat_pertemuan == 'I')
-                                      <td>
-                                        <span class="badge rounded-pill bg-warning">I</span>
-                                      </td>
-                                      @elseif($presensi->kehadiran[$i]->num_stat_pertemuan == 'S')
-                                      <td>
-                                        <span class="badge rounded-pill bg-success">S</span>
-                                      </td>
-                                      @else
-                                      <td>-</td>
+                            @if ($presences && $schedules)
+                              <!--begin::Table-->
+                              <table
+                                class="table  table-row-gray-300 align-middle gs-0 gy-4"
+                              >
+                                <!--begin::Table head-->
+                                <thead>
+                                  <tr
+                                    class="fw-bolder fs-6 text-gray-800 text-center border-0 bg-light"
+                                  >
+                                    <th class="min-w-150px px-3 rounded-start">Matakuliah</th>
+                                    <th class="min-w-50px">P1</th>
+                                    <th class="min-w-50px">P2</th>
+                                    <th class="min-w-50px">P3</th>
+                                    <th class="min-w-50px">P4</th>
+                                    <th class="min-w-50px">P5</th>
+                                    <th class="min-w-50px">P6</th>
+                                    <th class="min-w-50px">P7</th>
+                                    <th class="min-w-50px">UTS</th>
+                                    <th class="min-w-50px">P8</th>
+                                    <th class="min-w-50px">P9</th>
+                                    <th class="min-w-50px">P10</th>
+                                    <th class="min-w-50px">P11</th>
+                                    <th class="min-w-50px">P12</th>
+                                    <th class="min-w-50px">P13</th>
+                                    <th class="min-w-50px">P14</th>
+                                    <th class="min-w-50px px-3 rounded-end">UAS</th>
+                                  </tr>
+                                </thead>
+                                <!--end::Table head-->
+                                <!--begin::Table body-->
+                              @foreach ($presences as $presensi)
+                                <tbody class="border-bottom border">
+                                  <tr
+                                    class="text-center"
+                                  >
+                                    <td class="min-w-150px">
+                                      {{ $presensi->str_nm_mk }}
+                                    </td>
+                                    {{-- presensi if (banyak) --}}
+                                      @if ($presensi->p1 == 1)
+                                        <td>
+                                          <span class="badge rounded-pill bg-primary">H</span>
+                                        </td>
+                                        @elseif($presensi->p1 == 2)
+                                        <td>
+                                          <span class="badge rounded-pill bg-danger">A</span>
+                                        </td>
+                                        @elseif($presensi->p1 == 3)
+                                        <td>
+                                          <span class="badge rounded-pill bg-warning">I</span>
+                                        </td>
+                                        @elseif($presensi->p1 == 4)
+                                        <td>
+                                          <span class="badge rounded-pill bg-success">S</span>
+                                        </td>
+                                        @else
+                                        <td>-</td>
                                       @endif
-                                    @else
-                                    <td>-</td>
-                                    @endif
-                                  @endfor
-                                </tr>
-                              </tbody>
-							                @endforeach
-                              <!--end::Table body-->
-                            </table>
-                            <!--end::Table-->
+                                      @if ($presensi->p2 == 1)
+                                        <td>
+                                          <span class="badge rounded-pill bg-primary">H</span>
+                                        </td>
+                                        @elseif($presensi->p2 == 2)
+                                        <td>
+                                          <span class="badge rounded-pill bg-danger">A</span>
+                                        </td>
+                                        @elseif($presensi->p2 == 3)
+                                        <td>
+                                          <span class="badge rounded-pill bg-warning">I</span>
+                                        </td>
+                                        @elseif($presensi->p2 == 4)
+                                        <td>
+                                          <span class="badge rounded-pill bg-success">S</span>
+                                        </td>
+                                        @else
+                                        <td>-</td>
+                                      @endif
+                                      @if ($presensi->p3 == 1)
+                                        <td>
+                                          <span class="badge rounded-pill bg-primary">H</span>
+                                        </td>
+                                        @elseif($presensi->p3 == 2)
+                                        <td>
+                                          <span class="badge rounded-pill bg-danger">A</span>
+                                        </td>
+                                        @elseif($presensi->p3 == 3)
+                                        <td>
+                                          <span class="badge rounded-pill bg-warning">I</span>
+                                        </td>
+                                        @elseif($presensi->p3 == 4)
+                                        <td>
+                                          <span class="badge rounded-pill bg-success">S</span>
+                                        </td>
+                                        @else
+                                        <td>-</td>
+                                      @endif
+                                      @if ($presensi->p4 == 1)
+                                        <td>
+                                          <span class="badge rounded-pill bg-primary">H</span>
+                                        </td>
+                                        @elseif($presensi->p4 == 2)
+                                        <td>
+                                          <span class="badge rounded-pill bg-danger">A</span>
+                                        </td>
+                                        @elseif($presensi->p4 == 3)
+                                        <td>
+                                          <span class="badge rounded-pill bg-warning">I</span>
+                                        </td>
+                                        @elseif($presensi->p4 == 4)
+                                        <td>
+                                          <span class="badge rounded-pill bg-success">S</span>
+                                        </td>
+                                        @else
+                                        <td>-</td>
+                                      @endif
+                                      @if ($presensi->p5 == 1)
+                                        <td>
+                                          <span class="badge rounded-pill bg-primary">H</span>
+                                        </td>
+                                        @elseif($presensi->p5 == 2)
+                                        <td>
+                                          <span class="badge rounded-pill bg-danger">A</span>
+                                        </td>
+                                        @elseif($presensi->p5 == 3)
+                                        <td>
+                                          <span class="badge rounded-pill bg-warning">I</span>
+                                        </td>
+                                        @elseif($presensi->p5 == 4)
+                                        <td>
+                                          <span class="badge rounded-pill bg-success">S</span>
+                                        </td>
+                                        @else
+                                        <td>-</td>
+                                      @endif
+                                      @if ($presensi->p6 == 1)
+                                        <td>
+                                          <span class="badge rounded-pill bg-primary">H</span>
+                                        </td>
+                                        @elseif($presensi->p6 == 2)
+                                        <td>
+                                          <span class="badge rounded-pill bg-danger">A</span>
+                                        </td>
+                                        @elseif($presensi->p6 == 3)
+                                        <td>
+                                          <span class="badge rounded-pill bg-warning">I</span>
+                                        </td>
+                                        @elseif($presensi->p6 == 4)
+                                        <td>
+                                          <span class="badge rounded-pill bg-success">S</span>
+                                        </td>
+                                        @else
+                                        <td>-</td>
+                                      @endif
+                                      @if ($presensi->p7 == 1)
+                                        <td>
+                                          <span class="badge rounded-pill bg-primary">H</span>
+                                        </td>
+                                        @elseif($presensi->p7 == 2)
+                                        <td>
+                                          <span class="badge rounded-pill bg-danger">A</span>
+                                        </td>
+                                        @elseif($presensi->p7 == 3)
+                                        <td>
+                                          <span class="badge rounded-pill bg-warning">I</span>
+                                        </td>
+                                        @elseif($presensi->p7 == 4)
+                                        <td>
+                                          <span class="badge rounded-pill bg-success">S</span>
+                                        </td>
+                                        @else
+                                        <td>-</td>
+                                      @endif
+                                      @if ($presensi->p8 == 1)
+                                        <td>
+                                          <span class="badge rounded-pill bg-primary">H</span>
+                                        </td>
+                                        @elseif($presensi->p8 == 2)
+                                        <td>
+                                          <span class="badge rounded-pill bg-danger">A</span>
+                                        </td>
+                                        @elseif($presensi->p8 == 3)
+                                        <td>
+                                          <span class="badge rounded-pill bg-warning">I</span>
+                                        </td>
+                                        @elseif($presensi->p8 == 4)
+                                        <td>
+                                          <span class="badge rounded-pill bg-success">S</span>
+                                        </td>
+                                        @else
+                                        <td>-</td>
+                                      @endif
+                                      @if ($presensi->p9 == 1)
+                                        <td>
+                                          <span class="badge rounded-pill bg-primary">H</span>
+                                        </td>
+                                        @elseif($presensi->p9 == 2)
+                                        <td>
+                                          <span class="badge rounded-pill bg-danger">A</span>
+                                        </td>
+                                        @elseif($presensi->p9 == 3)
+                                        <td>
+                                          <span class="badge rounded-pill bg-warning">I</span>
+                                        </td>
+                                        @elseif($presensi->p9 == 4)
+                                        <td>
+                                          <span class="badge rounded-pill bg-success">S</span>
+                                        </td>
+                                        @else
+                                        <td>-</td>
+                                      @endif
+                                      @if ($presensi->p10 == 1)
+                                        <td>
+                                          <span class="badge rounded-pill bg-primary">H</span>
+                                        </td>
+                                        @elseif($presensi->p10 == 2)
+                                        <td>
+                                          <span class="badge rounded-pill bg-danger">A</span>
+                                        </td>
+                                        @elseif($presensi->p10 == 3)
+                                        <td>
+                                          <span class="badge rounded-pill bg-warning">I</span>
+                                        </td>
+                                        @elseif($presensi->p10 == 4)
+                                        <td>
+                                          <span class="badge rounded-pill bg-success">S</span>
+                                        </td>
+                                        @else
+                                        <td>-</td>
+                                      @endif
+                                      @if ($presensi->p11 == 1)
+                                        <td>
+                                          <span class="badge rounded-pill bg-primary">H</span>
+                                        </td>
+                                        @elseif($presensi->p11 == 2)
+                                        <td>
+                                          <span class="badge rounded-pill bg-danger">A</span>
+                                        </td>
+                                        @elseif($presensi->p11 == 3)
+                                        <td>
+                                          <span class="badge rounded-pill bg-warning">I</span>
+                                        </td>
+                                        @elseif($presensi->p11 == 4)
+                                        <td>
+                                          <span class="badge rounded-pill bg-success">S</span>
+                                        </td>
+                                        @else
+                                        <td>-</td>
+                                      @endif
+                                      @if ($presensi->p12 == 1)
+                                        <td>
+                                          <span class="badge rounded-pill bg-primary">H</span>
+                                        </td>
+                                        @elseif($presensi->p12 == 2)
+                                        <td>
+                                          <span class="badge rounded-pill bg-danger">A</span>
+                                        </td>
+                                        @elseif($presensi->p12 == 3)
+                                        <td>
+                                          <span class="badge rounded-pill bg-warning">I</span>
+                                        </td>
+                                        @elseif($presensi->p12 == 4)
+                                        <td>
+                                          <span class="badge rounded-pill bg-success">S</span>
+                                        </td>
+                                        @else
+                                        <td>-</td>
+                                      @endif
+                                      @if ($presensi->p13 == 1)
+                                        <td>
+                                          <span class="badge rounded-pill bg-primary">H</span>
+                                        </td>
+                                        @elseif($presensi->p13 == 2)
+                                        <td>
+                                          <span class="badge rounded-pill bg-danger">A</span>
+                                        </td>
+                                        @elseif($presensi->p13 == 3)
+                                        <td>
+                                          <span class="badge rounded-pill bg-warning">I</span>
+                                        </td>
+                                        @elseif($presensi->p13 == 4)
+                                        <td>
+                                          <span class="badge rounded-pill bg-success">S</span>
+                                        </td>
+                                        @else
+                                        <td>-</td>
+                                      @endif
+                                      @if ($presensi->p14 == 1)
+                                        <td>
+                                          <span class="badge rounded-pill bg-primary">H</span>
+                                        </td>
+                                        @elseif($presensi->p14 == 2)
+                                        <td>
+                                          <span class="badge rounded-pill bg-danger">A</span>
+                                        </td>
+                                        @elseif($presensi->p14 == 3)
+                                        <td>
+                                          <span class="badge rounded-pill bg-warning">I</span>
+                                        </td>
+                                        @elseif($presensi->p14 == 4)
+                                        <td>
+                                          <span class="badge rounded-pill bg-success">S</span>
+                                        </td>
+                                        @else
+                                        <td>-</td>
+                                      @endif
+                                      @if ($presensi->p15 == 1)
+                                        <td>
+                                          <span class="badge rounded-pill bg-primary">H</span>
+                                        </td>
+                                        @elseif($presensi->p15 == 2)
+                                        <td>
+                                          <span class="badge rounded-pill bg-danger">A</span>
+                                        </td>
+                                        @elseif($presensi->p15 == 3)
+                                        <td>
+                                          <span class="badge rounded-pill bg-warning">I</span>
+                                        </td>
+                                        @elseif($presensi->p15 == 4)
+                                        <td>
+                                          <span class="badge rounded-pill bg-success">S</span>
+                                        </td>
+                                        @else
+                                        <td>-</td>
+                                      @endif
+                                      @if ($presensi->p16 == 1)
+                                        <td>
+                                          <span class="badge rounded-pill bg-primary">H</span>
+                                        </td>
+                                        @elseif($presensi->p16 == 2)
+                                        <td>
+                                          <span class="badge rounded-pill bg-danger">A</span>
+                                        </td>
+                                        @elseif($presensi->p16 == 3)
+                                        <td>
+                                          <span class="badge rounded-pill bg-warning">I</span>
+                                        </td>
+                                        @elseif($presensi->p16 == 4)
+                                        <td>
+                                          <span class="badge rounded-pill bg-success">S</span>
+                                        </td>
+                                        @else
+                                        <td>-</td>
+                                      @endif
+                                    {{-- end presensi if (banyak) --}}
+                                    
+                                    {{-- presnsi lama (salah)
+                                      @for ($i = 1; $i <= 16; $i++)
+                                        //cek apakah mhs punya kehadiran 
+                                        @if(array_key_exists($i, $presensi->kehadiran))
+                                          //kalo nilai "h" dimunculkan 
+                                          @if($presensi->kehadiran[$i]->num_stat_pertemuan == 'H')
+                                          <td>
+                                            <span class="badge rounded-pill bg-primary">H</span>
+                                          </td>
+                                          @elseif($presensi->kehadiran[$i]->num_stat_pertemuan == 'A')
+                                          <td>
+                                            <span class="badge rounded-pill bg-danger">A</span>
+                                          </td>
+                                          @elseif($presensi->kehadiran[$i]->num_stat_pertemuan == 'I')
+                                          <td>
+                                            <span class="badge rounded-pill bg-warning">I</span>
+                                          </td>
+                                          @elseif($presensi->kehadiran[$i]->num_stat_pertemuan == 'S')
+                                          <td>
+                                            <span class="badge rounded-pill bg-success">S</span>
+                                          </td>
+                                          @else
+                                          <td>-</td>
+                                          @endif
+                                          @else
+                                          <td>-</td>
+                                          @endif
+                                      @endfor 
+                                    --}}
+                                  </tr>
+                                </tbody>
+                                @endforeach
+                                <!--end::Table body-->
+                              </table>
+                              <!--end::Table-->
+                            @elseif($schedules)
+                            <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
+                              <!--begin::Icon-->
+                              <!--begin::Svg Icon | path: icons/duotune/general/gen044.svg-->
+                              <span class="svg-icon svg-icon-2tx svg-icon-warning me-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                  <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
+                                  <rect x="11" y="14" width="7" height="2" rx="1" transform="rotate(-90 11 14)" fill="black" />
+                                  <rect x="11" y="17" width="2" height="2" rx="1" transform="rotate(-90 11 17)" fill="black" />
+                                </svg>
+                              </span>
+                              <!--end::Svg Icon-->
+                              <!--end::Icon-->
+                              <!--begin::Wrapper-->
+                              <div class="d-flex flex-stack flex-grow-1">
+                                <!--begin::Content-->
+                                <div class="fw-bold">
+                                  <h4 class="text-gray-900 fw-bolder">Data Presensi Tidak Ada</h4>
+                                  <div class="fs-6 text-gray-700">Tidak ada presnsi untuk matakuliah ini.
+                                    <br />
+                                    {{-- <a class="fw-bolder" href="#">Learn more</a> --}}
+                                  </div>
+                                </div>
+                                <!--end::Content-->
+                              </div>
+                              <!--end::Wrapper-->
+                            </div>
                             @else
                             <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
                               <!--begin::Icon-->

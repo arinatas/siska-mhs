@@ -32,37 +32,63 @@ class JadwalController extends Controller
         ");
 
         // ambil seluruh presensi mahasiswa by nim
-        $presensis = DB::select("
-        SELECT * FROM presensi_row_coloumn WHERE str_thn_ajaran='".$tahunAjar."' AND bol_semester='".$semester."' AND str_id_nim='".$nim."'");
-        
-        $presensiArray = [];
-        $mhsPresensi  = [];
+            $presences = DB::select("
+            SELECT 
+                int_kd_perkuliahan_d, 
+                str_nm_mk,
+                sum( if( a.num_pertemuan_ke = '1', a.num_stat_pertemuan, 0 ) ) AS p1,
+                sum( if( a.num_pertemuan_ke = '2', a.num_stat_pertemuan, 0 ) ) AS p2,
+                sum( if( a.num_pertemuan_ke = '3', a.num_stat_pertemuan, 0 ) ) AS p3,
+                sum( if( a.num_pertemuan_ke = '4', a.num_stat_pertemuan, 0 ) ) AS p4,
+                sum( if( a.num_pertemuan_ke = '5', a.num_stat_pertemuan, 0 ) ) AS p5,
+                sum( if( a.num_pertemuan_ke = '6', a.num_stat_pertemuan, 0 ) ) AS p6,
+                sum( if( a.num_pertemuan_ke = '7', a.num_stat_pertemuan, 0 ) ) AS p7,
+                sum( if( a.num_pertemuan_ke = '8', a.num_stat_pertemuan, 0 ) ) AS p8,
+                sum( if( a.num_pertemuan_ke = '9', a.num_stat_pertemuan, 0 ) ) AS p9,
+                sum( if( a.num_pertemuan_ke = '10', a.num_stat_pertemuan, 0 ) ) AS p10,
+                sum( if( a.num_pertemuan_ke = '11', a.num_stat_pertemuan, 0 ) ) AS p11,
+                sum( if( a.num_pertemuan_ke = '12', a.num_stat_pertemuan, 0 ) ) AS p12,  
+                sum( if( a.num_pertemuan_ke = '13', a.num_stat_pertemuan, 0 ) ) AS p13,
+                sum( if( a.num_pertemuan_ke = '14', a.num_stat_pertemuan, 0 ) ) AS p14,
+                sum( if( a.num_pertemuan_ke = '15', a.num_stat_pertemuan, 0 ) ) AS p15,
+                sum( if( a.num_pertemuan_ke = '16', a.num_stat_pertemuan, 0 ) ) AS p16
+            FROM 
+                tabel_presensi a
+            where 
+                a.str_thn_ajaran='".$tahunAjar."' and a.bol_semester='".$semester."' and a.str_id_nim='".$nim."'
+            GROUP BY 
+                a.int_kd_perkuliahan_d");
 
 
-        //maping presensi per matakuliah
-        foreach ($schedules as $schedule)
-        {
-            $currentPresensi = collect($presensis)->where('int_kd_perkuliahan_d', $schedule->int_kd_perkuliahan_d)->all();
+        // presensi wrong
+            // $presensis = DB::select("
+            // SELECT * FROM presensi_row_coloumn WHERE str_thn_ajaran='".$tahunAjar."' AND bol_semester='".$semester."' AND str_id_nim='".$nim."'");
+            
+            // $presensiArray = [];
+            // $mhsPresensi  = [];
 
-            $tempPresensi = [];
-            foreach ($currentPresensi as $presensi)
-            {
-                $tempPresensi[] = $presensi;
-            }
-            $presensiArray[$schedule->int_kd_perkuliahan_d] = $tempPresensi;
-        }
+            // //maping presensi per matakuliah
+            // foreach ($schedules as $schedule)
+            // {
+            //     $currentPresensi = collect($presensis)->where('int_kd_perkuliahan_d', $schedule->int_kd_perkuliahan_d)->all();
 
+            //     $tempPresensi = [];
+            //     foreach ($currentPresensi as $presensi)
+            //     {
+            //         $tempPresensi[] = $presensi;
+            //     }
+            //     $presensiArray[$schedule->int_kd_perkuliahan_d] = $tempPresensi;
+            // }
 
-        //maping ke tampilan
-        foreach ($schedules as $schedule)
-        {
-
-            $mhsPresensi[] = (object)[
-                'str_nm_mk' => $schedule->str_nm_mk,
-                'kehadiran' => $presensiArray[$schedule->int_kd_perkuliahan_d],
-            ];
-
-        }
+            // //maping ke tampilan
+            // foreach ($schedules as $schedule)
+            // {
+            //     $mhsPresensi[] = (object)[
+            //         'str_nm_mk' => $schedule->str_nm_mk,
+            //         'kehadiran' => $presensiArray[$schedule->int_kd_perkuliahan_d],
+            //     ];
+            // }
+        //presensis wrong end    
 
         //mengembalikan nilai ke tampilan
         return view('kelas.index', [
@@ -70,7 +96,7 @@ class JadwalController extends Controller
             'active' => 'Kelas',
             // get jadwal
             'schedules' =>  $schedules,
-            'presensis' => $mhsPresensi
+            'presences' => $presences
         ]);    
     }
 
