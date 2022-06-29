@@ -108,23 +108,6 @@ class AkademikController extends Controller
 
         $semesterUniq = ["Ganjil", "Genap", "SP"];
         //end
-        
-
-        // //ambil tahun ajaran dan smt dari transkrip
-        // $transkrips = DB::select("
-        // SELECT *
-        // FROM `v_transkrip`
-        // WHERE (`nim` = '".$nim."')");
-
-        // foreach ($transkrips as $transkrip)
-        // {
-        //     $tahunAjar[] = $transkrip->str_thn_ajaran;
-        //     $semester[] = $transkrip->bol_semester;
-        // }
-
-        // $tahunAjarUniq = array_values(array_unique($tahunAjar));
-        // $semesterUniq = array_values(array_unique($semester));
-
 
         //cek semester brp untuk teks
         $tahunSemester = substr($request->get('tahun'), -2);
@@ -153,8 +136,10 @@ class AkademikController extends Controller
         $khs = DB::select("
         SELECT 
         d.str_kd_mk, 
+        b.int_kd_perkuliahan_d, 
         d.str_nm_mk, 
         e.num_sks, 
+        f.dec_na, 
         if(f.str_na IS NOT NULL, f.str_na, 'F') as str_na, 
         if(
             f.num_bobot IS NOT NULL, f.num_bobot, 
@@ -178,32 +163,25 @@ class AkademikController extends Controller
         //ambil nilai uts/uas/tugas/keaktifan
             // $nilaiEach = DB::select("
             // SELECT 
-            // aka_nilai.str_id_nim,
-            // aka_nilai.str_kd_mk,
-            // aka_matakuliah.str_nm_mk,
-            // aka_nilai.str_na,
-            // aka_nilai.num_bobot,
-            // aka_nilai_detail.dec_nilai,
+            // aka_nilai.str_id_nim, 
+            // aka_nilai.str_kd_mk, 
+            // aka_matakuliah.str_nm_mk, 
+            // aka_nilai.str_na, 
+            // aka_nilai.num_bobot, 
+            // aka_nilai_detail.dec_nilai, 
             // uni_mtr_nilai.str_nm_mtr_nilai, 
-            // (
-            //     SELECT 
-            //     aka_matakuliah_detail.num_sks 
-            //     FROM 
-            //     aka_matakuliah_detail 
-            //     WHERE 
-            //     aka_matakuliah_detail.str_kd_mk = aka_nilai.str_kd_mk 
-            //     AND aka_matakuliah_detail.str_kd_prodi = mhs_mahasiswa.str_kd_prodi
-            // ) as num_sks 
+            // aka_matakuliah_detail.num_sks 
             // FROM 
             // aka_nilai 
             // LEFT JOIN aka_nilai_detail ON aka_nilai.int_kd_nilai = aka_nilai_detail.int_kd_nilai 
             // LEFT join uni_mtr_nilai ON aka_nilai_detail.int_id_mtr_nilai = uni_mtr_nilai.int_id_mtr_nilai 
             // LEFT JOIN aka_matakuliah ON aka_nilai.str_kd_mk = aka_matakuliah.str_kd_mk 
-            // LEFT JOIN mhs_mahasiswa ON aka_nilai.str_id_nim = mhs_mahasiswa.str_id_nim 
+            // LEFT JOIN aka_matakuliah_detail ON aka_matakuliah.str_kd_mk = aka_matakuliah_detail.str_kd_mk 
             // WHERE 
-            // aka_nilai.str_id_nim = '".$nim."' 
+            // aka_nilai.str_id_nim ='".$nim."'
             // AND aka_nilai.str_thn_ajaran = '".$request->get('tahun')."' 
             // AND aka_nilai.bol_semester = '".$request->get('semester')."'
+            // AND aka_matakuliah_detail.str_kd_prodi = '".$mhsBio[0]->str_kd_prodi."'
             // ");
 
             // $nilai=array();
@@ -220,6 +198,8 @@ class AkademikController extends Controller
             // // change index from text (kode perkuliahan) to index        
             // $nilai = array_values($nilai);
 
+            // dd($nilai);
+
         // untuk penomeran tabel
         $totalMatkul = 1;
 
@@ -230,6 +210,15 @@ class AkademikController extends Controller
         $allSks = [];
         $totalBobot = [];
 
+        //by nilai
+        // foreach ($nilai as $value)
+        // {
+        //     $allSks[] = $value["sks"];
+        //     $totalBobot[] = $value["bobot"] * $value["sks"];
+        // }
+        
+
+        // by khs
         foreach ($khs as $value)
         {
             $allSks[] = $value->num_sks;
@@ -267,6 +256,22 @@ class AkademikController extends Controller
             'semesterText' => $semesterText,
             'mahasiswa' => $mhsBio,
         ]); 
+    }
+
+    public function nilaieach($kodemk, $kodeperkul, $smt, $thn){
+        // Mengambil nim user yang login
+        $nim = auth()->user()->username;
+
+        // Ambil detail matakuliah
+        $getAngketData = DB::select("
+        SELECT * from aka_nilai_detail left join uni_mtr_nilai on uni_mtr_nilai.int_id_mtr_nilai = aka_nilai_detail.int_id_mtr_nilai where int_kd_nilai in(SELECT int_kd_nilai
+        FROM aka_nilai 
+        where str_id_nim = '".$nim."' AND str_kd_mk = '".$kodemk."' 
+        AND str_thn_ajaran = '".$thn."' AND bol_semester = '".$smt."')
+        ORDER BY int_id_detail_nilai DESC
+        ");
+
+        return array_slice($getAngketData, 0, 4);
     }
 
     public function angketList()

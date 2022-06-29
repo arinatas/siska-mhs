@@ -2,6 +2,29 @@
 
 @section('container')
 
+<script>
+  function add(kode_mk, kode_perku, smt, thn)
+  {
+    $.ajax({
+      url: 'nilaieach/'+ kode_mk + '/' + kode_perku + '/' + smt + '/' + thn,
+      type: 'GET',
+      data: {
+        "kode_mk": kode_mk,
+        "kode_perku": kode_perku,
+        "smt": smt,
+        "tahun": thn
+      },
+      success:function(data){
+        // console.log(data);
+        jQuery.each(data, function(index, value){
+            // console.log(value);
+            $('#'+value.str_nm_mtr_nilai).html(parseInt(value.dec_nilai));
+        });
+      }
+    })                                    
+  }
+  </script>
+
   <!--begin::Body-->
   <body
     id="kt_body"
@@ -243,6 +266,7 @@
                                   {{-- <th class="min-w-50px">UAS</th> --}}
                                   <th class="min-w-50px">SKS</th>
                                   <th class="min-w-50px">Bobot</th>
+                                  <th class="min-w-50px">Nilai</th>
                                   <th class="min-w-50px rounded-end">Grade</th>
                                 </tr>
                               </thead>
@@ -262,6 +286,11 @@
                                     {{-- <td>{{ (int)$value["UAS"] }}</td> --}}
                                     <td>{{ $value->num_sks }}</td>
                                     <td>{{ $value->num_bobot }}</td>
+                                    <td>
+                                      <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="add('{{ $value->str_kd_mk }}', '{{ $value->int_kd_perkuliahan_d }}', '{{ $selectedSmt }}', '{{ $selectedTahun }}')">
+                                        {{ (int)$value->dec_na }}
+                                      </button>
+                                    </td>
                                     @if($value->str_na == 'A' || $value->str_na == 'A-')
                                     <td>
                                       <span class="badge rounded-pill bg-success">{{ $value->str_na }}</span>
@@ -284,6 +313,48 @@
                                 </tbody>
                                 @endforeach
                                 <!--end::Table body-->
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Detail Nilai</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <div class="container-fluid">
+                                          <div class="row text-center">
+                                            <div class="col-md-3">
+                                              <div class="alert alert-primary" role="alert">
+                                                Tugas <span class="badge badge-primary" id="Tugas"></span>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                              <div class="alert alert-primary" role="alert">
+                                                Keaktifan <span class="badge badge-primary" id="Keaktifan"></span>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                              <div class="alert alert-primary" role="alert">
+                                                UTS <span class="badge badge-primary" id="UTS"></span>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                              <div class="alert alert-primary" role="alert">
+                                                UAS <span class="badge badge-primary" id="UAS"></span>
+                                              </div>
+                                            </div>
+                                          
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
                                 
                                 {{-- future table uas tugas uts dll --}}
                                 {{-- @foreach ($khs as $value)
@@ -387,6 +458,8 @@
     </div>
     <!--end::Root-->
     <!--end::Main-->
+
+    
     
   </body>
   <!--end::Body-->
