@@ -17,7 +17,6 @@
         "tahun": thn
       },
       success:function(data){
-        console.log(data);
         jQuery.each(data, function(index, value){
             // console.log(value);
             if (value.hasOwnProperty("str_nm_mtr_nilai")){
