@@ -2,6 +2,8 @@
 
 @section('container')
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
 <script>
   function add(kode_mk, kode_perku, smt, thn)
   {
@@ -15,10 +17,16 @@
         "tahun": thn
       },
       success:function(data){
-        // console.log(data);
+        console.log(data);
         jQuery.each(data, function(index, value){
             // console.log(value);
-            $('#'+value.str_nm_mtr_nilai).html(parseInt(value.dec_nilai));
+            if (value.hasOwnProperty("str_nm_mtr_nilai")){
+              // cek ketika dpt data dari tabel aka_nilai
+              $('#'+value.str_nm_mtr_nilai.toLowerCase()).html(parseInt(value.dec_nilai));
+            } else if (value.hasOwnProperty("kategori")){
+              // cek ketika dpt data dari tabel aka_nilai_kategori
+              $('#'+value.kategori).html(parseInt(value.nilai));
+            }
         });
       }
     })                                    
@@ -260,10 +268,6 @@
                                 >
                                   <th class="min-w-50px rounded-start">No</th>
                                   <th class="min-w-100px">Matakuliah & Kode MK</th>
-                                  {{-- <th class="min-w-50px">Tugas</th> --}}
-                                  {{-- <th class="min-w-50px">Keaktifan</th> --}}
-                                  {{-- <th class="min-w-50px">UTS</th> --}}
-                                  {{-- <th class="min-w-50px">UAS</th> --}}
                                   <th class="min-w-50px">SKS</th>
                                   <th class="min-w-50px">Bobot</th>
                                   <th class="min-w-50px">Nilai</th>
@@ -280,10 +284,6 @@
                                   >
                                     <td>{{ $totalMatkul++ }}</td>
                                     <td>{{ $value->str_nm_mk }} <b>({{ $value->str_kd_mk }})</b></td>
-                                    {{-- <td>{{ (int)$value["Tugas"] }}</td> --}}
-                                    {{-- <td>{{ (int)$value["Keaktifan"] }}</td> --}}
-                                    {{-- <td>{{ (int)$value["UTS"] }}</td> --}}
-                                    {{-- <td>{{ (int)$value["UAS"] }}</td> --}}
                                     <td>{{ $value->num_sks }}</td>
                                     <td>{{ $value->num_bobot }}</td>
                                     <td>
@@ -327,22 +327,22 @@
                                           <div class="row text-center">
                                             <div class="col-md-3">
                                               <div class="alert alert-primary" role="alert">
-                                                Tugas <span class="badge badge-primary" id="Tugas"></span>
+                                                Tugas <span class="badge badge-primary" id="tugas"></span>
                                               </div>
                                             </div>
                                             <div class="col-md-3">
                                               <div class="alert alert-primary" role="alert">
-                                                Keaktifan <span class="badge badge-primary" id="Keaktifan"></span>
+                                                Keaktifan <span class="badge badge-primary" id="keaktifan"></span>
                                               </div>
                                             </div>
                                             <div class="col-md-3">
                                               <div class="alert alert-primary" role="alert">
-                                                UTS <span class="badge badge-primary" id="UTS"></span>
+                                                UTS <span class="badge badge-primary" id="uts"></span>
                                               </div>
                                             </div>
                                             <div class="col-md-3">
                                               <div class="alert alert-primary" role="alert">
-                                                UAS <span class="badge badge-primary" id="UAS"></span>
+                                                UAS <span class="badge badge-primary" id="uas"></span>
                                               </div>
                                             </div>
                                           
@@ -355,43 +355,6 @@
                                     </div>
                                   </div>
                                 </div>
-                                
-                                {{-- future table uas tugas uts dll --}}
-                                {{-- @foreach ($khs as $value)
-                                <tbody class="border-bottom border">
-                                  <tr
-                                    class="text-center"
-                                  >
-                                    <td>{{ $totalMatkul++ }}</td>
-                                    <td>{{ $value["matkul"] }} <b>({{ $value["kode_mk"] }})</b></td>
-                                    <td>{{ (int)$value["Tugas"] }}</td>
-                                    <td>{{ (int)$value["Keaktifan"] }}</td>
-                                    <td>{{ (int)$value["UTS"] }}</td>
-                                    <td>{{ (int)$value["UAS"] }}</td>
-                                    <td>{{ $value["sks"] }}</td>
-                                    <td>{{ $value["bobot"] }}</td>
-                                    @if($value->str_na == 'A' || $value->str_na == 'A-')
-                                    <td>
-                                      <span class="badge rounded-pill bg-success">{{ $value->str_na }}</span>
-                                    </td>
-                                    @elseif($value->str_na == 'B+' || $value["grade"] == 'B' || $value["grade"] == 'B-')
-                                    <td>
-                                      <span class="badge rounded-pill bg-primary">{{ $value["grade"] }}</span>
-                                    </td>
-                                    @elseif($value["grade"] == 'C+' || $value["grade"] == 'C')
-                                    <td>
-                                      <span class="badge rounded-pill bg-warning">{{ $value["grade"] }}</span>
-                                    </td>
-                                    @else
-                                    <td>
-                                      <span class="badge rounded-pill bg-danger">{{ $value["grade"] }}</span>
-                                    </td>
-                                    @endif
-                                    
-                                  </tr>
-                                </tbody>
-                                @endforeach --}}
-                                
 
                             </table>
                             <!--end::Table-->

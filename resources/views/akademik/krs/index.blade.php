@@ -2,6 +2,39 @@
 
 @section('container')
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script>
+	
+	$(function() {
+        $.ajax({
+        url: "http://localhost:8000/get_krs.php?nim={{ $nim }}",
+       	method: "GET",
+		crossDomain: true,
+        dataType: "json",
+		headers: {
+              "accept": "application/json",
+			  "x-requested-with":"XMLHttpRequest"
+          },
+        success: function(data) {
+			console.log(data.length);
+            var str = "";          
+           	for(var i= 0; i < data.length; i++){
+				$('#listIrsMhs').append(`<tr>\
+					<td>`+data[i].str_nm_mk+`<br><b>(`+data[i].str_kd_mk+`)</b></td>\
+					<td>`+data[i].str_nm_kad+`</td>\
+					<td>`+data[i].str_nama_hari+`,`+data[i].awal+`-`+data[i].akhir+`<br><b>(`+data[i].str_nm_ruang+`)</b></td>\
+					<td>`+data[i].num_sks+`&nbsp;&nbsp;`+`&`+`&nbsp;&nbsp;`+data[i].num_kd_semester+`</td>\
+					<td> <a href=""><i class="bi bi-trash3-fill text-danger fs-1"></i></a></td>\
+				</tr>`);
+           }
+		   console.log(data);
+        //   $("body").html(str);
+        }
+        });
+    });
+</script>
+
   <!--begin::Body-->
   <body
     id="kt_body"
@@ -112,35 +145,28 @@
                                 </tr>
                               </thead>
                               <!--end::Table head-->
+
                               <!--begin::Table body-->
-                              <tbody class="border-bottom border">
-                                <tr
-                                  class="text-center"
+                              <tbody class="border-bottom border text-center"id="listIrsMhs">
+                                {{-- <tr
+                                  class="text-center"  
                                 >
-                                  <td align="left" class="px-5">
-                                    Rekayasa Perangkat Lunak <br> (SI20S0301)
+                                  <td>
+									 <span id="nama_mk"></span> <br> <span id="kode_mk"></span>
                                   </td>
                                   <td>
-                                  A A Istri Ita Paramitha, S.Pd.,M.Kom.
+									<span id="dosen"></span>
                                   </td>
                                   <td >
-                                  Senin, 13.01 - 15.00 <br> (R.3B)
+									<span id="hari"></span>, <span id="awal"></span> - <span id="akhir"></span> <br> <span id="ruangan"></span>
                                   </td>
                                   <td>
-                                    3 (IV)
+                                    <span id="sks"></span> <span id="smt"></span>
                                   </td>
                                   <td>
-                                    <a href="">
-                                      <span class="svg-icon svg-icon-danger svg-icon-2x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo1/dist/../src/media/svg/icons/Home/Trash.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <rect x="0" y="0" width="24" height="24"/>
-                                            <path d="M6,8 L18,8 L17.106535,19.6150447 C17.04642,20.3965405 16.3947578,21 15.6109533,21 L8.38904671,21 C7.60524225,21 6.95358004,20.3965405 6.89346498,19.6150447 L6,8 Z M8,10 L8.45438229,14.0894406 L15.5517885,14.0339036 L16,10 L8,10 Z" fill="#000000" fill-rule="nonzero"/>
-                                            <path d="M14,4.5 L14,3.5 C14,3.22385763 13.7761424,3 13.5,3 L10.5,3 C10.2238576,3 10,3.22385763 10,3.5 L10,4.5 L5.5,4.5 C5.22385763,4.5 5,4.72385763 5,5 L5,5.5 C5,5.77614237 5.22385763,6 5.5,6 L18.5,6 C18.7761424,6 19,5.77614237 19,5.5 L19,5 C19,4.72385763 18.7761424,4.5 18.5,4.5 L14,4.5 Z" fill="#000000" opacity="0.3"/>
-                                        </g>
-                                    </svg><!--end::Svg Icon--></span>
-                                    </a>
+									<a href=""><i class="bi bi-x-circle-fill text-danger fs-1"></i></a>
                                   </td>
-                                </tr>
+                                </tr> --}}
                               </tbody>
                               <!--end::Table body-->
                             </table>
@@ -249,26 +275,31 @@
                                               <th class="min-w-50px">Matakuliah (Kode MK)</th>
                                               <th class="min-w-100">Hari, Jam & Ruangan</th>
                                               <th class="min-w-50px">SKS & Semester</th>
+                                              <th class="min-w-50px">Kuota</th>
                                               <th class="min-w-10px">Ambil</th>
                                             </tr>
                                           </thead>
                                           <!--end::Head-->
                                           <!--begin::Body-->
                                           <tbody class="fs-6">
-                                            @foreach ($transkrips as $transkrip)
+                                            @foreach ($irsLists as $value)
                                             <tr>
-                                              <td>I Putu Satwika, M.Kom (SP0010)</td>
+                                              <td>{{ $value->str_nm_kad }}</td>
                                               <td>
-                                              {{ $transkrip->str_nm_mk }} <span>({{ $transkrip->str_kd_mk }})</span>
+                                              {{ $value->str_nm_mk }} <span>({{ $value->str_kd_mk }})</span>
                                               </td>
-                                              <td>Rabu, 13:20 ~ 16:00 (R.3C)</td>
+                                              <td>{{ $value->str_nm_ruang }}, {{ $value->awal }} ~ {{ $value->akhir }} ({{ $value->str_nm_ruang }})</td>
                                               <td>
-                                              {{ $transkrip->num_sks }}  (I)
+                                              {{ $value->num_sks }}  ({{ $value->num_kd_semester }})
                                               </td>
                                               <td>
-												<div class="form-check">
-													<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-												  </div>
+                                              {{ $value->num_jml_sisa }}
+                                              </td>
+                                              <td>
+												<div>
+													{{-- <button type="button" class="btn btn-primary btn-sm">Add</button> --}}
+													<a href=""><i class="bi bi-plus-circle-fill text-primary fs-1"></i></a>
+												</div>
                                               </td>
                                             </tr>
                                             @endforeach

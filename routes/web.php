@@ -40,8 +40,8 @@ Route::patch('password', [ChangePasswordController::class, 'update'])->name('pas
 
 Route::get('/kelas', [JadwalController::class, 'index'])->middleware(['auth', 'angket.checker']);
 Route::get('/khs', [AkademikController::class, 'khs'])->middleware(['auth', 'angket.checker']);
+// Route::get('/krs', [AkademikController::class, 'krs'])->middleware(['auth', 'angket.checker', 'cors']);
 Route::get('/nilaieach/{kodemk}/{kodeperkul}/{smt}/{thn}', [AkademikController::class, 'nilaieach'])->middleware(['auth', 'angket.checker'])->where('thn', '.*');;
-// Route::get('/krs', [AkademikController::class, 'krs'])->middleware(['auth', 'angket.checker']);
 Route::get('/transkrip', [AkademikController::class, 'transkrip'])->middleware(['auth', 'angket.checker']);
 Route::get('/angket', [AkademikController::class, 'angketList'])->middleware(['auth']);
 Route::get('/angket/{int_kd_perkuliahan_d}', [AkademikController::class, 'isiAngket'])->middleware(['auth']);

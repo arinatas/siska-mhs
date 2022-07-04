@@ -262,8 +262,8 @@ class AkademikController extends Controller
         // Mengambil nim user yang login
         $nim = auth()->user()->username;
 
-        // Ambil detail matakuliah
-        $getAngketData = DB::select("
+        // Ambil detail matakuliah dari tabel aka_nilai
+        $getNilaiDataAkaNilai = DB::select("
         SELECT * from aka_nilai_detail left join uni_mtr_nilai on uni_mtr_nilai.int_id_mtr_nilai = aka_nilai_detail.int_id_mtr_nilai where int_kd_nilai in(SELECT int_kd_nilai
         FROM aka_nilai 
         where str_id_nim = '".$nim."' AND str_kd_mk = '".$kodemk."' 
@@ -271,7 +271,23 @@ class AkademikController extends Controller
         ORDER BY int_id_detail_nilai DESC
         ");
 
-        return array_slice($getAngketData, 0, 4);
+        if ($getNilaiDataAkaNilai) {
+            // cek jika dpt nilainya return ke ajax (frontend)
+            return array_slice($getNilaiDataAkaNilai, 0, 4);
+        } else {
+            // kalo tidak dpt cek di tabel sebelah
+            
+            // Ambil detail matakuliah dari tabel aka_nilai_kategori
+            $getNilaiDataAkaNilaiKategori = DB::select("
+            SELECT *
+            FROM `aka_nilai_kategori`
+            WHERE `str_id_nim` = '".$nim."' AND `int_kd_perkuliahan_d` = '".$kodeperkul."'
+            ORDER BY `int_kd_perkuliahan_d`
+            ");
+
+            // cek jika dpt nilainya return ke ajax (frontend)
+            return array_slice($getNilaiDataAkaNilaiKategori, 0, 4);
+        }
     }
 
     public function angketList()
@@ -471,17 +487,34 @@ class AkademikController extends Controller
     
     public function krs()
     {
-        $nim = auth()->user()->username;
+    //     $nim = auth()->user()->username;
 
-        $transkrips = DB::select("
-        SELECT *
-        FROM `v_transkrip`
-        WHERE (`nim` = '".$nim."')");
+    //    // Panggil API untuk mendapatkan matkul yg di tawarkan (krs)
+    //     $url = "http://localhost:8000/get_makul.php?nim=".$nim."";
+    //     $ch = curl_init();
+    //     curl_setopt($ch, CURLOPT_URL, $url);
+    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    //     $response = curl_exec($ch);
+    //     curl_close($ch);
 
-        return view('akademik.krs.index', [
-            'title' => 'KRS',
-            'active' => 'Akademik',
-            'transkrips' => $transkrips
-        ]); 
+    //     $irs = json_decode($response);
+       
+    //     // // Panggil API untuk mendapatkan krs yg telah diambil (mhs)
+    //     // $url = "http://localhost:8000/get_krs.php?nim=".$nim."";
+    //     // $ch = curl_init();
+    //     // curl_setopt($ch, CURLOPT_URL, $url);
+    //     // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    //     // $response = curl_exec($ch);
+    //     // curl_close($ch);
+
+    //     // $mhsIrs = json_decode($response);
+
+    //     return view('akademik.krs.index', [
+    //         'title' => 'KRS',
+    //         'active' => 'Akademik',
+    //         'irsLists' => $irs,
+    //         'nim' => $nim,
+    //         // 'irsMhsLists' => $mhsIrs
+    //     ]); 
     }
 }
