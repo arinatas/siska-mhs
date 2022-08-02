@@ -3,37 +3,203 @@
 @section('container')
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <script>
-	
+	function romanize (num) {
+		if (isNaN(num))
+			return NaN;
+		var digits = String(+num).split(""),
+			key = ["","C","CC","CCC","CD","D","DC","DCC","DCCC","CM",
+				"","X","XX","XXX","XL","L","LX","LXX","LXXX","XC",
+				"","I","II","III","IV","V","VI","VII","VIII","IX"],
+			roman = "",
+			i = 3;
+		while (i--)
+			roman = (key[+digits.pop() + (i * 10)] || "") + roman;
+		return Array(+digits.join("") + 1).join("M") + roman;
+	}
+
+	function deleteIrs(form) {
+		Swal.fire({
+		title: 'Hapus Kelas ?',
+		text: "Yakin ingin menghapus kelas yang telah diambil ?",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Ya',
+		cancelButtonText: 'Tidak',
+		reverseButtons: true
+		}).then((result) => {
+		if (result.isConfirmed) {
+			const element = document.getElementById("IrsTable");
+   			element.classList.add("disabledbutton");
+			//mengubah data yang di dapat dari form ke bentuk object
+			var unindexed_array = $( form ).serializeArray();
+			var indexed_array = {};
+			$.map(unindexed_array, function(n, i){
+				indexed_array[n['name']] = n['value'];
+			});
+			// post api with ajax
+			$.ajax({
+				url: "http://27.112.79.162:8000/remove_irs.php",
+				method: "POST",
+				data: indexed_array,
+				dataType:'json',
+				success: function (response) {
+					if (response.status == false){
+						Swal.fire(
+						'Gagal!',
+						response.message,
+						'error'
+						)
+						$.get("{{ URL::to('getIrs') }}", function(data){
+							$('#listIrsMhs').empty().html(data);
+						});
+						element.classList.remove("disabledbutton");
+					} else {
+						Swal.fire(
+						'Berhasil!',
+						response.message,
+						'success'
+						)
+						$.get("{{ URL::to('getIrs') }}", function(data){
+							$('#listIrsMhs').empty().html(data);
+						});
+						element.classList.remove("disabledbutton");
+					}
+				},
+				error: function(error){
+					console.log("Something went wrong", error);
+				}
+
+			});
+
+  			event.preventDefault();
+		}
+		});
+		return false;
+	}
+
+	function addIrsMhs(form) {
+		
+		Swal.fire({
+		title: 'Ambil Kelas ?',
+		text: "Sudah yakin ingin mengambil kelas ini ?",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Ya',
+		cancelButtonText: 'Tidak',
+		reverseButtons: true
+		}).then((result) => {
+		if (result.isConfirmed) {
+			const element = document.getElementById("kt_project_users_table");
+   			element.classList.add("disabledbutton");
+			//mengubah data yang di dapat dari form ke bentuk object
+			var unindexed_array = $( form ).serializeArray();
+			var indexed_array = {};
+			$.map(unindexed_array, function(n, i){
+				indexed_array[n['name']] = n['value'];
+			});
+			// post api with ajax
+			$.ajax({
+				url: "http://27.112.79.162:8000/post_irs.php",
+				method: "POST",
+				data: indexed_array,
+				dataType:'json',
+				success: function (response) {
+					if (response.status == false){
+						Swal.fire(
+						'Gagal!',
+						response.message,
+						'error'
+						)
+						$.get("{{ URL::to('getIrs') }}", function(data){
+							$('#listIrsMhs').empty().html(data);
+						});
+						element.classList.remove("disabledbutton");
+					} else {
+						Swal.fire(
+						'Berhasil!',
+						response.message,
+						'success'
+						)
+						$.get("{{ URL::to('getIrs') }}", function(data){
+							$('#listIrsMhs').empty().html(data);
+						});
+						element.classList.remove("disabledbutton");
+					}
+				},
+				error: function(error){
+					console.log("Something went wrong", error);
+				}
+			});
+  			event.preventDefault();
+		}
+		});
+		return false;
+	}
+
+
 	$(function() {
-        $.ajax({
-        url: "http://localhost:8000/get_krs.php?nim={{ $nim }}",
-       	method: "GET",
-		crossDomain: true,
-        dataType: "json",
-		headers: {
-              "accept": "application/json",
-			  "x-requested-with":"XMLHttpRequest"
-          },
-        success: function(data) {
-			console.log(data.length);
-            var str = "";          
-           	for(var i= 0; i < data.length; i++){
-				$('#listIrsMhs').append(`<tr>\
-					<td>`+data[i].str_nm_mk+`<br><b>(`+data[i].str_kd_mk+`)</b></td>\
-					<td>`+data[i].str_nm_kad+`</td>\
-					<td>`+data[i].str_nama_hari+`,`+data[i].awal+`-`+data[i].akhir+`<br><b>(`+data[i].str_nm_ruang+`)</b></td>\
-					<td>`+data[i].num_sks+`&nbsp;&nbsp;`+`&`+`&nbsp;&nbsp;`+data[i].num_kd_semester+`</td>\
-					<td> <a href=""><i class="bi bi-trash3-fill text-danger fs-1"></i></a></td>\
-				</tr>`);
-           }
-		   console.log(data);
-        //   $("body").html(str);
-        }
-        });
+		//reload table di matakuliah yang di ambil
+		$.get("{{ URL::to('getIrs') }}", function(data){
+			$('#listIrsMhs').empty().html(data);
+		});
+		//ajax
+			// $('#IrsTable').dataTable();
+			// $.ajax({
+			// 	url: "http://27.112.79.162:8000/get_irs.php?nim={{ $nim }}",
+			// 	method: "GET",
+			// 	crossDomain: true,
+			// 	dataType: "json",
+			// 	headers: {
+			//       "accept": "application/json",
+			// 	  "x-requested-with":"XMLHttpRequest"
+			//   	},
+			// 	success: function(data) {
+			// 		// bindtoDatatable(data);
+					
+			// 		// using with foreach
+			// 		// var html = '';
+			// 		// $.each(data, function(index, value){
+			// 		// 	html += `<tr>\
+			// 		// 	<td>`+value.str_nm_mk+`<br><b>(`+value.str_kd_mk+`)</b></td>\
+			// 		// 	<td>`+value.str_nm_kad+`</td>\
+			// 		// 	<td>`+value.str_nama_hari+`,&nbsp`+value.awal+`-`+value.akhir+`<br><b>(`+value.str_nm_ruang+`)</b></td>\
+			// 		// 	<td>`+value.num_sks+`&nbsp;&nbsp;(`+ romanize(value.num_kd_semester)+`)</td>\
+			// 		// 	<td> <a href="/irsDel/`+value.int_kd_perkuliahan_d+`"><i class="bi bi-trash3-fill text-danger fs-1"></i></a></td>\
+			// 		// 	</tr>`;
+			// 		// 	$("#listIrsMhs").html(html);
+			// 		// });
+			// 	}
+			// });
     });
 </script>
+
+	{{-- swall faiyah --}}
+	@if (\Session::has('irsDeletedSuccess'))
+		<script>
+			Swal.fire(
+			'Berhasil!',
+			'{!! \Session::get('irsDeletedSuccess') !!}',
+			'success'
+			)
+		</script>
+  	@endif
+
+	  @if (\Session::has('irsAddesSuccess'))
+	  <script>
+		  Swal.fire(
+		  'Berhasil!',
+		  '{!! \Session::get('irsAddesSuccess') !!}',
+		  'success'
+		  )
+	  </script>
+	@endif
 
   <!--begin::Body-->
   <body
@@ -110,79 +276,35 @@
                     <!--begin::Body-->
                     <div class="card-body p-5 px-lg-19 py-lg-16">
                       <!--begin::Content main-->
-                      <div class="mb-14">
+                      <div class="container">
                         <!--begin::Heading-->
-                        <div class="mb-15 d-flex justify-content-between">
+                        <div class="my-5 d-flex justify-content-between">
                           <!--begin::Title-->
                           <h1 class="fs-1x text-dark mb-6">
                             Mata Kuliah Yang Diambil
                           </h1>
                           <div class="">
-                            <a href="#" class="btn btn-sm btn-primary me-3" data-bs-toggle="modal" id="kt_drawer_chat_toggle">Ajukan</a>
+                            {{-- <a href="#" class="btn btn-sm btn-primary me-3" data-bs-toggle="modal" id="kt_drawer_chat_toggle">Ajukan</a> --}}
+							{{-- <a href="#" class="btn btn-sm btn-light-primary fw-bolder ms-2 fs-8 py-1 px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">Approve</a> --}}
                           </div>
                           <!--end::Title-->
                         </div>
                         <!--end::Heading-->
                         <!--begin::Body-->
-                        <!--begin::Table-->
-                        <div class="mb-14">
-                          <!--begin::Table container-->
-                          <div class="table-responsive">
-                            <!--begin::Table-->
-                            <table
-                              class="table  table-row-gray-300 align-middle gs-0 gy-4"
-                            >
-                              <!--begin::Table head-->
-                              <thead>
-                                <tr
-                                  class="fw-bolder fs-6 text-gray-800 text-center border-0 bg-light"
-                                >
-                                  <th class="min-w-50px px-3 rounded-start">Matakuliah</th>
-                                  <th class="min-w-150px">Dosen</th>
-                                  <th class="min-w-100px">Waktu & Ruangan</th>
-                                  <th class="min-w-50px">SKS & Semester</th>
-                                  <th class="min-w-50px px-3 rounded-end">Action</th>
-                                </tr>
-                              </thead>
-                              <!--end::Table head-->
-
-                              <!--begin::Table body-->
-                              <tbody class="border-bottom border text-center"id="listIrsMhs">
-                                {{-- <tr
-                                  class="text-center"  
-                                >
-                                  <td>
-									 <span id="nama_mk"></span> <br> <span id="kode_mk"></span>
-                                  </td>
-                                  <td>
-									<span id="dosen"></span>
-                                  </td>
-                                  <td >
-									<span id="hari"></span>, <span id="awal"></span> - <span id="akhir"></span> <br> <span id="ruangan"></span>
-                                  </td>
-                                  <td>
-                                    <span id="sks"></span> <span id="smt"></span>
-                                  </td>
-                                  <td>
-									<a href=""><i class="bi bi-x-circle-fill text-danger fs-1"></i></a>
-                                  </td>
-                                </tr> --}}
-                              </tbody>
-                              <!--end::Table body-->
-                            </table>
-                            <!--end::Table-->
-                          </div>
-                          <!--end::Table container-->
-                        </div>
-                        <!--end::Table-->
-                      </div>
+							<!--begin::Table-->
+							<div class="" id="listIrsMhs">
+								{{-- ajax here --}}
+							</div>
+							<!--end::Table-->
+						</div>
                       <!--end::Card-->
                     </div>
                     <!--end::Body-->
                   </div>
                   <!-- end table -->
                 </div>
-                <!-- end col -->  
+                <!-- end col --> 
+				 
                 <!-- begin col -->
                 <div class="col-xl-12">
                   <!-- begin table -->
@@ -192,19 +314,9 @@
                       <!--begin::Content main-->
                       <div class="mb-14">
                         <!--begin::Heading-->
-                        <div class="mb-15 d-flex justify-content-between">
-                          <!--begin::Title-->
-                          <h1 class="fs-1x text-dark mb-6">
-                            Mata Kuliah Yang Tersedia
-                          </h1>
-                          <div class="">
-                            <a href="#" class="btn btn-sm btn-primary me-3" data-bs-toggle="modal" id="kt_drawer_chat_toggle">Submit</a>
-                          </div>
-                          <!--end::Title-->
-                        </div>
-                        <!--end::Heading-->
                         <div>
-                          <div id="kt_content_container" class="d-flex flex-column-fluid align-items-start container-xxl">
+                          {{-- <div id="kt_content_container" class="d-flex flex-column-fluid align-items-start container-xxl"> --}}
+                          <div id="" class="d-flex flex-column-fluid align-items-start container-xxl">
                             <!--begin::Post-->
                             <div class="content flex-row-fluid" id="kt_content">
                               <!--begin::Toolbar-->
@@ -214,22 +326,9 @@
                                   <!--begin::Actions-->
                                   <div class="d-flex my-0">
                                     <!--begin::Select-->
-                                    <select name="status" data-control="select2" data-hide-search="true" data-placeholder="Export" class="form-select form-select-white form-select-sm w-150px">
-                                      <option value="1">Semester 1</option>
-                                      <option value="2">Semester 2</option>
-                                      <option value="3">Semester 3</option>
-                                      <option value="4">Semester 4</option>
-                                      <option value="5">Semester 5</option>
-                                      <option value="6">Semester 6</option>
-                                      <option value="7">Semester 7</option>
-                                      <option value="8">Semester 8</option>
-                                    </select>
-                                    <!--end::Select-->
-                                    <!--begin::Select-->
-                                    <select name="status" data-control="select2" data-hide-search="true" data-placeholder="Export" class="form-select form-select-white form-select-sm w-100px">
-                                      <option value="1">Pagi</option>
-                                      <option value="2">Malam</option>
-                                    </select>
+                                    <h1 class="fs-1x text-dark">
+										Mata Kuliah Yang Tersedia
+									  </h1>
                                     <!--end::Select-->
                                   </div>
                                   <!--end::Actions-->
@@ -263,50 +362,93 @@
                                   <!--begin::Card-->
                                   <div class="card card-flush">
                                     <!--begin::Card body-->
-                                    <div class="card-body pt-0">
+                                    <div class="">
                                       <!--begin::Table container-->
                                       <div class="table-responsive">
-                                        <!--begin::Table-->
+
+										@if ($irsLists[0])
+										<!--begin::Table-->
                                         <table id="kt_project_users_table" class="table table-row-bordered table-row gy-4 align-middle fw-bolder">
-                                          <!--begin::Head-->
-                                          <thead class="fs-7 text-gray-700 text-uppercase">
-                                            <tr>
-                                              <th class="min-w-50">Dosen</th>
-                                              <th class="min-w-50px">Matakuliah (Kode MK)</th>
-                                              <th class="min-w-100">Hari, Jam & Ruangan</th>
-                                              <th class="min-w-50px">SKS & Semester</th>
-                                              <th class="min-w-50px">Kuota</th>
-                                              <th class="min-w-10px">Ambil</th>
-                                            </tr>
-                                          </thead>
-                                          <!--end::Head-->
-                                          <!--begin::Body-->
-                                          <tbody class="fs-6">
-                                            @foreach ($irsLists as $value)
-                                            <tr>
-                                              <td>{{ $value->str_nm_kad }}</td>
-                                              <td>
-                                              {{ $value->str_nm_mk }} <span>({{ $value->str_kd_mk }})</span>
-                                              </td>
-                                              <td>{{ $value->str_nm_ruang }}, {{ $value->awal }} ~ {{ $value->akhir }} ({{ $value->str_nm_ruang }})</td>
-                                              <td>
-                                              {{ $value->num_sks }}  ({{ $value->num_kd_semester }})
-                                              </td>
-                                              <td>
-                                              {{ $value->num_jml_sisa }}
-                                              </td>
-                                              <td>
-												<div>
-													{{-- <button type="button" class="btn btn-primary btn-sm">Add</button> --}}
-													<a href=""><i class="bi bi-plus-circle-fill text-primary fs-1"></i></a>
+											<!--begin::Head-->
+											<thead class="fs-7 text-gray-700 text-uppercase">
+											  <tr>
+												<th class="min-w-150">Dosen</th>
+												<th class="min-w-150px">Matakuliah (Kode MK)</th>
+												<th class="min-w-150">Waktu & Ruangan</th>
+												<th class="min-w-50px">SKS & Semester</th>
+												<th class="min-w-10px">Kuota</th>
+												<th class="min-w-10px">Ambil</th>
+											  </tr>
+											</thead>
+											<!--end::Head-->
+											{{-- ambil fungsi untuk mengambil fungsi konversi angka romawi --}}
+											@inject('romanNum', 'App\Http\Controllers\AkademikController')
+											<!--begin::Body-->
+											<tbody class="fs-6" id="btnico">
+											  @foreach ($irsLists as $value)
+											  <tr>
+												<td>{{ $value->str_nm_kad }}</td>
+												<td>
+												{{ $value->str_nm_mk }} <span>({{ $value->str_kd_mk }})</span>
+												</td>
+												<td>{{ $value->str_nama_hari }}, {{ $value->awal }} ~ {{ $value->akhir }} ({{ $value->str_nm_ruang }})</td>
+												<td>
+												{{ $value->num_sks }}  ({{ $romanNum::numberToRoman($value->num_kd_semester) }})
+												</td>
+												<td>
+												{{ $value->num_jml_sisa }}
+												</td>
+												<td>
+												  <form onsubmit="return addIrsMhs(this);">
+												  @csrf
+												  <input type="hidden" name="str_id_nim" value="{{ auth()->user()->username }}">
+												  <input type="hidden" name="int_kd_perkuliahan_d" value="{{ $value->int_kd_perkuliahan_d }}">
+												  <input type="hidden" name="num_sks" value="{{ $value->num_sks }}">
+												  <input type="hidden" name="str_kd_mk" value="{{ $value->str_kd_mk }}">
+													  <div>
+														  <button id="" type="submit" style="border: none; outline: none; background: none;  padding: 0;"><i class="bi bi-plus-circle-fill text-primary fs-1"></i></button>
+													  </div>
+												  </form>
+												</td>
+											  </tr>
+											  @endforeach
+											</tbody>
+											<!--end::Body-->
+										</table>
+										<!--end::Table-->
+										<div class="text-center mt-5">
+											<div class="alert alert-info" role="alert">
+											  <b>Refresh page untuk mengetahui sisa kuota kelas</b>
+											</div>
+										</div>
+										@else
+										<div class="notice d-flex bg-light-warning rounded border-warning border border-dashed p-6 mt-10">
+											<!--begin::Icon-->
+											<!--begin::Svg Icon | path: icons/duotune/general/gen044.svg-->
+											<span class="svg-icon svg-icon-2tx svg-icon-warning me-4">
+											  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+												<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
+												<rect x="11" y="14" width="7" height="2" rx="1" transform="rotate(-90 11 14)" fill="black" />
+												<rect x="11" y="17" width="2" height="2" rx="1" transform="rotate(-90 11 17)" fill="black" />
+											  </svg>
+											</span>
+											<!--end::Svg Icon-->
+											<!--end::Icon-->
+											<!--begin::Wrapper-->
+											<div class="d-flex flex-stack flex-grow-1">
+											  <!--begin::Content-->
+											  <div class="fw-bold">
+												<h4 class="text-gray-900 fw-bolder">Data IRS Tidak Tersedia</h4>
+												<div class="fs-6 text-gray-700">Hallo <b>{{ auth()->user()->display_name }}</b>, kamu mungkin tidak mengambil KRS pada tahun ajaran ini.
+												  <br />
+												  {{-- <a class="fw-bolder" href="#">Learn more</a> --}}
 												</div>
-                                              </td>
-                                            </tr>
-                                            @endforeach
-                                          </tbody>
-                                          <!--end::Body-->
-                                        </table>
-                                        <!--end::Table-->
+											  </div>
+											  <!--end::Content-->
+											</div>
+											<!--end::Wrapper-->
+										</div>
+										@endif
                                       </div>
                                       <!--end::Table container-->
                                     </div>
@@ -717,5 +859,12 @@
     
   </body>
   <!--end::Body-->
+
+  <style>
+	.disabledbutton {
+		pointer-events: none;
+		opacity: 0.4;
+	}
+  </style>
 
 @endsection

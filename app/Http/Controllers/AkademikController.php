@@ -487,34 +487,138 @@ class AkademikController extends Controller
     
     public function krs()
     {
+        $nim = auth()->user()->username;
+
+       // Panggil API untuk mendapatkan matkul yg di tawarkan (krs)
+        $url = "http://27.112.79.162:8000/get_makul.php?nim=".$nim."";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $irs = json_decode($response);
+
+        return view('akademik.krs.index', [
+            'title' => 'KRS',
+            'active' => 'Akademik',
+            'irsLists' => $irs,
+            'nim' => $nim,
+            // 'irsMhsLists' => $mhsIrs
+        ]); 
+    }
+
+    // ambil irs mhs
+    public function getIrs()
+    {
+        $nim = auth()->user()->username;
+
+        // Panggil API untuk mendapatkan krs yg telah diambil (mhs)
+        $url = "http://27.112.79.162:8000/get_irs.php?nim=".$nim."";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $mhsIrs = json_decode($response);
+
+        if($mhsIrs[0]){
+            foreach ($mhsIrs as $value)
+            {
+                $allSks[] = $value->num_sks;
+            }
+        } else {
+            $allSks = 0;
+        }
+
+        return view('akademik.krs.irslist', [
+            'lists' => $mhsIrs,
+            'totalSKS' => $allSks
+        ]); 
+    }
+
+    // // ambil matakuliah yg tersedia
+    // public function getMatkulIrs()
+    // {
     //     $nim = auth()->user()->username;
 
-    //    // Panggil API untuk mendapatkan matkul yg di tawarkan (krs)
-    //     $url = "http://localhost:8000/get_makul.php?nim=".$nim."";
+    //     // Panggil API untuk mendapatkan krs yg telah diambil (mhs)
+    //     $url = "http://27.112.79.162:8000/get_makul.php?nim=".$nim."";
     //     $ch = curl_init();
     //     curl_setopt($ch, CURLOPT_URL, $url);
     //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     //     $response = curl_exec($ch);
     //     curl_close($ch);
 
-    //     $irs = json_decode($response);
-       
-    //     // // Panggil API untuk mendapatkan krs yg telah diambil (mhs)
-    //     // $url = "http://localhost:8000/get_krs.php?nim=".$nim."";
-    //     // $ch = curl_init();
-    //     // curl_setopt($ch, CURLOPT_URL, $url);
-    //     // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    //     // $response = curl_exec($ch);
-    //     // curl_close($ch);
+    //     $matkulIrs = json_decode($response);
 
-    //     // $mhsIrs = json_decode($response);
-
-    //     return view('akademik.krs.index', [
-    //         'title' => 'KRS',
-    //         'active' => 'Akademik',
-    //         'irsLists' => $irs,
-    //         'nim' => $nim,
-    //         // 'irsMhsLists' => $mhsIrs
+    //     return view('akademik.krs.matkulist', [
+    //         'lists' => $matkulIrs
     //     ]); 
-    }
+    // }
+    
+    // public function irsAdd(Request $request)
+    // {
+
+    //     $dataIrs = $request->all();
+
+    //     $url = 'http://27.112.79.162:8000/post_irs.php';
+    //     $irsPost = http_build_query($dataIrs);
+    //     $ch = curl_init();
+    //     curl_setopt($ch, CURLOPT_URL, $url);
+    //     curl_setopt($ch, CURLOPT_POST, true);
+    //     curl_setopt($ch, CURLOPT_POSTFIELDS, $irsPost);
+    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    //     $response = curl_exec($ch);
+    //     curl_close($ch);
+    //     $response = json_decode($response);
+
+    //     return redirect()->back()->with('irsAddesSuccess', 'Berhasil ditambahkan!'); 
+    // }
+
+    // public function irsDel($kelas)
+    // {
+    //     $nim = auth()->user()->username;
+        
+    //     $url = 'http://27.112.79.162:8000/remove_irs.php?str_id_nim='.$nim.'&int_kd_perkuliahan_d='.$kelas.'';
+    //     $ch = curl_init();
+    //     curl_setopt($ch, CURLOPT_URL, $url);
+    //     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    //     $result = curl_exec($ch);
+    //     $result = json_decode($result);
+    //     curl_close($ch);
+
+    //     return redirect()->back()->with('irsDeletedSuccess', 'Berhasil dihapus!'); 
+    // }
+
+    // fungsi untuk mengubah angka ke romawi pada IRS
+    function numberToRoman($num)  
+    { 
+        // Be sure to convert the given parameter into an integer
+        $n = intval($num);
+        $result = ''; 
+    
+        // Declare a lookup array that we will use to traverse the number: 
+        $lookup = array(
+            'M' => 1000, 'CM' => 900, 'D' => 500, 'CD' => 400, 
+            'C' => 100, 'XC' => 90, 'L' => 50, 'XL' => 40, 
+            'X' => 10, 'IX' => 9, 'V' => 5, 'IV' => 4, 'I' => 1
+        ); 
+    
+        foreach ($lookup as $roman => $value)  
+        {
+            // Look for number of matches
+            $matches = intval($n / $value); 
+    
+            // Concatenate characters
+            $result .= str_repeat($roman, $matches); 
+    
+            // Substract that from the number 
+            $n = $n % $value; 
+        } 
+
+        return $result; 
+    } 
 }
