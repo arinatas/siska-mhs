@@ -490,7 +490,7 @@ class AkademikController extends Controller
         $nim = auth()->user()->username;
 
        // Panggil API untuk mendapatkan matkul yg di tawarkan (krs)
-        $url = "http://27.112.79.162:8000/get_makul.php?nim=".$nim."";
+        $url = "http://103.80.88.77:8001/get_makul.php?nim=".$nim."";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -514,7 +514,7 @@ class AkademikController extends Controller
         $nim = auth()->user()->username;
 
         // Panggil API untuk mendapatkan krs yg telah diambil (mhs)
-        $url = "http://27.112.79.162:8000/get_irs.php?nim=".$nim."";
+        $url = "http://103.80.88.77:8001/get_irs.php?nim=".$nim."";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -544,7 +544,7 @@ class AkademikController extends Controller
     //     $nim = auth()->user()->username;
 
     //     // Panggil API untuk mendapatkan krs yg telah diambil (mhs)
-    //     $url = "http://27.112.79.162:8000/get_makul.php?nim=".$nim."";
+    //     $url = "http://103.80.88.77:8001/get_makul.php?nim=".$nim."";
     //     $ch = curl_init();
     //     curl_setopt($ch, CURLOPT_URL, $url);
     //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -563,7 +563,7 @@ class AkademikController extends Controller
 
     //     $dataIrs = $request->all();
 
-    //     $url = 'http://27.112.79.162:8000/post_irs.php';
+    //     $url = 'http://103.80.88.77:8001/post_irs.php';
     //     $irsPost = http_build_query($dataIrs);
     //     $ch = curl_init();
     //     curl_setopt($ch, CURLOPT_URL, $url);
@@ -581,7 +581,7 @@ class AkademikController extends Controller
     // {
     //     $nim = auth()->user()->username;
         
-    //     $url = 'http://27.112.79.162:8000/remove_irs.php?str_id_nim='.$nim.'&int_kd_perkuliahan_d='.$kelas.'';
+    //     $url = 'http://103.80.88.77:8001/remove_irs.php?str_id_nim='.$nim.'&int_kd_perkuliahan_d='.$kelas.'';
     //     $ch = curl_init();
     //     curl_setopt($ch, CURLOPT_URL, $url);
     //     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");

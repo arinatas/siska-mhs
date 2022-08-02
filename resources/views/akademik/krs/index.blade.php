@@ -43,7 +43,7 @@
 			});
 			// post api with ajax
 			$.ajax({
-				url: "http://27.112.79.162:8000/remove_irs.php",
+				url: "http://103.80.88.77:8001/remove_irs.php",
 				method: "POST",
 				data: indexed_array,
 				dataType:'json',
@@ -106,7 +106,7 @@
 			});
 			// post api with ajax
 			$.ajax({
-				url: "http://27.112.79.162:8000/post_irs.php",
+				url: "http://103.80.88.77:8001/post_irs.php",
 				method: "POST",
 				data: indexed_array,
 				dataType:'json',
@@ -152,7 +152,7 @@
 		//ajax
 			// $('#IrsTable').dataTable();
 			// $.ajax({
-			// 	url: "http://27.112.79.162:8000/get_irs.php?nim={{ $nim }}",
+			// 	url: "http://103.80.88.77:8001/get_irs.php?nim={{ $nim }}",
 			// 	method: "GET",
 			// 	crossDomain: true,
 			// 	dataType: "json",
