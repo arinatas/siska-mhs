@@ -593,32 +593,37 @@ class AkademikController extends Controller
     //     return redirect()->back()->with('irsDeletedSuccess', 'Berhasil dihapus!'); 
     // }
 
-    // fungsi untuk mengubah angka ke romawi pada IRS
-    function numberToRoman($num)  
-    { 
-        // Be sure to convert the given parameter into an integer
-        $n = intval($num);
-        $result = ''; 
-    
-        // Declare a lookup array that we will use to traverse the number: 
-        $lookup = array(
-            'M' => 1000, 'CM' => 900, 'D' => 500, 'CD' => 400, 
-            'C' => 100, 'XC' => 90, 'L' => 50, 'XL' => 40, 
-            'X' => 10, 'IX' => 9, 'V' => 5, 'IV' => 4, 'I' => 1
-        ); 
-    
-        foreach ($lookup as $roman => $value)  
-        {
-            // Look for number of matches
-            $matches = intval($n / $value); 
-    
-            // Concatenate characters
-            $result .= str_repeat($roman, $matches); 
-    
-            // Substract that from the number 
-            $n = $n % $value; 
-        } 
 
-        return $result; 
-    } 
+    // fungsi untuk mengubah angka ke romawi pada IRS
+    // Make a class having name RomanNumerials and add a protected static property as defined (DIBUAT STATIC KALO TIDAK NANTI ERROR DI VERSI PHP YG BERBEDA)
+        protected static $lookup = [
+            1000 => 'M',
+            900 => 'CM',
+            500 => 'D',
+            400 => 'CD',
+            100 => 'C',
+            90 => 'XC',
+            50 => 'L',
+            40 => 'XL',
+            10 => 'X',
+            9 => 'IX',
+            5 => 'V',
+            4 => 'IV',
+            1 => 'I',
+        ];
+
+        function numberToRoman($num)  
+        { 
+            $result = '';
+
+            foreach(static::$lookup as $limit => $glyph){
+                while ($num >= $limit) {
+                    $result .= $glyph;
+                    $num -= $limit;
+                }
+            }
+
+            return $result;
+        }
+    //end fungsi romawi
 }
