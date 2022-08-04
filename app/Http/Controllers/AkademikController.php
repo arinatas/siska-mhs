@@ -618,7 +618,7 @@ class AkademikController extends Controller
             1 => 'I',
         ];
 
-        function numberToRoman($num)  
+        public static function numberToRoman($num)  
         { 
             $result = '';
 
