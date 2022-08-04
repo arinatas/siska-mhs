@@ -558,40 +558,46 @@ class AkademikController extends Controller
     //     ]); 
     // }
     
-    // public function irsAdd(Request $request)
-    // {
+    public function irsAdd(Request $request)
+    {
 
-    //     $dataIrs = $request->all();
+        $dataIrs = $request->all();
 
-    //     $url = 'http://103.80.88.77:8001/post_irs.php';
-    //     $irsPost = http_build_query($dataIrs);
-    //     $ch = curl_init();
-    //     curl_setopt($ch, CURLOPT_URL, $url);
-    //     curl_setopt($ch, CURLOPT_POST, true);
-    //     curl_setopt($ch, CURLOPT_POSTFIELDS, $irsPost);
-    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    //     $response = curl_exec($ch);
-    //     curl_close($ch);
-    //     $response = json_decode($response);
+        $url = 'http://103.80.88.77:8001/post_irs.php';
+        $irsPost = http_build_query($dataIrs);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $irsPost);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        $response = json_decode($response);
 
-    //     return redirect()->back()->with('irsAddesSuccess', 'Berhasil ditambahkan!'); 
-    // }
+        // balikin nilai ke ajax pengambilan krs
+        return $response;
 
-    // public function irsDel($kelas)
-    // {
-    //     $nim = auth()->user()->username;
+        // return redirect()->back()->with('irsAddesSuccess', 'Berhasil ditambahkan!'); 
+    }
+
+    public function irsDel(Request $request)
+    {
+        $delData = $request->all();
         
-    //     $url = 'http://103.80.88.77:8001/remove_irs.php?str_id_nim='.$nim.'&int_kd_perkuliahan_d='.$kelas.'';
-    //     $ch = curl_init();
-    //     curl_setopt($ch, CURLOPT_URL, $url);
-    //     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    //     $result = curl_exec($ch);
-    //     $result = json_decode($result);
-    //     curl_close($ch);
+        $url = 'http://103.80.88.77:8001/remove_irs.php';
+        $irsDelete = http_build_query($delData);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $irsDelete);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        $response = json_decode($response);
 
-    //     return redirect()->back()->with('irsDeletedSuccess', 'Berhasil dihapus!'); 
-    // }
+        // balikin nilai ke ajax delete krs
+        return $response;
+    }
 
 
     // fungsi untuk mengubah angka ke romawi pada IRS

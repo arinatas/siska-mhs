@@ -43,7 +43,8 @@
 			});
 			// post api with ajax
 			$.ajax({
-				url: "http://103.80.88.77:8001/remove_irs.php",
+				// url: "http://localhost:8000/remove_irs.php",
+				url: "/irsDel",
 				method: "POST",
 				data: indexed_array,
 				dataType:'json',
@@ -106,7 +107,8 @@
 			});
 			// post api with ajax
 			$.ajax({
-				url: "http://103.80.88.77:8001/post_irs.php",
+				// url: "http://localhost:8000/post_irs.php",
+				url: "/irsAdd",
 				method: "POST",
 				data: indexed_array,
 				dataType:'json',
@@ -152,7 +154,7 @@
 		//ajax
 			// $('#IrsTable').dataTable();
 			// $.ajax({
-			// 	url: "http://103.80.88.77:8001/get_irs.php?nim={{ $nim }}",
+			// 	url: "http://localhost:8000/get_irs.php?nim={{ $nim }}",
 			// 	method: "GET",
 			// 	crossDomain: true,
 			// 	dataType: "json",
@@ -181,7 +183,7 @@
 </script>
 
 	{{-- swall faiyah --}}
-	@if (\Session::has('irsDeletedSuccess'))
+	{{-- @if (\Session::has('irsDeletedSuccess'))
 		<script>
 			Swal.fire(
 			'Berhasil!',
@@ -199,7 +201,7 @@
 		  'success'
 		  )
 	  </script>
-	@endif
+	@endif --}}
 
   <!--begin::Body-->
   <body
@@ -400,6 +402,7 @@
 												</td>
 												<td>
 												  <form onsubmit="return addIrsMhs(this);">
+												  {{-- <form action="/irsAdd" method="POST"> --}}
 												  @csrf
 												  <input type="hidden" name="str_id_nim" value="{{ auth()->user()->username }}">
 												  <input type="hidden" name="int_kd_perkuliahan_d" value="{{ $value->int_kd_perkuliahan_d }}">

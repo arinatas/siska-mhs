@@ -41,8 +41,9 @@
                   <span id="sks">{{ $irs->num_sks }}</span> <span id="smt">  ({{ $romanNum::numberToRoman($irs->num_kd_semester) }})</span>
                   </td>
                   <td>
-                      {{-- <a id="btnico" href="/irsDel/{{ $irs->int_kd_perkuliahan_d }}"><i class="bi bi-trash3-fill text-danger fs-1"></i></a> --}}
+                      {{-- <a id="btnico" href="/irsDel/{{ $irs->int_kd_perkuliahan_d }}"><i class="bi bi-trash3-fill text-success fs-1"></i></a> --}}
                       <form onsubmit="return deleteIrs(this);">
+                      {{-- <form action="/irsDel" method="POST"> --}}
                         @csrf
                         <input type="hidden" name="str_id_nim" value="{{ auth()->user()->username }}">
                         <input type="hidden" name="int_kd_perkuliahan_d" value="{{ $irs->int_kd_perkuliahan_d }}">

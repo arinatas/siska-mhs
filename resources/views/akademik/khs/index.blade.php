@@ -5,19 +5,20 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 <script>
-  function add(kode_mk, kode_perku, smt, thn)
+  function paramNilai(kode_mk, kode_perku, smt, thn)
   {
     $.ajax({
       url: 'nilaieach/'+ kode_mk + '/' + kode_perku + '/' + smt + '/' + thn,
-      type: 'GET',
-      data: {
-        "kode_mk": kode_mk,
-        "kode_perku": kode_perku,
-        "smt": smt,
-        "tahun": thn
-      },
-      success:function(data){
-        jQuery.each(data, function(index, value){
+      // type: 'GET',
+      // data: {
+      //   "kode_mk": kode_mk,
+      //   "kode_perku": kode_perku,
+      //   "smt": smt,
+      //   "tahun": thn
+      // },
+      success:function(response){
+        console.log(response);
+        jQuery.each(response, function(index, value){
             // console.log(value);
             if (value.hasOwnProperty("str_nm_mtr_nilai")){
               // cek ketika dpt data dari tabel aka_nilai
@@ -286,7 +287,7 @@
                                     <td>{{ $value->num_sks }}</td>
                                     <td>{{ $value->num_bobot }}</td>
                                     <td>
-                                      <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="add('{{ $value->str_kd_mk }}', '{{ $value->int_kd_perkuliahan_d }}', '{{ $selectedSmt }}', '{{ $selectedTahun }}')">
+                                      <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="paramNilai('{{ $value->str_kd_mk }}', '{{ $value->int_kd_perkuliahan_d }}', '{{ $selectedSmt }}', '{{ $selectedTahun }}')">
                                         {{ (int)$value->dec_na }}
                                       </button>
                                     </td>
