@@ -243,7 +243,7 @@ class AkademikController extends Controller
         }
 
         return view('akademik.khs.index', [
-            'title' => 'Kartu Hasil Studi',
+            'title' => 'KHS',
             'active' => 'Akademik',
             'tahunAjar' => $tahunAjarUniq,
             'selectedTahun' => $selectedTahun,
@@ -382,7 +382,6 @@ class AkademikController extends Controller
                 session()->forget(['angketLeft']);
                 return redirect('/kelas')->with('falseAngket', $response->message);
             }
-
             
         } else {
             session()->forget(['angketLeft']);
@@ -485,7 +484,7 @@ class AkademikController extends Controller
         return redirect('/angket')->with('angketSubmited', 'Angket Berhasil diinput!');
     }
     
-    public function krs()
+    public function irs()
     {
         $nim = auth()->user()->username;
 
@@ -516,8 +515,8 @@ class AkademikController extends Controller
 
         // dd($statusPembayaran);
 
-        return view('akademik.krs.index', [
-            'title' => 'KRS',
+        return view('akademik.irs.index', [
+            'title' => 'IRS',
             'active' => 'Akademik',
             'irsLists' => $irs,
             'nim' => $nim,
@@ -566,13 +565,11 @@ class AkademikController extends Controller
         $statusIrsMhs = $status[0]->status;
         $statusPembayaran = $status[1];
 
-        return view('akademik.krs.irslist', [
+        return view('akademik.irs.irslist', [
             'lists' => $mhsIrs,
             'totalSKS' => $allSks,
             'statusFinal' => $statusIrsMhs,
-            'statusPembayaran' => $statusPembayaran,
-            
-            
+            'statusPembayaran' => $statusPembayaran
 
         ]); 
     }

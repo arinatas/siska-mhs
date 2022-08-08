@@ -79,7 +79,7 @@
                   <!--begin::Item-->
                   @if ($selectedSmt && $selectedTahun != null)
                   <li class="breadcrumb-item text-white opacity-75">
-                    <span class="badge rounded-pill bg-light text-dark">{{ $selectedSmt }} {{ $selectedTahun }}</span>
+                    Kartu Rencana Studi &nbsp; <span class="badge rounded-pill bg-light text-dark">{{ $selectedSmt }} {{ $selectedTahun }}</span>
                   </li>
                   @endif
                   <!--end::Item-->

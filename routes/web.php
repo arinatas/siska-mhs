@@ -40,7 +40,7 @@ Route::patch('password', [ChangePasswordController::class, 'update'])->name('pas
 
 Route::get('/kelas', [JadwalController::class, 'index'])->middleware(['auth', 'angket.checker']);
 Route::get('/khs', [AkademikController::class, 'khs'])->middleware(['auth', 'angket.checker']);
-Route::get('/krs', [AkademikController::class, 'krs'])->middleware(['auth', 'cors']);
+Route::get('/irs', [AkademikController::class, 'irs'])->middleware(['auth', 'cors', 'angket.checker']);
 Route::post('/irsDel', [AkademikController::class, 'irsDel'])->middleware(['auth', 'angket.checker', 'cors']);
 Route::post('/irsAdd', [AkademikController::class, 'irsAdd'])->middleware(['auth', 'angket.checker', 'cors']);
 Route::get('/getIrs', [AkademikController::class, 'getIrs'])->middleware(['auth', 'angket.checker', 'cors']);

@@ -249,7 +249,7 @@
                   <!--end::Item-->
                   <!--begin::Item-->
                   <li class="breadcrumb-item text-white opacity-75">
-                    {{-- Semester Genap 2021/2022 --}}
+                    Input Rencana Studi
                   </li>
                   <!--end::Item-->
                 </ul>
