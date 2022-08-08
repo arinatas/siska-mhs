@@ -74,7 +74,7 @@
                   <!--end::Item-->
                   <!--begin::Item-->
                   <li class="breadcrumb-item text-white opacity-75">
-                    Semester Genap 2021/2022
+                    <span class="badge rounded-pill bg-light text-dark">{{ $semester }} {{ $tahunAjar }}</span>
                   </li>
                   <!--end::Item-->
                 </ul>
@@ -122,84 +122,114 @@
                           <div class="table-responsive">
                             {{-- cek table jadwal kosong --}}
                             @if ($schedules)
-                            <!--begin::Table-->
-                            <table
-                              class="table  table-row-gray-300 align-middle gs-0 gy-4"
-                            >
-                              <!--begin::Table head-->
-                              <thead>
-                                <tr
-                                  class="fw-bolder fs-6 text-gray-800 text-center border-0 bg-light"
+                              @if ($statusFinal == true)
+                                  <!--begin::Table-->
+                                  <table
+                                  class="table  table-row-gray-300 align-middle gs-0 gy-4"
                                 >
-                                  <th class="min-w-150px px-3 rounded-start">Matakuliah</th>
-                                  <th class="min-w-150px">Dosen</th>
-                                  <th class="min-w-70px">Waktu</th>
-                                  <th class="min-w-50px">Ruangan</th>
-                                  <th class="min-w-50px">Enrollment Key</th>
-                                  <th class="min-w-100px px-3 rounded-end">Link</th>
-                                </tr>
-                              </thead>
-                              <!--end::Table head-->
-                              <!--begin::Table body-->
-							              @foreach ($schedules as $schedule)
-                              <tbody class="border-bottom border">
-                                <tr
-                                  class="text-center"
-                                >
-                                  <td align="left" style="padding-left: 20px">
-                                  {{ $schedule->str_nm_mk }}
-                                  <br>
-                                  <span>Kode: <b>{{ $schedule->str_kd_mk }}</b></span>
-                                  </td>
-                                  <td align="left" style="padding-left: 20px">
-                                  {{ $schedule->str_nm_kad }}
-                                  </td>
-                                  <td>
-                                  {{ $schedule->str_nama_hari }} <br> {{ $schedule->awal }} ~ {{ $schedule->akhir }}
-                                  </td>
-                                  <td>
-                                  {{ $schedule->str_nm_ruang }}
-                                  </td>
-                                  <td>
-                                  {{ $schedule->group_spada }}
-                                  </td>
-                                  <td class="px-5" style="text-align-last: justify;">
-                                      <a href="{{ $schedule->link }}"><img src="/assets/media/logos/whatsapp.svg" width="30px" alt="SPADA"></a>
-                                      <a href="{{ $schedule->link_spada }}"><img src="/assets/media/logos/smallprimakara.png" width="25px" alt="SPADA"></a>
-                                  </td>
-                                </tr>
-                              </tbody>
-							                @endforeach
-                              <!--end::Table body-->
-                            </table>
-                            <!--end::Table-->
-                            @else
-                            <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
-                              <!--begin::Icon-->
-                              <!--begin::Svg Icon | path: icons/duotune/general/gen044.svg-->
-                              <span class="svg-icon svg-icon-2tx svg-icon-warning me-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                  <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
-                                  <rect x="11" y="14" width="7" height="2" rx="1" transform="rotate(-90 11 14)" fill="black" />
-                                  <rect x="11" y="17" width="2" height="2" rx="1" transform="rotate(-90 11 17)" fill="black" />
-                                </svg>
-                              </span>
-                              <!--end::Svg Icon-->
-                              <!--end::Icon-->
-                              <!--begin::Wrapper-->
-                              <div class="d-flex flex-stack flex-grow-1">
-                                <!--begin::Content-->
-                                <div class="fw-bold">
-                                  <h4 class="text-gray-900 fw-bolder">Tidak Ada Jadwal Kuliah</h4>
-                                  <div class="fs-6 text-gray-700">Hallo <b>{{ auth()->user()->display_name }}</b>, kamu mungkin tidak mengambil KRS pada semester ini.
-                                    <br />
-                                    {{-- <a class="fw-bolder" href="#">Learn more</a> --}}
+                                  <!--begin::Table head-->
+                                  <thead>
+                                    <tr
+                                      class="fw-bolder fs-6 text-gray-800 text-center border-0 bg-light"
+                                    >
+                                      <th class="min-w-150px px-3 rounded-start">Matakuliah</th>
+                                      <th class="min-w-150px">Dosen</th>
+                                      <th class="min-w-70px">Waktu</th>
+                                      <th class="min-w-50px">Ruangan</th>
+                                      <th class="min-w-50px">Enrollment Key</th>
+                                      <th class="min-w-100px px-3 rounded-end">Link</th>
+                                    </tr>
+                                  </thead>
+                                  <!--end::Table head-->
+                                  <!--begin::Table body-->
+                                @foreach ($schedules as $schedule)
+                                  <tbody class="border-bottom border">
+                                    <tr
+                                      class="text-center"
+                                    >
+                                      <td align="left" style="padding-left: 20px">
+                                      {{ $schedule->str_nm_mk }}
+                                      <br>
+                                      <span>Kode: <b>{{ $schedule->str_kd_mk }}</b></span>
+                                      </td>
+                                      <td align="left" style="padding-left: 20px">
+                                      {{ $schedule->str_nm_kad }}
+                                      </td>
+                                      <td>
+                                      {{ $schedule->str_nama_hari }} <br> {{ $schedule->awal }} ~ {{ $schedule->akhir }}
+                                      </td>
+                                      <td>
+                                      {{ $schedule->str_nm_ruang }}
+                                      </td>
+                                      <td>
+                                      {{ $schedule->group_spada }}
+                                      </td>
+                                      <td class="px-5" style="text-align-last: justify;">
+                                          <a href="{{ $schedule->link }}"><img src="/assets/media/logos/whatsapp.svg" width="30px" alt="SPADA"></a>
+                                          <a href="{{ $schedule->link_spada }}"><img src="/assets/media/logos/smallprimakara.png" width="25px" alt="SPADA"></a>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                  @endforeach
+                                  <!--end::Table body-->
+                                </table>
+                                <!--end::Table-->
+                              @else
+                                <div class="notice d-flex bg-light-info rounded border-info border border-dashed mb-9 p-6">
+                                  <!--begin::Icon-->
+                                  <!--begin::Svg Icon | path: icons/duotune/general/gen044.svg-->
+                                  <span class="svg-icon svg-icon-2tx svg-icon-info me-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                      <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
+                                      <rect x="11" y="14" width="7" height="2" rx="1" transform="rotate(-90 11 14)" fill="black" />
+                                      <rect x="11" y="17" width="2" height="2" rx="1" transform="rotate(-90 11 17)" fill="black" />
+                                    </svg>
+                                  </span>
+                                  <!--end::Svg Icon-->
+                                  <!--end::Icon-->
+                                  <!--begin::Wrapper-->
+                                  <div class="d-flex flex-stack flex-grow-1">
+                                    <!--begin::Content-->
+                                    <div class="fw-bold">
+                                      <h4 class="text-gray-900 fw-bolder">IRS Belum difinalisasi</h4>
+                                      <div class="fs-6 text-gray-700">Hallo <b>{{ auth()->user()->display_name }}</b>, IRS kamu belum difinalisasi oleh dosen pembimbing, hubungi dosen pembimbing ya agar status IRS difinalisasi.
+                                        <br />
+                                        {{-- <a class="fw-bolder" href="#">Learn more</a> --}}
+                                      </div>
+                                    </div>
+                                    <!--end::Content-->
                                   </div>
+                                  <!--end::Wrapper-->
                                 </div>
-                                <!--end::Content-->
+                              @endif
+                              
+                            @else
+                              <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
+                                <!--begin::Icon-->
+                                <!--begin::Svg Icon | path: icons/duotune/general/gen044.svg-->
+                                <span class="svg-icon svg-icon-2tx svg-icon-warning me-4">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
+                                    <rect x="11" y="14" width="7" height="2" rx="1" transform="rotate(-90 11 14)" fill="black" />
+                                    <rect x="11" y="17" width="2" height="2" rx="1" transform="rotate(-90 11 17)" fill="black" />
+                                  </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                                <!--end::Icon-->
+                                <!--begin::Wrapper-->
+                                <div class="d-flex flex-stack flex-grow-1">
+                                  <!--begin::Content-->
+                                  <div class="fw-bold">
+                                    <h4 class="text-gray-900 fw-bolder">Tidak Ada Jadwal Kuliah</h4>
+                                    <div class="fs-6 text-gray-700">Hallo <b>{{ auth()->user()->display_name }}</b>, kamu mungkin tidak mengambil KRS pada semester ini.
+                                      <br />
+                                      {{-- <a class="fw-bolder" href="#">Learn more</a> --}}
+                                    </div>
+                                  </div>
+                                  <!--end::Content-->
+                                </div>
+                                <!--end::Wrapper-->
                               </div>
-                              <!--end::Wrapper-->
-                            </div>
                             @endif
                           </div>
                           <!--end::Table container-->

@@ -386,7 +386,7 @@ class AkademikController extends Controller
             
         } else {
             session()->forget(['angketLeft']);
-            return redirect('/kelas')->with('angketNotYet', 'No schedule found!');
+            return redirect('/kelas')->with('angketNotYet', 'Jadwal Tidak ditemukan!');
         }
 
         
@@ -499,11 +499,30 @@ class AkademikController extends Controller
 
         $irs = json_decode($response);
 
+        // cek status IRS(array 0) dan Pembayaran (array 1)
+        // cek jika tidak dpt data bakal error
+        $url = "http://103.80.88.77:8001/cek_awal.php?str_id_nim=".$nim."";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $status = json_decode($response);
+
+        // set status irs dan pembayaran
+        $statusIrsMhs = $status[0]->status;
+        $statusPembayaran = $status[1];
+
+        // dd($statusPembayaran);
+
         return view('akademik.krs.index', [
             'title' => 'KRS',
             'active' => 'Akademik',
             'irsLists' => $irs,
             'nim' => $nim,
+            'statusFinal' => $statusIrsMhs,
+            'statusPembayaran' => $statusPembayaran
             // 'irsMhsLists' => $mhsIrs
         ]); 
     }
@@ -532,31 +551,31 @@ class AkademikController extends Controller
             $allSks = 0;
         }
 
+        // cek status IRS(array 0) dan Pembayaran (array 1)
+        // cek jika tidak dpt data bakal error
+        $url = "http://103.80.88.77:8001/cek_awal.php?str_id_nim=".$nim."";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $status = json_decode($response);
+
+        // set status irs dan pembayaran
+        $statusIrsMhs = $status[0]->status;
+        $statusPembayaran = $status[1];
+
         return view('akademik.krs.irslist', [
             'lists' => $mhsIrs,
-            'totalSKS' => $allSks
+            'totalSKS' => $allSks,
+            'statusFinal' => $statusIrsMhs,
+            'statusPembayaran' => $statusPembayaran,
+            
+            
+
         ]); 
     }
-
-    // // ambil matakuliah yg tersedia
-    // public function getMatkulIrs()
-    // {
-    //     $nim = auth()->user()->username;
-
-    //     // Panggil API untuk mendapatkan krs yg telah diambil (mhs)
-    //     $url = "http://103.80.88.77:8001/get_makul.php?nim=".$nim."";
-    //     $ch = curl_init();
-    //     curl_setopt($ch, CURLOPT_URL, $url);
-    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    //     $response = curl_exec($ch);
-    //     curl_close($ch);
-
-    //     $matkulIrs = json_decode($response);
-
-    //     return view('akademik.krs.matkulist', [
-    //         'lists' => $matkulIrs
-    //     ]); 
-    // }
     
     public function irsAdd(Request $request)
     {

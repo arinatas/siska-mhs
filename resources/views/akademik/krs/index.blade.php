@@ -6,19 +6,19 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <script>
-	function romanize (num) {
-		if (isNaN(num))
-			return NaN;
-		var digits = String(+num).split(""),
-			key = ["","C","CC","CCC","CD","D","DC","DCC","DCCC","CM",
-				"","X","XX","XXX","XL","L","LX","LXX","LXXX","XC",
-				"","I","II","III","IV","V","VI","VII","VIII","IX"],
-			roman = "",
-			i = 3;
-		while (i--)
-			roman = (key[+digits.pop() + (i * 10)] || "") + roman;
-		return Array(+digits.join("") + 1).join("M") + roman;
-	}
+	// function romanize (num) {
+	// 	if (isNaN(num))
+	// 		return NaN;
+	// 	var digits = String(+num).split(""),
+	// 		key = ["","C","CC","CCC","CD","D","DC","DCC","DCCC","CM",
+	// 			"","X","XX","XXX","XL","L","LX","LXX","LXXX","XC",
+	// 			"","I","II","III","IV","V","VI","VII","VIII","IX"],
+	// 		roman = "",
+	// 		i = 3;
+	// 	while (i--)
+	// 		roman = (key[+digits.pop() + (i * 10)] || "") + roman;
+	// 	return Array(+digits.join("") + 1).join("M") + roman;
+	// }
 
 	function deleteIrs(form) {
 		Swal.fire({
@@ -183,25 +183,26 @@
 </script>
 
 	{{-- swall faiyah --}}
-	{{-- @if (\Session::has('irsDeletedSuccess'))
+		{{-- @if (\Session::has('irsDeletedSuccess'))
+			<script>
+				Swal.fire(
+				'Berhasil!',
+				'{!! \Session::get('irsDeletedSuccess') !!}',
+				'success'
+				)
+			</script>
+		@endif
+
+		@if (\Session::has('irsAddesSuccess'))
 		<script>
 			Swal.fire(
 			'Berhasil!',
-			'{!! \Session::get('irsDeletedSuccess') !!}',
+			'{!! \Session::get('irsAddesSuccess') !!}',
 			'success'
 			)
 		</script>
-  	@endif
-
-	  @if (\Session::has('irsAddesSuccess'))
-	  <script>
-		  Swal.fire(
-		  'Berhasil!',
-		  '{!! \Session::get('irsAddesSuccess') !!}',
-		  'success'
-		  )
-	  </script>
-	@endif --}}
+		@endif --}}
+	{{-- swall faiyah end --}}
 
   <!--begin::Body-->
   <body
@@ -248,7 +249,7 @@
                   <!--end::Item-->
                   <!--begin::Item-->
                   <li class="breadcrumb-item text-white opacity-75">
-                    Semester Genap 2021/2022
+                    {{-- Semester Genap 2021/2022 --}}
                   </li>
                   <!--end::Item-->
                 </ul>
@@ -282,7 +283,7 @@
                         <!--begin::Heading-->
                         <div class="my-5 d-flex justify-content-between">
                           <!--begin::Title-->
-                          <h1 class="fs-1x text-dark mb-6">
+                          <h1 class="fs-1x text-dark" style="margin: 0">
                             Mata Kuliah Yang Diambil
                           </h1>
                           <div class="">
@@ -322,13 +323,13 @@
                             <!--begin::Post-->
                             <div class="content flex-row-fluid" id="kt_content">
                               <!--begin::Toolbar-->
-                              <div class="d-flex flex-wrap flex-stack pb-7">   
+                              <div class="d-flex flex-wrap flex-stack pb-5">   
                                 <!--begin::Controls-->
                                 <div class="d-flex flex-wrap my-1">
                                   <!--begin::Actions-->
                                   <div class="d-flex my-0">
                                     <!--begin::Select-->
-                                    <h1 class="fs-1x text-dark">
+                                    <h1 class="fs-1x text-dark" style="margin: 0">
 										Mata Kuliah Yang Tersedia
 									  </h1>
                                     <!--end::Select-->
@@ -356,6 +357,13 @@
                                 <!--end::Search-->
                                 <!--end::Controls-->
                               </div>
+							  @if ($statusPembayaran->status == true)	  
+							  <div class="text-center">
+								  <div class="alert alert-info" role="alert">
+								  <b>Refresh page untuk mengetahui sisa kuota kelas</b>
+								  </div>
+							  </div>
+							  @endif
                               <!--end::Toolbar-->
                               <!--begin::Tab Content-->
                               <div class="tab-content">
@@ -367,91 +375,119 @@
                                     <div class="">
                                       <!--begin::Table container-->
                                       <div class="table-responsive">
-
-										@if ($irsLists[0])
-										<!--begin::Table-->
-                                        <table id="kt_project_users_table" class="table table-row-bordered table-row gy-4 align-middle fw-bolder">
-											<!--begin::Head-->
-											<thead class="fs-7 text-gray-700 text-uppercase">
-											  <tr>
-												<th class="min-w-150">Dosen</th>
-												<th class="min-w-150px">Matakuliah (Kode MK)</th>
-												<th class="min-w-150">Waktu & Ruangan</th>
-												<th class="min-w-50px">SKS & Semester</th>
-												<th class="min-w-10px">Kuota</th>
-												<th class="min-w-10px">Ambil</th>
-											  </tr>
-											</thead>
-											<!--end::Head-->
-											{{-- ambil fungsi untuk mengambil fungsi konversi angka romawi --}}
-											@inject('romanNum', 'App\Http\Controllers\AkademikController')
-											<!--begin::Body-->
-											<tbody class="fs-6" id="btnico">
-											  @foreach ($irsLists as $value)
-											  <tr>
-												<td>{{ $value->str_nm_kad }}</td>
-												<td>
-												{{ $value->str_nm_mk }} <span>({{ $value->str_kd_mk }})</span>
-												</td>
-												<td>{{ $value->str_nama_hari }}, {{ $value->awal }} ~ {{ $value->akhir }} ({{ $value->str_nm_ruang }})</td>
-												<td>
-												{{ $value->num_sks }}  ({{ $romanNum::numberToRoman($value->num_kd_semester) }})
-												</td>
-												<td>
-												{{ $value->num_jml_sisa }}
-												</td>
-												<td>
-												  <form onsubmit="return addIrsMhs(this);">
-												  {{-- <form action="/irsAdd" method="POST"> --}}
-												  @csrf
-												  <input type="hidden" name="str_id_nim" value="{{ auth()->user()->username }}">
-												  <input type="hidden" name="int_kd_perkuliahan_d" value="{{ $value->int_kd_perkuliahan_d }}">
-												  <input type="hidden" name="num_sks" value="{{ $value->num_sks }}">
-												  <input type="hidden" name="str_kd_mk" value="{{ $value->str_kd_mk }}">
-													  <div>
-														  <button id="" type="submit" style="border: none; outline: none; background: none;  padding: 0;"><i class="bi bi-plus-circle-fill text-primary fs-1"></i></button>
-													  </div>
-												  </form>
-												</td>
-											  </tr>
-											  @endforeach
-											</tbody>
-											<!--end::Body-->
-										</table>
-										<!--end::Table-->
-										<div class="text-center mt-5">
-											<div class="alert alert-info" role="alert">
-											  <b>Refresh page untuk mengetahui sisa kuota kelas</b>
-											</div>
-										</div>
-										@else
-										<div class="notice d-flex bg-light-warning rounded border-warning border border-dashed p-6 mt-10">
-											<!--begin::Icon-->
-											<!--begin::Svg Icon | path: icons/duotune/general/gen044.svg-->
-											<span class="svg-icon svg-icon-2tx svg-icon-warning me-4">
-											  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+										{{-- cek jika belum bayar, tidak tampil list matakuliah --}}
+										@if ($statusPembayaran->status == false)
+											<div class="notice d-flex bg-light-danger rounded border-danger border border-dashed p-6 mt-5">
+												<!--begin::Icon-->
+												<!--begin::Svg Icon | path: icons/duotune/general/gen044.svg-->
+												<span class="svg-icon svg-icon-2tx svg-icon-danger me-4">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
 												<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
 												<rect x="11" y="14" width="7" height="2" rx="1" transform="rotate(-90 11 14)" fill="black" />
 												<rect x="11" y="17" width="2" height="2" rx="1" transform="rotate(-90 11 17)" fill="black" />
-											  </svg>
-											</span>
-											<!--end::Svg Icon-->
-											<!--end::Icon-->
-											<!--begin::Wrapper-->
-											<div class="d-flex flex-stack flex-grow-1">
-											  <!--begin::Content-->
-											  <div class="fw-bold">
-												<h4 class="text-gray-900 fw-bolder">Data IRS Tidak Tersedia</h4>
-												<div class="fs-6 text-gray-700">Hallo <b>{{ auth()->user()->display_name }}</b>, kamu mungkin tidak mengambil KRS pada tahun ajaran ini.
-												  <br />
-												  {{-- <a class="fw-bolder" href="#">Learn more</a> --}}
+												</svg>
+												</span>
+												<!--end::Svg Icon-->
+												<!--end::Icon-->
+												<!--begin::Wrapper-->
+												<div class="d-flex flex-stack flex-grow-1">
+												<!--begin::Content-->
+												<div class="fw-bold">
+												<h4 class="text-gray-900 fw-bolder">Pembayaran Belum Terpenuhi</h4>
+												<div class="fs-6 text-gray-700">Hallo <b>{{ auth()->user()->display_name }}</b>, {{ $statusPembayaran->message }}
+												<br />
+												{{-- <a class="fw-bolder" href="#">Learn more</a> --}}
 												</div>
-											  </div>
-											  <!--end::Content-->
+												</div>
+												<!--end::Content-->
+												</div>
+												<!--end::Wrapper-->
 											</div>
-											<!--end::Wrapper-->
-										</div>
+										@else
+											@if ($irsLists[0])
+											<!--begin::Table-->
+											<table id="kt_project_users_table" class="table table-row-bordered table-row gy-4 align-middle fw-bolder">
+												<!--begin::Head-->
+												<thead class="fs-7 text-gray-700 text-uppercase">
+												<tr>
+													<th class="min-w-150">Dosen</th>
+													<th class="min-w-150px">Matakuliah</th>
+													<th class="min-w-150">Waktu & Ruangan</th>
+													<th class="min-w-50px">SKS & Semester</th>
+													<th class="min-w-10px">Kuota</th>
+													<th class="min-w-10px">Ambil</th>
+												</tr>
+												</thead>
+												<!--end::Head-->
+												{{-- ambil fungsi untuk mengambil fungsi konversi angka romawi --}}
+												@inject('romanNum', 'App\Http\Controllers\AkademikController')
+												<!--begin::Body-->
+												<tbody class="fs-6" id="btnico">
+												@foreach ($irsLists as $value)
+												<tr>
+													<td>{{ $value->str_nm_kad }}</td>
+													<td>
+													{{ $value->str_nm_mk }} <span>({{ $value->str_kd_mk }})</span>
+													</td>
+													<td>{{ $value->str_nama_hari }}, {{ $value->awal }} ~ {{ $value->akhir }} ({{ $value->str_nm_ruang }})</td>
+													<td>
+													{{ $value->num_sks }}  ({{ $romanNum::numberToRoman($value->num_kd_semester) }})
+													</td>
+													<td>
+													{{ $value->num_jml_sisa }}
+													</td>
+													<td>
+															@if ($statusFinal == false)
+													<form onsubmit="return addIrsMhs(this);">
+													{{-- <form action="/irsAdd" method="POST"> --}}
+													@csrf
+													<input type="hidden" name="str_id_nim" value="{{ auth()->user()->username }}">
+													<input type="hidden" name="int_kd_perkuliahan_d" value="{{ $value->int_kd_perkuliahan_d }}">
+													<input type="hidden" name="num_sks" value="{{ $value->num_sks }}">
+													<input type="hidden" name="str_kd_mk" value="{{ $value->str_kd_mk }}">
+														<div>
+															<button id="" type="submit" style="border: none; outline: none; background: none;  padding: 0;"><i class="bi bi-plus-circle-fill text-primary fs-1"></i></button>
+														</div>
+													</form>
+													@endif
+													</td>
+												</tr>
+												@endforeach
+												</tbody>
+												<!--end::Body-->
+											</table>
+											<!--end::Table-->
+											@else
+											<div class="notice d-flex bg-light-warning rounded border-warning border border-dashed p-6 mt-10">
+												<!--begin::Icon-->
+												<!--begin::Svg Icon | path: icons/duotune/general/gen044.svg-->
+												<span class="svg-icon svg-icon-2tx svg-icon-warning me-4">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+													<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
+													<rect x="11" y="14" width="7" height="2" rx="1" transform="rotate(-90 11 14)" fill="black" />
+													<rect x="11" y="17" width="2" height="2" rx="1" transform="rotate(-90 11 17)" fill="black" />
+												</svg>
+												</span>
+												<!--end::Svg Icon-->
+												<!--end::Icon-->
+												<!--begin::Wrapper-->
+												<div class="d-flex flex-stack flex-grow-1">
+												<!--begin::Content-->
+												<div class="fw-bold">
+													<h4 class="text-gray-900 fw-bolder">Data IRS Tidak Tersedia</h4>
+													<div class="fs-6 text-gray-700">Hallo <b>{{ auth()->user()->display_name }}</b>, kamu mungkin tidak mengambil IRS pada tahun ajaran ini.
+													<br />
+													{{-- <a class="fw-bolder" href="#">Learn more</a> --}}
+													</div>
+												</div>
+												<!--end::Content-->
+												</div>
+												<!--end::Wrapper-->
+											</div>
+											@endif
 										@endif
+										{{-- cek jika ada matakuliah tersedia --}}
+										
                                       </div>
                                       <!--end::Table container-->
                                     </div>

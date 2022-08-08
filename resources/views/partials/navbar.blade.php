@@ -84,7 +84,7 @@
                       data-kt-menu="true"
                     >
                     {{-- here show & active harus di handle untuk kelihatan aktif --}}
-                      <div
+                      {{-- <div
                         data-kt-menu-placement="bottom-start"
                         class="menu-item {{ ($active === "Dashboard") ? 'here show' : '' }} menu-lg-down-accordion me-lg-1"
                       >
@@ -95,7 +95,7 @@
                           <span class="menu-title">Dashboard</span>
                           <span class="menu-arrow d-lg-none"></span>
                         </a>
-                      </div>
+                      </div> --}}
                       <div
                         data-kt-menu-placement="bottom-start"
                         class="menu-item {{ ($active === "Kelas") ? 'here show' : '' }} menu-lg-down-accordion me-lg-1"
@@ -120,7 +120,7 @@
                         <div
                           class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0 py-lg-4 w-lg-225px"
                         >
-                          <div class="menu-item">
+                          {{-- <div class="menu-item">
                             <a
                               class="menu-link py-3"
                               href="#"
@@ -155,12 +155,12 @@
                               </span>
                               <span class="menu-title">Rencana Studi</span>
                             </a>
-                          </div>
+                          </div> --}}
                           <div class="menu-item">
                             <a
                               class="menu-link py-3"
                               href="/krs"
-                              title="KRS"
+                              title="IRS"
                               data-bs-toggle="tooltip"
                               data-bs-trigger="hover"
                               data-bs-dismiss="click"
@@ -189,7 +189,7 @@
                                 </span>
                                 <!--end::Svg Icon-->
                               </span>
-                              <span class="menu-title">KRS</span>
+                              <span class="menu-title">IRS</span>
                             </a>
                           </div>
                           <div class="menu-item">
@@ -345,7 +345,7 @@
                               <span class="menu-title">TAK</span>
                             </a>
                           </div>
-                          <div class="menu-item">
+                          {{-- <div class="menu-item">
                             <a
                               class="menu-link py-3"
                               href="#"
@@ -380,8 +380,8 @@
                               </span>
                               <span class="menu-title">Informasi Umum TAK</span>
                             </a>
-                          </div>
-                          <div class="menu-item">
+                          </div> --}}
+                          {{-- <div class="menu-item">
                             <a
                               class="menu-link py-3"
                               href="#"
@@ -416,8 +416,8 @@
                               </span>
                               <span class="menu-title">Transkrip TAK</span>
                             </a>
-                          </div>
-                          <div class="menu-item">
+                          </div> --}}
+                          {{-- <div class="menu-item">
                             <a
                               class="menu-link py-3"
                               href="#"
@@ -452,8 +452,8 @@
                               </span>
                               <span class="menu-title">Laporan AKtifitas</span>
                             </a>
-                          </div>
-                          <div class="menu-item">
+                          </div> --}}
+                          {{-- <div class="menu-item">
                             <a
                               class="menu-link py-3"
                               href="#"
@@ -488,12 +488,13 @@
                               </span>
                               <span class="menu-title">Prestasi</span>
                             </a>
-                          </div>
+                          </div> --}}
                           
                         </div>
                       </div>
                       
-                      <div
+                      {{-- administrasi --}}
+                      {{-- <div
                         data-kt-menu-trigger="click"
                         data-kt-menu-placement="bottom-start"
                         class="menu-item {{ ($active === "Administrasi") ? 'here show' : '' }} menu-lg-down-accordion me-lg-1"
@@ -578,7 +579,7 @@
                             </a>
                           </div>
                         </div>
-                      </div>
+                      </div> --}}
                     </div>
                     <!--end::Menu-->
                   </div>

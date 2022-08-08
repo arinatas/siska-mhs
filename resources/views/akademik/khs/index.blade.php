@@ -376,7 +376,7 @@
                                 <!--begin::Content-->
                                 <div class="fw-bold">
                                   <h4 class="text-gray-900 fw-bolder">Data KHS tidak ditemukan</h4>
-                                  <div class="fs-6 text-gray-700">Hallo <b>{{ auth()->user()->display_name }}</b>, kamu mungkin tidak mengambil KRS pada tahun ajaran ini.
+                                  <div class="fs-6 text-gray-700">Hallo <b>{{ auth()->user()->display_name }}</b>, kamu mungkin tidak mengambil IRS pada tahun ajaran ini.
                                     <br />
                                     {{-- <a class="fw-bolder" href="#">Learn more</a> --}}
                                   </div>

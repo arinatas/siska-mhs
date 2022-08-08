@@ -90,13 +90,31 @@ class JadwalController extends Controller
             // }
         //presensis wrong end    
 
+        // cek status finalisasi IRS(array 0) dan Pembayaran (array 1)
+        // cek jika tidak dpt data bakal error
+        $url = "http://103.80.88.77:8001/cek_awal.php?str_id_nim=".$nim."";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $status = json_decode($response);
+
+        $statusIrs = $status[0]->status;
+
+        // dd($statusIrs);
+
         //mengembalikan nilai ke tampilan
         return view('kelas.index', [
             'title' => 'Kelas',
             'active' => 'Kelas',
-            // get jadwal
+            'tahunAjar' => $tahunAjar,
+            'semester' => $semester,
             'schedules' =>  $schedules,
-            'presences' => $presences
+            'presences' => $presences,
+            'statusFinal' => $statusIrs,
+
         ]);    
     }
 
