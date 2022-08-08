@@ -8,6 +8,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\AkademikController;
+use App\Http\Controllers\KemahasiswaanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,7 @@ use App\Http\Controllers\AkademikController;
 |
 */
 
+// Routes For Authentication Here
 
 Route::get('/login', [LoginController::class, 'index'])->middleware('guest')->name('login');
 Route::get('/', [LoginController::class, 'index'])->middleware('guest')->name('login');
@@ -38,6 +40,8 @@ Route::patch('password', [ChangePasswordController::class, 'update'])->name('pas
 //     return view('dashboard.index');
 // })->middleware(['auth', 'angket.checker']);
 
+// Routes For Akademik Here
+
 Route::get('/kelas', [JadwalController::class, 'index'])->middleware(['auth', 'angket.checker']);
 Route::get('/khs', [AkademikController::class, 'khs'])->middleware(['auth', 'angket.checker']);
 Route::get('/irs', [AkademikController::class, 'irs'])->middleware(['auth', 'cors', 'angket.checker']);
@@ -50,4 +54,10 @@ Route::get('/transkrip', [AkademikController::class, 'transkrip'])->middleware([
 Route::get('/angket', [AkademikController::class, 'angketList'])->middleware(['auth']);
 Route::get('/angket/{int_kd_perkuliahan_d}', [AkademikController::class, 'isiAngket'])->middleware(['auth']);
 Route::post('/angket', [AkademikController::class, 'sendAngket'])->middleware(['auth']);
+
+// Routes For Kemahasiswaan Here
+
+Route::get('/tak', [KemahasiswaanController::class, 'tak'])->middleware(['auth', 'angket.checker']);
+
+
 

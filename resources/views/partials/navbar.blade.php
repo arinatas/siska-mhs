@@ -312,7 +312,7 @@
                           <div class="menu-item">
                             <a
                               class="menu-link py-3"
-                              href="#"
+                              href="/tak"
                               title="Transkrip Aktivitas Mahasiswa"
                               data-bs-toggle="tooltip"
                               data-bs-trigger="hover"
