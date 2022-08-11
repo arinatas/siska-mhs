@@ -486,18 +486,8 @@ class AkademikController extends Controller
     
     public function irs()
     {
+
         $nim = auth()->user()->username;
-
-       // Panggil API untuk mendapatkan matkul yg di tawarkan (krs)
-        $url = "http://103.80.88.77:8001/get_makul.php?nim=".$nim."";
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($ch);
-        curl_close($ch);
-
-        $irs = json_decode($response);
-
         // cek status IRS(array 0) dan Pembayaran (array 1)
         // cek jika tidak dpt data bakal error
         $url = "http://103.80.88.77:8001/cek_awal.php?str_id_nim=".$nim."";
@@ -512,18 +502,45 @@ class AkademikController extends Controller
         // set status irs dan pembayaran
         $statusIrsMhs = $status[0]->status;
         $statusPembayaran = $status[1];
+        $statusAtifIrs = $status[2];
 
-        // dd($statusPembayaran);
+        if ($statusAtifIrs->status == true){
+            // get dosen PA dan bio
+            $mhsBio = DB::select("
+            SELECT mm.str_id_nim, mm.str_nm_mhs, IF(mm.str_kd_prodi = '0001', 'Teknik Informatika', IF(mm.str_kd_prodi = '0002', 'Sistem Informasi Akuntansi', 'Sistem Informasi')) as prodi, IF(mm.int_kd_kelas = 1, 'Pagi', 'Malam') as kelas, mm.str_email, mm.str_hp, mm.str_angkatan, mm.status_aktif,
+            (SELECT str_nm_kad FROM uni_karidos WHERE str_id_kad = (SELECT agw.str_kd_dosen_wali_d FROM aka_group_wali agw WHERE agw.int_id_group_wali = mm.int_id_group_wali)) as pembimbing_1,
+            (SELECT str_nm_kad FROM uni_karidos WHERE str_id_kad = (SELECT agw.str_kd_dosen_wali_aktif FROM aka_group_wali agw WHERE agw.int_id_group_wali = mm.int_id_group_wali)) as pembimbing_2
+            FROM mhs_mahasiswa mm
+            WHERE (mm.str_id_nim = '".$nim."') ");
 
-        return view('akademik.irs.index', [
-            'title' => 'IRS',
-            'active' => 'Akademik',
-            'irsLists' => $irs,
-            'nim' => $nim,
-            'statusFinal' => $statusIrsMhs,
-            'statusPembayaran' => $statusPembayaran
-            // 'irsMhsLists' => $mhsIrs
-        ]); 
+            // Panggil API untuk mendapatkan matkul yg di tawarkan (krs)
+            $url = "http://103.80.88.77:8001/get_makul.php?nim=".$nim."";
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $response = curl_exec($ch);
+            curl_close($ch);
+
+            $irs = json_decode($response);
+
+            // dd($statusPembayaran);
+
+            return view('akademik.irs.index', [
+                'title' => 'IRS',
+                'active' => 'Akademik',
+                'irsLists' => $irs,
+                'nim' => $nim,
+                'statusFinal' => $statusIrsMhs,
+                'statusPembayaran' => $statusPembayaran,
+                'mahasiswa' => $mhsBio
+            ]); 
+        }
+        else {
+            // return redirect()->back()->with('irsNotfound', $statusAtifIrs->message);
+            return redirect('/kelas')->with('irsNotfound', $statusAtifIrs->message);
+        }
+
+        
     }
 
     // ambil irs mhs

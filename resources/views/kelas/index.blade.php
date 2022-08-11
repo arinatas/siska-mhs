@@ -17,6 +17,15 @@
         )
     </script>
   @endif
+  @if (\Session::has('irsNotfound'))
+    <script>
+        Swal.fire(
+          '{!! \Session::get('irsNotfound') !!}',
+          'Masa pengisian IRS belum dibuka!',
+          'warning'
+        )
+    </script>
+  @endif
   @if (\Session::has('falseAngket'))
     <script>
         Swal.fire(
@@ -192,7 +201,7 @@
                                     <!--begin::Content-->
                                     <div class="fw-bold">
                                       <h4 class="text-gray-900 fw-bolder">IRS Belum difinalisasi</h4>
-                                      <div class="fs-6 text-gray-700">Hallo <b>{{ auth()->user()->display_name }}</b>, IRS kamu belum difinalisasi oleh dosen pembimbing, hubungi dosen pembimbing ya agar status IRS difinalisasi.
+                                      <div class="fs-6 text-gray-700">Hallo <b>{{ auth()->user()->display_name }}</b>, IRS kamu belum difinalisasi oleh dosen pembimbing, hubungi dosen pembimbing 1 ya untuk finalisasi IRS.
                                         <br />
                                         {{-- <a class="fw-bolder" href="#">Learn more</a> --}}
                                       </div>
