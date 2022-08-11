@@ -672,7 +672,7 @@
                                 <!--begin::Content-->
                                 <div class="fw-bold">
                                   <h4 class="text-gray-900 fw-bolder">Data Presensi Tidak Ada</h4>
-                                  <div class="fs-6 text-gray-700">Tidak ada presnsi untuk matakuliah ini.
+                                  <div class="fs-6 text-gray-700">Tidak ada presnsi yang ditemukan.
                                     <br />
                                     {{-- <a class="fw-bolder" href="#">Learn more</a> --}}
                                   </div>

@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AkademikController;
 use App\Http\Controllers\KemahasiswaanController;
 
@@ -40,9 +41,12 @@ Route::patch('password', [ChangePasswordController::class, 'update'])->name('pas
 //     return view('dashboard.index');
 // })->middleware(['auth', 'angket.checker']);
 
-// Routes For Akademik Here
-
+// Main Menu
 Route::get('/kelas', [JadwalController::class, 'index'])->middleware(['auth', 'angket.checker']);
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'angket.checker']);
+
+
+// Routes For Akademik Here
 Route::get('/khs', [AkademikController::class, 'khs'])->middleware(['auth', 'angket.checker']);
 Route::get('/irs', [AkademikController::class, 'irs'])->middleware(['auth', 'cors', 'angket.checker']);
 Route::post('/irsDel', [AkademikController::class, 'irsDel'])->middleware(['auth', 'angket.checker', 'cors']);
