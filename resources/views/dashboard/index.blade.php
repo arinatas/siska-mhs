@@ -100,7 +100,7 @@
                   </div>
                   @endif
                   
-                  <div class="card bg-primary mt-3">
+                  <div class="card bg-primary mt-5">
                     <div class="card-body">
                       <div class="card mb-xl-1">
                         <!--begin::Body-->
@@ -119,7 +119,7 @@
                             </div>
                             <h5 class="progress_name mt-5">TAK</h5>
                             <div class="progress" style="height: 30px;">
-                            <div class="progress-bar bg-warning" role="progressbar" style="width: {{ $takPercentage }}%" aria-valuenow="{{ $totalTAK }}" aria-valuemin="0" aria-valuemax="120">{{ $totalTAK }}</div>
+                            <div class="progress-bar bg-warning text-black" role="progressbar" style="width: {{ $takPercentage }}%" aria-valuenow="{{ $totalTAK }}" aria-valuemin="0" aria-valuemax="120">{{ $totalTAK }}</div>
                             </div>
                           </div>
                           <!--end::Chart-->
@@ -254,11 +254,11 @@
                   <!-- end table matkul-->
 
                   <!-- begin table invoice-->
-                  <div class="card mt-3">
+                  <div class="card mt-5">
                     <!--begin::Body-->
                     <div class="card-body p-5 px-lg-19 py-lg-16">
                       <!--begin::Content main-->
-                      <div class="mb-14">
+                      <div class="">
                         <!--begin::Heading-->
                         <div class="mb-10">
                           <!--begin::Title-->
@@ -270,7 +270,7 @@
                         <!--end::Heading-->
                         <!--begin::Body-->
                         <!--begin::Table-->
-                        <div class="mb-14">
+                        <div class="mb-5">
                           <!--begin::Table container-->
                           <div class="table-responsive">
                             <!--begin::Table-->

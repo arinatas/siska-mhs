@@ -10,7 +10,10 @@ class ChangePasswordController extends Controller
 
     public function edit()
     {
-            return view('password.index');
+            return view('password.index', [
+                'title' => 'Profile',
+                'active' => 'Profile',
+            ]);
     }
 
     public function update()
