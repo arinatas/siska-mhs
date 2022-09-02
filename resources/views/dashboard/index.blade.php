@@ -80,7 +80,7 @@
                         <div class="container">
 
                           <h4 class="card-text text-black py-4">"Terimakasih telah melakukan pembayaran tepat waktu"</h4>
-                          <h5 class="card-text text-black mt-5" style="font-style: italic;">Info : Data pembayaran diprebaharui pada tanggal 10 tiap awal bulan oleh bagian keuangan.</h5>
+                          <h5 class="card-text text-black mt-5" style="font-style: italic;">Info : Data pembayaran diperbaharui pada tanggal 10 tiap awal bulan oleh bagian keuangan.</h5>
                           <br>
                           <a href="#" class="btn text-white btn-primary">Lunas</a>
                         </div>
@@ -92,7 +92,7 @@
                       <h1 class="card-title text-black my-6 mb-6 text-center">Status Pembayaran SPP</h1>
                       <div class="container">
                         <h4 class="card-text text-black py-4">"Segera lakukan pembayaran"</h4>
-                        <h5 class="card-text text-black mt-5" style="font-style: italic;">Info : Data pembayaran diprebaharui pada tanggal 10 tiap awal bulan oleh bagian keuangan.</h5>
+                        <h5 class="card-text text-black mt-5" style="font-style: italic;">Info : Data pembayaran diperbaharui pada tanggal 10 tiap awal bulan oleh bagian keuangan.</h5>
                         <br>
                         <a href="#" class="btn text-white btn-danger">Belum Lunas</a>
                       </div>
@@ -232,7 +232,7 @@
                                   <!--begin::Content-->
                                   <div class="fw-bold">
                                     <h4 class="text-gray-900 fw-bolder">Tidak Ada Jadwal Kuliah</h4>
-                                    <div class="fs-6 text-gray-700">Hallo <b>{{ auth()->user()->display_name }}</b>, kamu mungkin tidak mengambil KRS pada semester ini.
+                                    <div class="fs-6 text-gray-700">Hallo <b>{{ auth()->user()->display_name }}</b>, kamu mungkin tidak mengambil IRS pada semester ini.
                                       <br />
                                       {{-- <a class="fw-bolder" href="#">Learn more</a> --}}
                                     </div>

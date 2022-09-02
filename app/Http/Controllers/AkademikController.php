@@ -304,7 +304,7 @@ class AkademikController extends Controller
         $semesterNow = $getTahunAjaran[0]->bol_semester_krs;
 
         // Panggil API untuk mendapatkan jadwal angket
-        $url = "http://103.80.88.77:8000/get_jadwal_by_request.php?semester=".$semesterNow."&tahun_ajaran=".$tahunNow."";
+        $url = "http://27.112.79.162:18000/get_jadwal_by_request.php?semester=".$semesterNow."&tahun_ajaran=".$tahunNow."";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -332,7 +332,7 @@ class AkademikController extends Controller
             ");
 
             // API ambil angket yg telah ter~isi
-            $url = "http://103.80.88.77:8000/get_pertanyaan.php?id_jadwal_edom=".$response->data[0]->id_jadwal_edom."&nim=".$nim."&tahun_ajaran=".$response->data[0]->tahun_ajaran."&semester=".$response->data[0]->semester."";
+            $url = "http://27.112.79.162:18000/get_pertanyaan.php?id_jadwal_edom=".$response->data[0]->id_jadwal_edom."&nim=".$nim."&tahun_ajaran=".$response->data[0]->tahun_ajaran."&semester=".$response->data[0]->semester."";
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -404,7 +404,7 @@ class AkademikController extends Controller
         $semester = $getDataTime[0]->bol_semester;
 
         // Panggil API untuk mendapatkan jadwal angket
-        $url = "http://103.80.88.77:8000/get_jadwal_by_request.php?semester=".$semester."&tahun_ajaran=".$tahunAjar."";
+        $url = "http://27.112.79.162:18000/get_jadwal_by_request.php?semester=".$semester."&tahun_ajaran=".$tahunAjar."";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -415,7 +415,7 @@ class AkademikController extends Controller
 
         if ($response->status == true){
             // API ambil pertanyaan untuk edom
-            $url = "http://103.80.88.77:8000/get_pertanyaan.php?id_jadwal_edom=".$response->data[0]->id_jadwal_edom."&nim=".$nim."&tahun_ajaran=".$tahunAjar."&semester=".$semester."";
+            $url = "http://27.112.79.162:18000/get_pertanyaan.php?id_jadwal_edom=".$response->data[0]->id_jadwal_edom."&nim=".$nim."&tahun_ajaran=".$tahunAjar."&semester=".$semester."";
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -468,7 +468,7 @@ class AkademikController extends Controller
             $dataJawab = $request->all();
 
             //api post jawaban
-            $urlJawab = 'http://103.80.88.77:8000/post_jawaban.php';
+            $urlJawab = 'http://27.112.79.162:18000/post_jawaban.php';
             $postdataJawab = http_build_query($dataJawab);
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $urlJawab);
@@ -490,7 +490,7 @@ class AkademikController extends Controller
         $nim = auth()->user()->username;
         // cek status IRS(array 0) dan Pembayaran (array 1)
         // cek jika tidak dpt data bakal error
-        $url = "http://103.80.88.77:8001/cek_awal.php?str_id_nim=".$nim."";
+        $url = "http://27.112.79.162:8000/cek_awal.php?str_id_nim=".$nim."";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -514,7 +514,7 @@ class AkademikController extends Controller
             WHERE (mm.str_id_nim = '".$nim."') ");
 
             // Panggil API untuk mendapatkan matkul yg di tawarkan (krs)
-            $url = "http://103.80.88.77:8001/get_makul.php?nim=".$nim."";
+            $url = "http://27.112.79.162:8000/get_makul.php?nim=".$nim."";
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -549,7 +549,7 @@ class AkademikController extends Controller
         $nim = auth()->user()->username;
 
         // Panggil API untuk mendapatkan krs yg telah diambil (mhs)
-        $url = "http://103.80.88.77:8001/get_irs.php?nim=".$nim."";
+        $url = "http://27.112.79.162:8000/get_irs.php?nim=".$nim."";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -569,7 +569,7 @@ class AkademikController extends Controller
 
         // cek status IRS(array 0) dan Pembayaran (array 1)
         // cek jika tidak dpt data bakal error
-        $url = "http://103.80.88.77:8001/cek_awal.php?str_id_nim=".$nim."";
+        $url = "http://27.112.79.162:8000/cek_awal.php?str_id_nim=".$nim."";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -596,7 +596,7 @@ class AkademikController extends Controller
 
         $dataIrs = $request->all();
 
-        $url = 'http://103.80.88.77:8001/post_irs.php';
+        $url = 'http://27.112.79.162:8000/post_irs.php';
         $irsPost = http_build_query($dataIrs);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -617,7 +617,7 @@ class AkademikController extends Controller
     {
         $delData = $request->all();
         
-        $url = 'http://103.80.88.77:8001/remove_irs.php';
+        $url = 'http://27.112.79.162:8000/remove_irs.php';
         $irsDelete = http_build_query($delData);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);

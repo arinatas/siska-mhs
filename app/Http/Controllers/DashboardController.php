@@ -97,7 +97,7 @@ class DashboardController extends Controller
         // get status pepmbayaran dan irs
             // cek status finalisasi IRS(array 0) dan Pembayaran (array 1)
             // cek jika tidak dpt data bakal error
-            $url = "http://103.80.88.77:8001/cek_awal.php?str_id_nim=".$nim."";
+            $url = "http://27.112.79.162:8000/cek_awal.php?str_id_nim=".$nim."";
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

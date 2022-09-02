@@ -230,7 +230,7 @@
                                   <!--begin::Content-->
                                   <div class="fw-bold">
                                     <h4 class="text-gray-900 fw-bolder">Tidak Ada Jadwal Kuliah</h4>
-                                    <div class="fs-6 text-gray-700">Hallo <b>{{ auth()->user()->display_name }}</b>, kamu mungkin tidak mengambil KRS pada semester ini.
+                                    <div class="fs-6 text-gray-700">Hallo <b>{{ auth()->user()->display_name }}</b>, kamu mungkin tidak mengambil IRS pada semester ini.
                                       <br />
                                       {{-- <a class="fw-bolder" href="#">Learn more</a> --}}
                                     </div>
@@ -699,7 +699,7 @@
                                 <!--begin::Content-->
                                 <div class="fw-bold">
                                   <h4 class="text-gray-900 fw-bolder">Data Presensi Tidak Ada</h4>
-                                  <div class="fs-6 text-gray-700">Hallo <b>{{ auth()->user()->display_name }}</b>, kamu mungkin tidak mengambil KRS pada semester ini.
+                                  <div class="fs-6 text-gray-700">Hallo <b>{{ auth()->user()->display_name }}</b>, kamu mungkin tidak mengambil IRS pada semester ini.
                                     <br />
                                     {{-- <a class="fw-bolder" href="#">Learn more</a> --}}
                                   </div>
