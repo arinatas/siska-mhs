@@ -82,7 +82,7 @@
                           <h4 class="card-text text-black py-4">"Terimakasih telah melakukan pembayaran tepat waktu"</h4>
                           <h5 class="card-text text-black mt-5" style="font-style: italic;">Info : Data pembayaran diperbaharui pada tanggal 10 tiap awal bulan oleh bagian keuangan.</h5>
                           <br>
-                          <div class="d-grid gap-2 col-6 mx-auto">
+                          <div class="d-grid gap-2 col-12 mx-auto">
                             <a href="#" class="btn text-white btn-primary">Lunas</a>
                           </div>
                         </div>
@@ -96,7 +96,7 @@
                         <h4 class="card-text text-black py-4">"Segera lakukan pembayaran"</h4>
                         <h5 class="card-text text-black mt-5" style="font-style: italic;">Info : Data pembayaran diperbaharui pada tanggal 10 tiap awal bulan oleh bagian keuangan.</h5>
                         <br>
-                        <div class="d-grid gap-2 col-6 mx-auto">
+                        <div class="d-grid gap-2 col-12 mx-auto">
                           <a href="#" class="btn text-white btn-danger">Belum Lunas</a>
                         </div>
                       </div>
