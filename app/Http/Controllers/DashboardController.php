@@ -112,6 +112,19 @@ class DashboardController extends Controller
 
         // end get status pepmbayaran dan irs
 
+        // data password wifi 
+        $wifi = DB::select("
+            SELECT *
+            FROM `user_wifi`
+            WHERE (`username` = '".$nim."')");
+        
+        if ($wifi)
+        {
+            $wifiPassword = $wifi[0]->password;
+        } else {
+            $wifiPassword = "";
+        }
+
 
         return view('dashboard.index', [
             'title' => 'Dashboard',
@@ -125,7 +138,9 @@ class DashboardController extends Controller
             'schedules' =>  $schedules,
             'statusFinal' => $statusIrs,
             'statusPembayaran' => $statusPembayaran,
-            'invoiceInfo' => $invoiceInfo
+            'invoiceInfo' => $invoiceInfo,
+            'wifiPassword' => $wifiPassword
+            
 
         ]);
     }

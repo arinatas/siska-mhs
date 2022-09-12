@@ -174,8 +174,8 @@
                                       {{ $schedule->group_spada }}
                                       </td>
                                       <td class="px-5" style="text-align-last: justify;">
-                                          <a href="{{ $schedule->link }}"><img src="/assets/media/logos/whatsapp.svg" width="30px" alt="SPADA"></a>
-                                          <a href="{{ $schedule->link_spada }}"><img src="/assets/media/logos/smallprimakara.png" width="25px" alt="SPADA"></a>
+                                          <a href="{{ $schedule->link }}" target="blank"><img src="/assets/media/logos/whatsapp.svg" width="30px" alt="SPADA"></a>
+                                          <a href="{{ $schedule->link_spada }}" target="blank"><img src="/assets/media/logos/smallprimakara.png" width="25px" alt="SPADA"></a>
                                       </td>
                                     </tr>
                                   </tbody>

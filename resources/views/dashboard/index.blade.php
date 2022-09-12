@@ -74,7 +74,7 @@
                 <div class="col-xl-4">
                   <!--begin::Mixed Widget 2-->
                   @if ($statusPembayaran == true)
-                    <div class="card bg-success">
+                    <div class="card">
                       <div class="card-body">
                         <h1 class="card-title text-black my-6 mb-6 text-center">Status Pembayaran SPP</h1>
                         <div class="container">
@@ -82,7 +82,9 @@
                           <h4 class="card-text text-black py-4">"Terimakasih telah melakukan pembayaran tepat waktu"</h4>
                           <h5 class="card-text text-black mt-5" style="font-style: italic;">Info : Data pembayaran diperbaharui pada tanggal 10 tiap awal bulan oleh bagian keuangan.</h5>
                           <br>
-                          <a href="#" class="btn text-white btn-primary">Lunas</a>
+                          <div class="d-grid gap-2 col-6 mx-auto">
+                            <a href="#" class="btn text-white btn-primary">Lunas</a>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -94,7 +96,9 @@
                         <h4 class="card-text text-black py-4">"Segera lakukan pembayaran"</h4>
                         <h5 class="card-text text-black mt-5" style="font-style: italic;">Info : Data pembayaran diperbaharui pada tanggal 10 tiap awal bulan oleh bagian keuangan.</h5>
                         <br>
-                        <a href="#" class="btn text-white btn-danger">Belum Lunas</a>
+                        <div class="d-grid gap-2 col-6 mx-auto">
+                          <a href="#" class="btn text-white btn-danger">Belum Lunas</a>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -127,6 +131,30 @@
                       </div>
                     </div>
                   </div>
+
+                  <div class="card bg-primary mt-5">
+                    <div class="card-body">
+                      <div class="card mb-xl-1">
+                        <!--begin::Body-->
+                        <div
+                          class="card-body p-0 d-flex justify-content-between flex-column overflow-hidden"
+                        >
+                          <!--begin::Chart-->
+                          <div class="card-body">
+                            <h1 class="card-title text-black mb-4 text-center">Informasi Wi-Fi Kampus</h1>
+                            {{-- <div class="container"> --}}
+                              <h4 class="card-text text-black py-2">Untuk menggunakan Wi-Fi kampus STMIK Primakara kamu dapat mengkoneksikan device terlebih dahulu ke wifi "Primakara"</h4>
+                              <h4 class="card-text text-black py-2 text-center"><u><a href="http://10.100.1.1/" target="blank">Kemudian akses link berikut untuk melakukan login</a></u></h4>
+                              <h5 class="card-text text-black mt-5" style="font-style: italic;">Berikut account kamu yang digunakan untuk login ya  <br><br>User : {{ auth()->user()->username }}<br>Password : {{ $wifiPassword }}</h5>
+                              <br>
+                            {{-- </div> --}}
+                          </div>
+                          <!--end::Chart-->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+ 
                   <!--end::Mixed Widget 2-->
                 </div>
                 <!--end::Col-->
