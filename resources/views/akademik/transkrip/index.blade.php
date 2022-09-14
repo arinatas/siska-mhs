@@ -144,8 +144,14 @@
                                 </div>
                                 <!--end::Info-->
                               </div>
+                              <!--begin::Actions-->
+                              <div class="d-flex">
+                                <button id="printPageButton" onclick="window.print()" class="btn btn-sm btn-primary me-3">
+                                  Cetak Transkrip
+                                </button>
+                              </div>
+                              <!--end::Actions-->
                               <!--end::User-->
-
                             </div>
                             <!--end::Title-->
                             <!--begin::Stats-->
@@ -239,20 +245,6 @@
                     <div class="card-body p-5 px-lg-19 py-lg-16">
                       <!--begin::Content main-->
                       <div class="mb-14">
-                        <!--begin::Heading-->
-                        <div class="mb-15 d-flex justify-content-between">
-                          <!--begin::Title-->
-                          <h1 class="fs-1x text-dark mt-1">
-                            Daftar Mata Kuliah
-                          </h1>
-                          <!--end::Title-->
-                          <!--begin::Actions-->
-                          <div class="d-flex">
-                            <a href="#" class="btn btn-sm btn-primary me-3 disabled" data-bs-toggle="modal" data-bs-target="#kt_modal_offer_a_deal">Cetak Transkrip</a>
-                          </div>
-                          <!--end::Actions-->
-                        </div>
-                        <!--end::Heading-->
                         <!--begin::Body-->
                         <!--begin::Table-->
                         <div class="mb-14">
@@ -377,5 +369,19 @@
     
   </body>
   <!--end::Body-->
+
+  {{-- using scpoed style https://laravel.com/docs/8.x/blade#stacks --}}
+    @push('css')
+    <style>
+      @media print {
+        #printPageButton {
+          display: none;
+        }
+      }
+    </style>
+    @endpush
+
+    @stack('css')
+  {{-- end scoped style --}}
 
 @endsection

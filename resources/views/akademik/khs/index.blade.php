@@ -185,6 +185,15 @@
                                         </div>
                                         <!--end::Info-->
                                       </div>
+                                      <!--begin::Actions-->
+                                      @if ($selectedTahun && $semesterText)
+                                      <div class="d-flex">
+                                        <button id="printPageButton" onclick="window.print()" class="btn btn-sm btn-primary me-3">
+                                          Cetak KHS
+                                        </button>
+                                      </div>
+                                      @endif
+                                      <!--end::Actions-->
                                       <!--end::User-->
 
                                     </div>
@@ -390,11 +399,6 @@
                           <!--end::Table container-->
                         </div>
                         <!--end::Table-->
-                        <div class="row">
-                            <div class="col text-end">
-                                <button type="button" class="btn btn-primary disabled">Print</button>
-                            </div>
-                        </div>
                         <!--End KHS Section-->
                         @endif
                       </div>
@@ -421,10 +425,22 @@
     </div>
     <!--end::Root-->
     <!--end::Main-->
-
-    
     
   </body>
   <!--end::Body-->
+
+  {{-- using scpoed style https://laravel.com/docs/8.x/blade#stacks --}}
+  @push('css')
+  <style>
+    @media print {
+      #printPageButton {
+        display: none;
+      }
+    }
+  </style>
+  @endpush
+
+  @stack('css')
+{{-- end scoped style --}}
 
 @endsection
