@@ -165,7 +165,7 @@
                                       {{ $schedule->str_nm_kad }}
                                       </td>
                                       <td>
-                                      {{ $schedule->str_nama_hari }} <br> {{ $schedule->awal }} ~ {{ $schedule->akhir }}
+                                      {{ $schedule->str_nama_hari }} <br> {{ $schedule->awal }} ~ {{ $schedule->akhir }} <br> (<b>{{ $schedule->str_nm_kelas }}</b>)
                                       </td>
                                       <td>
                                       {{ $schedule->str_nm_ruang }}
