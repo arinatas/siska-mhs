@@ -41,7 +41,7 @@
   >
     <!--begin::Main-->
     <!--begin::Root-->
-    <div class="d-flex flex-column flex-root">
+    <div class="d-flex flex-column flex-root" id="section-to-print">
       <!--begin::Page-->
       <div class="page d-flex flex-row flex-column-fluid">
         <!--begin::Wrapper-->
@@ -122,7 +122,7 @@
                                 <!--begin::Details-->
                                 <div class="d-flex flex-wrap flex-sm-nowrap mb-3">
                                   <!--begin: Pic-->
-                                  <div class="me-7 mb-4">
+                                  <div class="me-7 mb-4 d-none d-sm-block" id="hidePrintSection">
                                     <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
                                       <img src="/assets/media/avatars/blank.png" alt="image" />
                                       <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px"></div>
@@ -186,36 +186,32 @@
                                         <!--end::Info-->
                                       </div>
                                       <!--begin::Actions-->
-                                      @if ($selectedTahun && $semesterText)
+                                      {{-- @if ($selectedTahun && $semesterText)
                                       <div class="d-flex">
-                                        <button id="printPageButton" onclick="window.print()" class="btn btn-sm btn-primary me-3">
+                                        <button id="hidePrintSection" onclick="window.print()" class="btn btn-sm btn-primary me-3">
                                           Cetak KHS
                                         </button>
                                       </div>
-                                      @endif
+                                      @endif --}}
                                       <!--end::Actions-->
                                       <!--end::User-->
 
                                     </div>
                                     <!--end::Title-->
                                     <!--KHS Section-->
-                                    <div class="row text-center">
-                                      <div class="col-md-4">
-                                          <div class="alert alert-info" role="alert">
-                                              Semester : <span class="badge badge-info">{{ $semesterText }}</span>
-                                            </div>
+                                    <div class="row">
+                                      <div class="row justify-content-start">
+                                        <div class="col-3 alert alert-info d-print-inline-block text-center" role="alert">
+                                            SMT : <span class="badge badge-info">{{ $semesterText }}</span>
+                                        </div>
+                                        <div class="col-3 alert alert-primary d-print-inline-block text-center mx-3" role="alert">
+                                            SKS : <span class="badge badge-primary">{{ array_sum($allSks) }}</span>
+                                        </div>
+                                        <div class="col-3 alert alert-success d-print-inline-block text-center " role="alert">
+                                            IPS : <span class="badge badge-success">{{ number_format($totalIps, 2)}}</span>
+                                        </div>
                                       </div>
-                                      <div class="col-md-4">
-                                          <div class="alert alert-primary" role="alert">
-                                              SKS : <span class="badge badge-primary">{{ array_sum($allSks) }}</span>
-                                            </div>
-                                      </div>
-                                      <div class="col-md-4">
-                                          <div class="alert alert-success" role="alert">
-                                              IPS : <span class="badge badge-success">{{ number_format($totalIps, 2)}}</span>
-                                            </div>
-                                      </div>
-                                      <div class="">
+                                      <div class="row mt-5" id="hidePrintSection">
                                         <form method="GET">
                                           <div class="row">
                                             <div class="d-flex my-1 justify-content-end">
@@ -367,6 +363,15 @@
 
                             </table>
                             <!--end::Table-->
+                            <!--begin::Actions-->
+                            @if ($selectedTahun && $semesterText)
+                            <div class="d-flex justify-content-end mt-5">
+                              <button id="hidePrintSection" onclick="window.print()" class="btn btn-sm btn-success me-3">
+                                Cetak KHS
+                              </button>
+                            </div>
+                            @endif
+                            <!--end::Actions-->
                             @else
                             <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6">
                               <!--begin::Icon-->
@@ -416,7 +421,9 @@
           </div>
           <!--end::Container-->
           <!--begin::Footer-->
+          <div id="hidePrintSection">
             @include('partials.footer')     
+          </div>
           <!--end::Footer-->
         </div>
         <!--end::Wrapper-->
@@ -432,9 +439,20 @@
   {{-- using scpoed style https://laravel.com/docs/8.x/blade#stacks --}}
   @push('css')
   <style>
-    @media print {
-      #printPageButton {
+    @media print {    
+      body * {
+        visibility: hidden;
+      }
+      #hidePrintSection {
         display: none;
+      }
+      #section-to-print, #section-to-print * {
+        visibility: visible;
+      }
+      #section-to-print {
+        /* position: absolute; */
+        /* left: 0; */
+        /* top: -200px; */
       }
     }
   </style>

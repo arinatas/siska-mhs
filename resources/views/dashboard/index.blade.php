@@ -83,7 +83,7 @@
                           <h5 class="card-text text-black mt-5" style="font-style: italic;">Info : Data pembayaran diperbaharui pada tanggal 10 tiap awal bulan oleh bagian keuangan.</h5>
                           <br>
                           <div class="d-grid gap-2 col-12 mx-auto">
-                            <a href="#" class="btn text-white btn-primary">Lunas</a>
+                            <a href="http://wa.me/6281239801356" target="blank" class="btn text-white btn-primary">Lunas</a>
                           </div>
                         </div>
                       </div>
@@ -97,7 +97,7 @@
                         <h5 class="card-text text-black mt-5" style="font-style: italic;">Info : Data pembayaran diperbaharui pada tanggal 10 tiap awal bulan oleh bagian keuangan.</h5>
                         <br>
                         <div class="d-grid gap-2 col-12 mx-auto">
-                          <a href="#" class="btn text-white btn-danger">Belum Lunas</a>
+                          <a href="http://wa.me/6281239801356" target="blank" class="btn text-white btn-danger">Belum Lunas</a>
                         </div>
                       </div>
                     </div>
@@ -331,6 +331,10 @@
 
                               </table>
                             <!--end::Table-->
+                          </div>
+                          <div class="d-block" style="text-align: end;">
+                            <a class="btn btn-primary btn-sm mt-3" href="https://bit.ly/TANYAKEUANGAN" target="blank" role="button">Akses Layanan Keuangan</a>
+                            <a class="btn btn-success btn-sm mt-3" href="http://wa.me/6281239801356" target="blank" role="button">Chat Bagian Keuangan</a>
                           </div>
                           <!--end::Table container-->
                         </div>
