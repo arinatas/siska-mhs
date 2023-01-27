@@ -154,6 +154,36 @@
                       </div>
                     </div>
                   </div>
+
+                  <div class="card bg-primary mt-5">
+                    <div class="card-body">
+                      <div class="card mb-xl-1">
+                        <!--begin::Body-->
+                        <div
+                          class="card-body p-0 d-flex justify-content-between flex-column overflow-hidden"
+                        >
+                          <!--begin::Chart-->
+                          <div class="card-body">
+                            <h1 class="card-title text-black mb-4 text-center">Administrasi BAAK</h1>
+                            {{-- <div class="container"> --}}
+                              <h5 class="card-text text-black py-4">Berikut tautan data administrasi akademik yang diperlukan seperti Pedoman Akademik, Pedoman MBKM, Surat-Menyurat, Pedoman Skripsi dan Tugas Akhir dan lain sebagainnya</h5>
+                            {{-- <h5 class="card-text text-black mt-5" style="font-style: italic;">Info : Data pembayaran diperbaharui pada tanggal 10 tiap awal bulan oleh bagian keuangan.</h5> --}}
+                            <br>
+                            <div class="d-grid gap-2 col-12 mx-auto">
+                              <a href="https://drive.google.com/drive/folders/1Inp4SAMwK_lj5tnf_4Slbciv38NCzJUc?usp=sharing" target="blank" class="btn text-white btn-primary">Data Administrasi</a>
+                            </div>
+                            <div class="d-grid gap-2 col-12 mx-auto mt-2">
+                              <a href="https://drive.google.com/file/d/1UzHL9QHAXNLJARhVhVqZGYwA4g4HV8I9/view" target="blank" class="btn text-white btn-primary">Data Informasi Dosen</a>
+                            </div>
+                            {{-- </div> --}}
+                          </div>
+                          <!--end::Chart-->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
  
                   <!--end::Mixed Widget 2-->
                 </div>
