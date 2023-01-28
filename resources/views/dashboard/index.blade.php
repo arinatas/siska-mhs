@@ -73,7 +73,7 @@
                 <!--begin::Col-->
                 <div class="col-xl-4">
                   <!--begin::Mixed Widget 2-->
-                  @if ($statusPembayaran == true)
+                  {{-- @if ($statusPembayaran == true)
                     <div class="card">
                       <div class="card-body">
                         <h1 class="card-title text-black my-6 mb-6 text-center">Status Pembayaran SPP</h1>
@@ -93,8 +93,8 @@
                     <div class="card-body">
                       <h1 class="card-title text-black my-6 mb-6 text-center">Status Pembayaran SPP</h1>
                       <div class="container">
-                        <h4 class="card-text text-black py-4">"Segera lakukan pembayaran"</h4>
-                        <h5 class="card-text text-black mt-5" style="font-style: italic;">Info : Data pembayaran diperbaharui pada tanggal 10 tiap awal bulan oleh bagian keuangan.</h5>
+                        <h5 class="card-text text-black py-4">Silahkan cek email dari BNI eCollection <a href="http://gmail.com" target="blank">no-reply@bni-ecollection.com</a> setelah melakukan proses pembayaran.</h5>
+                        <h5 class="card-text text-black mt-5" style="font-style: italic;"><b>Info : Data pembayaran diperbaharui pada tanggal 10 tiap awal bulan oleh bagian keuangan.</b></h5>
                         <br>
                         <div class="d-grid gap-2 col-12 mx-auto">
                           <a href="http://wa.me/6281239801356" target="blank" class="btn text-white btn-danger">Belum Lunas</a>
@@ -102,7 +102,35 @@
                       </div>
                     </div>
                   </div>
-                  @endif
+                  @endif --}}
+
+                  <div class="card bg-primary ">
+                    <div class="card-body">
+                      <div class="card mb-xl-1">
+                        <!--begin::Body-->
+                        <div
+                          class="card-body p-0 d-flex justify-content-between flex-column overflow-hidden"
+                        >
+                          <!--begin::Chart-->
+                          <div class="card-body">
+                            <h1 class="card-title text-black mb-4 text-center">Administrasi BAAK</h1>
+                            {{-- <div class="container"> --}}
+                              <h5 class="card-text text-black py-4">Berikut tautan data administrasi akademik yang diperlukan seperti Pedoman Akademik, Pedoman MBKM, Surat-Menyurat, Pedoman Skripsi dan Tugas Akhir dan lain sebagainnya</h5>
+                            {{-- <h5 class="card-text text-black mt-5" style="font-style: italic;">Info : Data pembayaran diperbaharui pada tanggal 10 tiap awal bulan oleh bagian keuangan.</h5> --}}
+                            <br>
+                            <div class="d-grid gap-2 col-12 mx-auto">
+                              <a href="https://drive.google.com/drive/folders/1Inp4SAMwK_lj5tnf_4Slbciv38NCzJUc?usp=sharing" target="blank" class="btn text-white btn-primary">Data Administrasi</a>
+                            </div>
+                            <div class="d-grid gap-2 col-12 mx-auto mt-2">
+                              <a href="https://drive.google.com/file/d/1UzHL9QHAXNLJARhVhVqZGYwA4g4HV8I9/view" target="blank" class="btn text-white btn-primary">Data Informasi Dosen</a>
+                            </div>
+                            {{-- </div> --}}
+                          </div>
+                          <!--end::Chart-->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   
                   <div class="card bg-primary mt-5">
                     <div class="card-body">
@@ -155,33 +183,7 @@
                     </div>
                   </div>
 
-                  <div class="card bg-primary mt-5">
-                    <div class="card-body">
-                      <div class="card mb-xl-1">
-                        <!--begin::Body-->
-                        <div
-                          class="card-body p-0 d-flex justify-content-between flex-column overflow-hidden"
-                        >
-                          <!--begin::Chart-->
-                          <div class="card-body">
-                            <h1 class="card-title text-black mb-4 text-center">Administrasi BAAK</h1>
-                            {{-- <div class="container"> --}}
-                              <h5 class="card-text text-black py-4">Berikut tautan data administrasi akademik yang diperlukan seperti Pedoman Akademik, Pedoman MBKM, Surat-Menyurat, Pedoman Skripsi dan Tugas Akhir dan lain sebagainnya</h5>
-                            {{-- <h5 class="card-text text-black mt-5" style="font-style: italic;">Info : Data pembayaran diperbaharui pada tanggal 10 tiap awal bulan oleh bagian keuangan.</h5> --}}
-                            <br>
-                            <div class="d-grid gap-2 col-12 mx-auto">
-                              <a href="https://drive.google.com/drive/folders/1Inp4SAMwK_lj5tnf_4Slbciv38NCzJUc?usp=sharing" target="blank" class="btn text-white btn-primary">Data Administrasi</a>
-                            </div>
-                            <div class="d-grid gap-2 col-12 mx-auto mt-2">
-                              <a href="https://drive.google.com/file/d/1UzHL9QHAXNLJARhVhVqZGYwA4g4HV8I9/view" target="blank" class="btn text-white btn-primary">Data Informasi Dosen</a>
-                            </div>
-                            {{-- </div> --}}
-                          </div>
-                          <!--end::Chart-->
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  
 
 
  
@@ -321,7 +323,7 @@
                         <div class="mb-10">
                           <!--begin::Title-->
                           <h1 class="fs-2x text-dark mx-2 mt-3">
-                            Informasi Pembayaran SPP
+                            Informasi Status Pembayaran SPP
                           </h1>
                           <!--end::Title-->
                         </div>
@@ -330,41 +332,12 @@
                         <!--begin::Table-->
                         <div class="mb-5">
                           <!--begin::Table container-->
-                          <div class="table-responsive">
-                            <!--begin::Table-->
-                              <table
-                                class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4"
-                              >
-                                <!--begin::Table head-->
-                                <thead>
-                                        <tr
-                                          class="fw-bolder fs-6 text-gray-800 text-center border-0 bg-light"
-                                        >
-                                          <th class="min-w-50px rounded-start">SPP</th>
-                                          <th class="min-w-100px">Telah Dibayar</th>
-                                          <th class="min-w-150px rounded-end">Sisa Pembayaran</th>
-                                        </tr>
-                                </thead>
-                                <!--end::Table head-->
-
-                                <!--begin::Table body-->
-                                    <tbody class="border-bottom border">
-                                          <tr
-                                            class="text-center"
-                                          >
-                                            <td class="px-3">Rp. {{number_format($invoiceInfo->SPP_Awal)}}</td>
-                                            <td class="">Rp. {{number_format($invoiceInfo->SPP_dibayarkan)}}</td>
-                                            <td>Rp. {{number_format($invoiceInfo->Sisa_SPP)}}</td>
-                                          </tr>
-                                    </tbody>
-                                <!--end::Table body-->
-
-                              </table>
-                            <!--end::Table-->
-                          </div>
+                          <h3 class="card-text text-black py-4">Silahkan cek email dari BNI eCollection <a href="http://gmail.com" target="blank">no-reply@bni-ecollection.com</a> setelah melakukan proses pembayaran.</h3>
+                          {{-- <h5 class="card-text text-black" style="font-style: italic;"><b>Info : Data pembayaran diperbaharui pada tanggal 10 tiap awal bulan oleh bagian keuangan.</b></h5> --}}
+                         
                           <div class="d-block" style="text-align: end;">
-                            <a class="btn btn-primary btn-sm mt-3" href="https://bit.ly/TANYAKEUANGAN" target="blank" role="button">Akses Layanan Keuangan</a>
-                            <a class="btn btn-success btn-sm mt-3" href="http://wa.me/6281239801356" target="blank" role="button">Chat Bagian Keuangan</a>
+                            <a class="btn btn-primary btn-md mt-3" href="https://bit.ly/TANYAKEUANGAN" target="blank" role="button">Akses Layanan Keuangan</a>
+                            <a class="btn btn-success btn-md mt-3" href="http://wa.me/6281239801356" target="blank" role="button">Chat Bagian Keuangan</a>
                           </div>
                           <!--end::Table container-->
                         </div>
