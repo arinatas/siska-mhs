@@ -112,6 +112,16 @@ class DashboardController extends Controller
 
         // end get status pepmbayaran dan irs
 
+        // get data mhs and dosen pa
+            // get dosen PA dan bio
+            $mhsBio = DB::select("
+            SELECT mm.str_id_nim, mm.str_nm_mhs, IF(mm.str_kd_prodi = '0001', 'Teknik Informatika', IF(mm.str_kd_prodi = '0002', 'Sistem Informasi Akuntansi', 'Sistem Informasi')) as prodi, IF(mm.int_kd_kelas = 1, 'Pagi', 'Malam') as kelas, mm.str_email, mm.str_hp, mm.str_angkatan, mm.status_aktif,
+            (SELECT str_nm_kad FROM uni_karidos WHERE str_id_kad = (SELECT agw.str_kd_dosen_wali_d FROM aka_group_wali agw WHERE agw.int_id_group_wali = mm.int_id_group_wali)) as pembimbing_1,
+            (SELECT str_nm_kad FROM uni_karidos WHERE str_id_kad = (SELECT agw.str_kd_dosen_wali_aktif FROM aka_group_wali agw WHERE agw.int_id_group_wali = mm.int_id_group_wali)) as pembimbing_2
+            FROM mhs_mahasiswa mm
+            WHERE (mm.str_id_nim = '".$nim."') ");
+        // end get data mhs and dosen pa
+
         // data password wifi 
         $wifi = DB::select("
             SELECT *
@@ -139,7 +149,9 @@ class DashboardController extends Controller
             'statusFinal' => $statusIrs,
             'statusPembayaran' => $statusPembayaran,
             'invoiceInfo' => $invoiceInfo,
-            'wifiPassword' => $wifiPassword
+            'wifiPassword' => $wifiPassword,
+            'mahasiswa' => $mhsBio
+
             
 
         ]);

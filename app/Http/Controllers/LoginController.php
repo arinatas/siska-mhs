@@ -121,18 +121,18 @@ class LoginController extends Controller
                         } else {
                             Auth::login($user);
                             $request->session()->regenerate();
-                            return redirect()->intended('/kelas');
+                            return redirect()->intended('/dashboard');
                         }
                     } else {
                         Auth::login($user);
                         $request->session()->regenerate();
-                        return redirect()->intended('/kelas');
+                        return redirect()->intended('/dashboard');
                     }
                 }
                 else{
                     Auth::login($user);
                     $request->session()->regenerate();
-                    return redirect()->intended('/kelas');
+                    return redirect()->intended('/dashboard');
                 }
         } else {
             return back()->with('loginError', 'Login Failed.');

@@ -67,6 +67,7 @@
                 <tr>
                 <th class="">Matakuliah</th>
                 <th class="">Dosen</th>
+                <th class="">Kelas</th>
                 <th class="">Waktu & Ruangan</th>
                 <th class="">SKS & Semester</th>
                 <th class="">Hapus</th>
@@ -85,6 +86,9 @@
                     </td>
                     <td>
                     <span id="dosen">{{ $irs->str_nm_kad }}</span>
+                    </td>
+                    <td>
+                    <span id="dosen">{{ $irs->str_nm_kelas }}</span>
                     </td>
                     <td >
                     <span id="hari">{{ $irs->str_nama_hari }}</span>, <span id="awal">{{ $irs->awal }}</span> - <span id="akhir">{{ $irs->akhir }}</span> <br> <span id="ruangan">{{ $irs->str_nm_ruang }}</span>

@@ -73,7 +73,7 @@
                 <!--begin::Col-->
                 <div class="col-xl-4">
                   <!--begin::Mixed Widget 2-->
-                  @if ($statusPembayaran == true)
+                  {{-- @if ($statusPembayaran == true)
                     <div class="card">
                       <div class="card-body">
                         <h1 class="card-title text-black my-6 mb-6 text-center">Status Pembayaran SPP</h1>
@@ -83,7 +83,7 @@
                           <h5 class="card-text text-black mt-5" style="font-style: italic;">Info : Data pembayaran diperbaharui pada tanggal 10 tiap awal bulan oleh bagian keuangan.</h5>
                           <br>
                           <div class="d-grid gap-2 col-12 mx-auto">
-                            <a href="#" class="btn text-white btn-primary">Lunas</a>
+                            <a href="http://wa.me/6281239801356" target="blank" class="btn text-white btn-primary">Lunas</a>
                           </div>
                         </div>
                       </div>
@@ -93,16 +93,44 @@
                     <div class="card-body">
                       <h1 class="card-title text-black my-6 mb-6 text-center">Status Pembayaran SPP</h1>
                       <div class="container">
-                        <h4 class="card-text text-black py-4">"Segera lakukan pembayaran"</h4>
-                        <h5 class="card-text text-black mt-5" style="font-style: italic;">Info : Data pembayaran diperbaharui pada tanggal 10 tiap awal bulan oleh bagian keuangan.</h5>
+                        <h5 class="card-text text-black py-4">Silahkan cek email dari BNI eCollection <a href="http://gmail.com" target="blank">no-reply@bni-ecollection.com</a> setelah melakukan proses pembayaran.</h5>
+                        <h5 class="card-text text-black mt-5" style="font-style: italic;"><b>Info : Data pembayaran diperbaharui pada tanggal 10 tiap awal bulan oleh bagian keuangan.</b></h5>
                         <br>
                         <div class="d-grid gap-2 col-12 mx-auto">
-                          <a href="#" class="btn text-white btn-danger">Belum Lunas</a>
+                          <a href="http://wa.me/6281239801356" target="blank" class="btn text-white btn-danger">Belum Lunas</a>
                         </div>
                       </div>
                     </div>
                   </div>
-                  @endif
+                  @endif --}}
+
+                  <div class="card bg-primary ">
+                    <div class="card-body">
+                      <div class="card mb-xl-1">
+                        <!--begin::Body-->
+                        <div
+                          class="card-body p-0 d-flex justify-content-between flex-column overflow-hidden"
+                        >
+                          <!--begin::Chart-->
+                          <div class="card-body">
+                            <h1 class="card-title text-black mb-4 text-center">Administrasi BAAK</h1>
+                            {{-- <div class="container"> --}}
+                              <h5 class="card-text text-black py-4">Berikut tautan data administrasi akademik yang diperlukan seperti Pedoman Akademik, Pedoman MBKM, Surat-Menyurat, Pedoman Skripsi dan Tugas Akhir dan lain sebagainnya</h5>
+                            {{-- <h5 class="card-text text-black mt-5" style="font-style: italic;">Info : Data pembayaran diperbaharui pada tanggal 10 tiap awal bulan oleh bagian keuangan.</h5> --}}
+                            <br>
+                            <div class="d-grid gap-2 col-12 mx-auto">
+                              <a href="https://drive.google.com/drive/folders/1Inp4SAMwK_lj5tnf_4Slbciv38NCzJUc?usp=sharing" target="blank" class="btn text-white btn-primary">Data Administrasi</a>
+                            </div>
+                            <div class="d-grid gap-2 col-12 mx-auto mt-2">
+                              <a href="https://drive.google.com/file/d/1UzHL9QHAXNLJARhVhVqZGYwA4g4HV8I9/view" target="blank" class="btn text-white btn-primary">Data Informasi Dosen</a>
+                            </div>
+                            {{-- </div> --}}
+                          </div>
+                          <!--end::Chart-->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   
                   <div class="card bg-primary mt-5">
                     <div class="card-body">
@@ -154,6 +182,10 @@
                       </div>
                     </div>
                   </div>
+
+                  
+
+
  
                   <!--end::Mixed Widget 2-->
                 </div>
@@ -291,7 +323,7 @@
                         <div class="mb-10">
                           <!--begin::Title-->
                           <h1 class="fs-2x text-dark mx-2 mt-3">
-                            Informasi Pembayaran SPP
+                            Informasi Status Pembayaran SPP
                           </h1>
                           <!--end::Title-->
                         </div>
@@ -300,37 +332,12 @@
                         <!--begin::Table-->
                         <div class="mb-5">
                           <!--begin::Table container-->
-                          <div class="table-responsive">
-                            <!--begin::Table-->
-                              <table
-                                class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4"
-                              >
-                                <!--begin::Table head-->
-                                <thead>
-                                        <tr
-                                          class="fw-bolder fs-6 text-gray-800 text-center border-0 bg-light"
-                                        >
-                                          <th class="min-w-50px rounded-start">SPP</th>
-                                          <th class="min-w-100px">Telah Dibayar</th>
-                                          <th class="min-w-150px rounded-end">Sisa Pembayaran</th>
-                                        </tr>
-                                </thead>
-                                <!--end::Table head-->
-
-                                <!--begin::Table body-->
-                                    <tbody class="border-bottom border">
-                                          <tr
-                                            class="text-center"
-                                          >
-                                            <td class="px-3">Rp. {{number_format($invoiceInfo->SPP_Awal)}}</td>
-                                            <td class="">Rp. {{number_format($invoiceInfo->SPP_dibayarkan)}}</td>
-                                            <td>Rp. {{number_format($invoiceInfo->Sisa_SPP)}}</td>
-                                          </tr>
-                                    </tbody>
-                                <!--end::Table body-->
-
-                              </table>
-                            <!--end::Table-->
+                          <h3 class="card-text text-black py-4">Silahkan cek email dari BNI eCollection <a href="http://gmail.com" target="blank">no-reply@bni-ecollection.com</a> setelah melakukan proses pembayaran.</h3>
+                          {{-- <h5 class="card-text text-black" style="font-style: italic;"><b>Info : Data pembayaran diperbaharui pada tanggal 10 tiap awal bulan oleh bagian keuangan.</b></h5> --}}
+                         
+                          <div class="d-block" style="text-align: end;">
+                            <a class="btn btn-primary btn-md mt-3" href="https://bit.ly/TANYAKEUANGAN" target="blank" role="button">Akses Layanan Keuangan</a>
+                            <a class="btn btn-success btn-md mt-3" href="http://wa.me/6281239801356" target="blank" role="button">Chat Bagian Keuangan</a>
                           </div>
                           <!--end::Table container-->
                         </div>
@@ -341,6 +348,102 @@
                     <!--end::Body-->
                   </div>
                   <!-- end table -->
+
+                  {{-- desc dosen pa --}}
+                  <div class="col-xl-12 mt-5">
+                    <!-- begin table -->
+                    <div class="card container">
+                      <!--begin::Body-->
+                      <div class="card mb-5 mb-xl-10">
+                      <div class="card-body pt-13 pb-0">
+                        <!--begin::Details-->
+                        <div class="d-flex flex-wrap flex-sm-nowrap mb-3">
+                        <!--begin::Info-->
+                        <div class="flex-grow-1">
+                          <!--begin::Title-->
+                          <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+                          <!--begin::User-->
+                          <div class="d-flex flex-column">
+                            <!--begin::Name-->
+                            <div class="d-flex align-items-center mb-2">
+                            <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">{{ auth()->user()->display_name }}</a>
+                            
+                            @if ($mahasiswa[0]->status_aktif == "aktif")
+                            <a href="#" class="btn btn-sm btn-light-success fw-bolder ms-2 fs-8 py-1 px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">{{ $mahasiswa[0]->status_aktif }}</a>
+                            @elseif ($mahasiswa[0]->status_aktif == "cuti")
+                            <a href="#" class="btn btn-sm btn-light-warning fw-bolder ms-2 fs-8 py-1 px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">{{ $mahasiswa[0]->status_aktif }}</a>
+                            @elseif ($mahasiswa[0]->status_aktif == "lulus")
+                            <a href="#" class="btn btn-sm btn-light-primary fw-bolder ms-2 fs-8 py-1 px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">{{ $mahasiswa[0]->status_aktif }}</a>
+                            @else
+                            <a href="#" class="btn btn-sm btn-light-danger fw-bolder ms-2 fs-8 py-1 px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">{{ $mahasiswa[0]->status_aktif }}</a>
+                            @endif
+                            </div>
+                            <!--end::Name-->
+                            <!--begin::Info-->
+                            <div class="d-flex flex-wrap fw-bold fs-6 mb-4 pe-2">
+                            <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
+                            
+                            <span class="svg-icon svg-icon-4 me-1">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                              <path opacity="0.3" d="M22 12C22 17.5 17.5 22 12 22C6.5 22 2 17.5 2 12C2 6.5 6.5 2 12 2C17.5 2 22 6.5 22 12ZM12 7C10.3 7 9 8.3 9 10C9 11.7 10.3 13 12 13C13.7 13 15 11.7 15 10C15 8.3 13.7 7 12 7Z" fill="black" />
+                              <path d="M12 22C14.6 22 17 21 18.7 19.4C17.9 16.9 15.2 15 12 15C8.8 15 6.09999 16.9 5.29999 19.4C6.99999 21 9.4 22 12 22Z" fill="black" />
+                              </svg>
+                            </span>
+                            <!--end::Svg Icon-->{{ auth()->user()->username }}</a>
+                            <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
+                            
+                            <span class="svg-icon svg-icon-4 me-1">
+                              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24"/>
+                                <circle fill="#000000" cx="12" cy="12" r="8"/>
+                              </g>
+                            </svg><!--end::Svg Icon--></span>
+                            <!--end::Svg Icon-->{{ $mahasiswa[0]->prodi; }}</a>
+                            <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary mb-2">
+                            <span class="svg-icon svg-icon-4 me-1">
+                              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24"/>
+                                <path d="M7.5,4 L7.5,19 L16.5,19 L16.5,4 L7.5,4 Z M7.71428571,2 L16.2857143,2 C17.2324881,2 18,2.8954305 18,4 L18,20 C18,21.1045695 17.2324881,22 16.2857143,22 L7.71428571,22 C6.76751186,22 6,21.1045695 6,20 L6,4 C6,2.8954305 6.76751186,2 7.71428571,2 Z" fill="#000000" fill-rule="nonzero"/>
+                                <polygon fill="#000000" opacity="0.3" points="7.5 4 7.5 19 16.5 19 16.5 4"/>
+                              </g>
+                              </svg>
+                            </span>
+                            <!--end::Svg Icon-->+{{ auth()->user()->phone }}</a>
+                            </div>
+                            <!--end::Info-->
+                          </div>
+                          <!--end::User-->
+
+                          </div>
+                          <!--end::Title-->
+                          <!--KHS Section-->
+                          <div class="row">
+                          <div class="col-md-12">
+                            <div class="alert alert-primary" role="alert">
+                              Dosen PA 1 : <span class="badge badge-primary">{{ $mahasiswa[0]->pembimbing_1; }}</span>
+                              </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="alert alert-success" role="alert">
+                              Dosen PA 2 : <span class="badge badge-success">{{ $mahasiswa[0]->pembimbing_2; }}</span>
+                              </div>
+                          </div>
+                          </div>
+                          <!--end::Stats-->
+                        </div>
+                        <!--end::Info-->
+                        </div>
+                        <!--end::Details-->
+                      </div>
+                      </div>
+                      <!--end::Body-->
+                    </div>
+                    <!-- end table -->
+                  </div>
+                {{-- end desc dosen pa --}}
+
                 </div>
                 <!-- end col -->  
               </div>

@@ -10,7 +10,7 @@
   >
     <!--begin::Main-->
     <!--begin::Root-->
-    <div class="d-flex flex-column flex-root">
+    <div class="d-flex flex-column flex-root" id="section-to-print">
       <!--begin::Page-->
       <div class="page d-flex flex-row flex-column-fluid">
         <!--begin::Wrapper-->
@@ -81,7 +81,7 @@
                         <!--begin::Details-->
                         <div class="d-flex flex-wrap flex-sm-nowrap mb-3">
                           <!--begin: Pic-->
-                          <div class="me-7 mb-4">
+                          <div class="me-7 mb-4" id="hidePrintSection">
                             <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
                               <img src="/assets/media/avatars/blank.png" alt="image" />
                               <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px"></div>
@@ -147,7 +147,7 @@
                               <!--end::User-->
                               <!--begin::Actions-->
                               <div class="d-flex">
-                                <button id="printPageButton" onclick="window.print()" class="btn btn-sm btn-primary me-3">
+                                <button id="hidePrintSection" onclick="window.print()" class="btn btn-sm btn-success me-3">
                                   Cetak TAK
                                 </button>
                               </div>
@@ -296,7 +296,9 @@
           </div>
           <!--end::Container-->
           <!--begin::Footer-->
+          <div id="hidePrintSection">
             @include('partials.footer')     
+          </div>
           <!--end::Footer-->
         </div>
         <!--end::Wrapper-->
@@ -313,8 +315,19 @@
     @push('css')
     <style>
       @media print {
-        #printPageButton {
+        body * {
+        visibility: hidden;
+        }
+        #hidePrintSection {
           display: none;
+        }
+        #section-to-print, #section-to-print * {
+          visibility: visible;
+        }
+        #section-to-print {
+          /* position: absolute; */
+          /* left: 0; */
+          /* top: -200px; */
         }
       }
     </style>

@@ -516,6 +516,7 @@
 												<tr>
 													<th class="min-w-150">Dosen</th>
 													<th class="min-w-150px">Matakuliah</th>
+													<th class="min-w-150">Kelas</th>
 													<th class="min-w-150">Waktu & Ruangan</th>
 													<th class="min-w-50px">SKS & Semester</th>
 													<th class="min-w-10px">Kuota</th>
@@ -531,8 +532,9 @@
 												<tr>
 													<td>{{ $value->str_nm_kad }}</td>
 													<td>
-													{{ $value->str_nm_mk }} <span>({{ $value->str_kd_mk }})</span>
+														{{ $value->str_nm_mk }} <span>({{ $value->str_kd_mk }})</span>
 													</td>
+													<td>{{ $value->str_nm_kelas }}</td>
 													<td>{{ $value->str_nama_hari }}, {{ $value->awal }} ~ {{ $value->akhir }} ({{ $value->str_nm_ruang }})</td>
 													<td>
 													{{ $value->num_sks }}  ({{ $romanNum::numberToRoman($value->num_kd_semester) }})
