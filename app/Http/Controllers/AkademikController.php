@@ -479,9 +479,13 @@ class AkademikController extends Controller
             curl_close($ch);
             $response = json_decode($response);
 
-
-        // balik ke angket
-        return redirect('/angket')->with('angketSubmited', 'Angket Berhasil diinput!');
+            if ($response->status == true) {
+                // balik ke angket berhasil
+                return redirect('/angket')->with('angketSubmited', 'Angket Berhasil diinput!');
+            } else {
+                // balik ke angket gagal
+                return redirect('/angket')->with('angketFailed', 'Input Angket Gagal!');
+            }
     }
     
     public function irs()

@@ -26,6 +26,15 @@
         )
     </script>
   @endif
+  @if (\Session::has('angketFailed'))
+    <script>
+        Swal.fire(
+						'Gagal!',
+						'{!! \Session::get('angketFailed') !!}',
+						'error'
+						)
+    </script>
+  @endif
   {{-- @if ($angketLefts == null)
     <script>
         Swal.fire(
