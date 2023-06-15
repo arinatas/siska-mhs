@@ -47,7 +47,7 @@
                   <img
                     alt="Logo"
                     src="/assets/media/logos/logo-demo2.png"
-                    class="logo-default h-150px"
+                    class="logo-default h-40px my-10"
                   />
                   <img
                     alt="Logo"
