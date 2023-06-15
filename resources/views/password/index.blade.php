@@ -130,7 +130,7 @@ License: For each use you must have a valid license purchased only from above li
 					<!--begin::Links-->
 					<div class="d-flex align-items-center fw-bold fs-6">
 						<div class="simple-footer text-center text-light" style="user-select: auto;">
-							Made with <i class="fas fa-heart text-danger" style="user-select: auto;"></i> by PPTI STMIK Primakara
+							Made with <i class="fas fa-heart text-danger" style="user-select: auto;"></i> by PPTI Primakara University
 						</div>
 					</div>
 					<!--end::Links-->

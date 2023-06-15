@@ -171,7 +171,7 @@
                           <div class="card-body">
                             <h1 class="card-title text-black mb-4 text-center">Informasi Wi-Fi Kampus</h1>
                             {{-- <div class="container"> --}}
-                              <h4 class="card-text text-black py-2">Untuk menggunakan Wi-Fi kampus STMIK Primakara kamu dapat mengkoneksikan device terlebih dahulu ke wifi "Primakara"</h4>
+                              <h4 class="card-text text-black py-2">Untuk menggunakan Wi-Fi kampus Primakara University kamu dapat mengkoneksikan device terlebih dahulu ke wifi "Primakara"</h4>
                               <h4 class="card-text text-black py-2 text-center"><u><a href="http://10.100.1.1/" target="blank">Kemudian akses link berikut untuk melakukan login</a></u></h4>
                               <h5 class="card-text text-black mt-5" style="font-style: italic;">Berikut account kamu yang digunakan untuk login ya  <br><br>User : {{ auth()->user()->username }}<br>Password : {{ $wifiPassword }}</h5>
                               <br>

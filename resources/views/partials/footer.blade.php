@@ -21,7 +21,7 @@
           href="https://primakara.ac.id"
           target="_blank"
           class="text-gray-800 text-hover-primary"
-          >STMIK Primakara</a
+          >Primakara University</a
         >
       </div>
       <!--end::Copyright-->
@@ -29,7 +29,7 @@
       <ul class="menu menu-gray-600 menu-hover-primary order-1">
         <li class="menu-item">
           <div class="simple-footer text-center" style="user-select: auto;">
-            Made with <i class="fas fa-heart text-danger" style="user-select: auto;"></i> by PPTI STMIK Primakara
+            Made with <i class="fas fa-heart text-danger" style="user-select: auto;"></i> by PPTI Primakara University
         </div>
         </li>
       </ul>

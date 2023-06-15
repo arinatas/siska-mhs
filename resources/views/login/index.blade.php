@@ -52,12 +52,12 @@ License: You must have a valid license purchased only from themeforest(the above
 						<!--begin: Aside content-->
 						<div class="flex-column-fluid d-flex flex-column justify-content-center">
 							<h3 class="font-size-h1 mb-5 text-white">Welcome to SISKA</h3>
-							<p class="font-weight-lighter text-white opacity-80">Academic Information System STMIK Primakara</p>
+							<p class="font-weight-lighter text-white opacity-80">Academic Information System Primakara University</p>
 						</div>
 						<!--end: Aside content-->
 						<!--begin: Aside footer for desktop-->
 						<div class="d-none flex-column-auto d-lg-flex justify-content-between mt-10">
-							<div class="opacity-70 font-weight-bold text-white">Copyright STMIK Primakara © 2022</div>
+							<div class="opacity-70 font-weight-bold text-white">Copyright Primakara University © 2022</div>
 							<div class="d-flex">
 								<a href="#" class="text-white">Privacy</a>
 								<a href="#" class="text-white ml-10">Legal</a>
@@ -142,12 +142,12 @@ License: You must have a valid license purchased only from themeforest(the above
             
 					</div>
           <div class="simple-footer mb-3 text-center" style="user-select: auto;">
-              Made with <i class="fas fa-heart text-danger" style="user-select: auto;"></i> by PPTI STMIK Primakara
+              Made with <i class="fas fa-heart text-danger" style="user-select: auto;"></i> by PPTI Primakara University
           </div>
 					<!--end::Content body-->
 					<!--begin::Content footer for mobile-->
 					<div class="d-flex d-lg-none flex-column-auto flex-column flex-sm-row justify-content-between align-items-center mt-5 p-5">
-						<div class="text-dark-50 font-weight-bold order-2 order-sm-1 my-2">Copyright STMIK Primakara © 2022</div>
+						<div class="text-dark-50 font-weight-bold order-2 order-sm-1 my-2">Copyright Primakara University © 2022</div>
 						<div class="d-flex order-1 order-sm-2 my-2">
 							<a href="#" class="text-dark-75 text-hover-primary">Privacy</a>
 							<a href="#" class="text-dark-75 text-hover-primary ml-4">Legal</a>
