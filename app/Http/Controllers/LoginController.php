@@ -20,6 +20,8 @@ class LoginController extends Controller
 
     public function authenticate(Request $request)
     {
+        $edomApiKey = config('app.edom_api_key');
+
         $credentials = $request->validate([
             'username' => 'required',
             'password' => 'required'
@@ -38,7 +40,7 @@ class LoginController extends Controller
         //5. jika iya -> check status 1 / 0 (kalau 1 masa pengisian angket) (jika 0 masa angket belum dibuka)
 
         // Panggil API untuk jadwal angket yang aktif
-        $url = "http://27.112.79.162:18000/get_jadwal_by_request.php?semester=".$semesterNow."&tahun_ajaran=".$tahunNow."";
+        $url = $edomApiKey."/get_jadwal_by_request.php?semester=".$semesterNow."&tahun_ajaran=".$tahunNow."";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -79,7 +81,7 @@ class LoginController extends Controller
                     ");
 
                     // API ambil angket yg telah ter~isi
-                    $url = "http://27.112.79.162:18000/get_pertanyaan.php?id_jadwal_edom=".$response->data[0]->id_jadwal_edom."&nim=".$user->username."&tahun_ajaran=".$response->data[0]->tahun_ajaran."&semester=".$response->data[0]->semester."";
+                    $url = $edomApiKey."/get_pertanyaan.php?id_jadwal_edom=".$response->data[0]->id_jadwal_edom."&nim=".$user->username."&tahun_ajaran=".$response->data[0]->tahun_ajaran."&semester=".$response->data[0]->semester."";
                     $ch = curl_init();
                     curl_setopt($ch, CURLOPT_URL, $url);
                     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

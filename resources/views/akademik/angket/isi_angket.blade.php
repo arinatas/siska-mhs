@@ -11,24 +11,31 @@
   {
     document.getElementById("komentar").value= 'Dosen mengajar sudah baik.';
   }
-  function submitForm(form) {
-    Swal.fire({
-      title: 'Apakah kamu yakin?',
-      text: "Data yang telah diisi tidak bisa diubah lagi!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Ya',
-      cancelButtonText: 'Tidak',
-      reverseButtons: true
-    }).then((result) => {
-      if (result.isConfirmed) {
-        form.submit();
-      }
-    });
-    return false;
+  function submitForm(button) {
+    button.disabled = true;
+			button.innerHTML = 'Submitting...';
+
+			// Mencegah pengiriman berulang
+			button.form.submit();
   }
+  // function submitForm(form) {
+  //   Swal.fire({
+  //     title: 'Apakah kamu yakin?',
+  //     text: "Data yang telah diisi tidak bisa diubah lagi!",
+  //     icon: 'warning',
+  //     showCancelButton: true,
+  //     confirmButtonColor: '#3085d6',
+  //     cancelButtonColor: '#d33',
+  //     confirmButtonText: 'Ya',
+  //     cancelButtonText: 'Tidak',
+  //     reverseButtons: true
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       form.submit();
+  //     }
+  //   });
+  //   return false;
+  // }
   
 </script>
 
@@ -148,7 +155,7 @@
                         <!--end::Heading-->
                         <!--begin::Body-->
                         <!--begin::Form-->
-                        <form action="/angket" method="POST" onsubmit="return submitForm(this);">
+                        <form action="/angket" method="POST">
                           @csrf
                           <div class="mb-14">
                             <!--begin::Table container-->
@@ -258,7 +265,7 @@
                                 <div class="col text-end">
                                   <!-- Button trigger modal -->
                                   {{-- <button type="submit" style="background-color: #003764" class="btn btn-outline-light text-light font-weight-bold px-9 py-4">Submit</button> --}}
-                                  <button type="submit" style="background-color: #003764" class="btn btn-outline-light text-light font-weight-bold px-9 py-4">Submit</button>
+                                  <button type="submit" onclick="submitForm(this)" style="background-color: #003764" class="btn btn-outline-light text-light font-weight-bold px-9 py-4">Submit</button>
                                 </div>
                             </div>
                             <!--end::Table container-->
