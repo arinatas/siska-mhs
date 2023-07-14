@@ -189,7 +189,7 @@ class DashboardController extends Controller
                 )
             ) as pembimbing_2 
             FROM 
-            mhs_mahasiswa mm;
+            mhs_mahasiswa mm
             WHERE 
             (mm.str_id_nim = '".$nim."')
             ");
