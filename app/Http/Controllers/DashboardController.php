@@ -139,7 +139,9 @@ class DashboardController extends Controller
                         mm.str_kd_prodi = '0010', 
                         'Akutansi', 
                         IF(
-                            mm.str_kd_prodi = '0011', 'Bisnis Digital'
+                            mm.str_kd_prodi = '0011', 
+                            'Bisnis Digital',
+                            ''
                         )
                         )
                     )
@@ -148,7 +150,9 @@ class DashboardController extends Controller
                 )
             ) as prodi, 
             IF(
-                mm.int_kd_kelas = 1, 'Pagi', 'Malam'
+                mm.int_kd_kelas = 1, 
+                'Pagi', 
+                'Malam'
             ) as kelas, 
             mm.str_email, 
             mm.str_hp, 
@@ -185,7 +189,7 @@ class DashboardController extends Controller
                 )
             ) as pembimbing_2 
             FROM 
-            mhs_mahasiswa mm 
+            mhs_mahasiswa mm;
             WHERE 
             (mm.str_id_nim = '".$nim."')
             ");
