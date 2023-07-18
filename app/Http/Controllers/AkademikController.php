@@ -467,7 +467,9 @@ class AkademikController extends Controller
 
     public function sendAngket(Request $request)
     {
-        
+
+            $edomApiKey = config('app.edom_api_key');
+
             //ambil semua request yg dikirim
             $dataJawab = $request->all();
 
