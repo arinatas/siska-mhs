@@ -27,8 +27,8 @@ return [
     */
 
     'env' => env('APP_ENV', 'production'),
-    'edom_api_key' => env('EDOM_API_KEY', 'http://13.214.193.201:8000'),
-    'krs_api_key' => env('KRS_API_KEY', 'http://13.212.23.189:8000'),
+    'edom_api_key' => env('EDOM_API_KEY', 'http://54.179.201.33:8000'),
+    'krs_api_key' => env('KRS_API_KEY', 'http://18.136.223.116:8000'),
 
     /*
     |--------------------------------------------------------------------------
