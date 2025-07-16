@@ -108,9 +108,17 @@ class DashboardController extends Controller
 
             $infoStatus = json_decode($response);
 
-            $statusIrs = $infoStatus[0]->status;
-            $statusPembayaran = $infoStatus[1]->status;
-            $invoiceInfo = $infoStatus[3];
+            if ($infoStatus) {
+                $statusIrs = $infoStatus[0]->status;
+                $statusPembayaran = $infoStatus[1]->status;
+                $invoiceInfo = $infoStatus[3];
+            } else {
+                $statusIrs = false;
+                $statusPembayaran = false;
+                $invoiceInfo = null;
+            }
+
+            
 
         // end get status pepmbayaran dan irs
 
