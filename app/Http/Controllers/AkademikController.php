@@ -511,10 +511,17 @@ class AkademikController extends Controller
 
         $status = json_decode($response);
 
-        // set status irs dan pembayaran
-        $statusIrsMhs = $status[0]->status;
-        $statusPembayaran = $status[1];
-        $statusAtifIrs = $status[2];
+        if ($status) {
+            // set status irs dan pembayaran
+            $statusIrsMhs = $status[0]->status;
+            $statusPembayaran = $status[1];
+            $statusAtifIrs = $status[2];
+        } else {
+            // jika tidak ada data, set status ke false
+            $statusIrsMhs = false;
+            $statusPembayaran = null;
+            $statusAtifIrs = (object) ['status' => false, 'message' => 'IRS tidak ditemukan.'];
+        }
 
         if ($statusAtifIrs->status == true){
 
@@ -665,9 +672,15 @@ class AkademikController extends Controller
 
         $status = json_decode($response);
 
-        // set status irs dan pembayaran
-        $statusIrsMhs = $status[0]->status;
-        $statusPembayaran = $status[1];
+        if ($status) {
+            // set status irs dan pembayaran
+            $statusIrsMhs = $status[0]->status;
+            $statusPembayaran = $status[1];
+        } else {
+            // jika tidak ada data, set status ke false
+            $statusIrsMhs = false;
+            $statusPembayaran = null;
+        }
 
         return view('akademik.irs.irslist', [
             'lists' => $mhsIrs,
