@@ -315,7 +315,13 @@ class AkademikController extends Controller
 
         $response = json_decode($response);
 
-        $angketAktif = $response->status;
+        if ($response) {
+            $angketAktif = $response->status;
+        } else
+        {
+            $angketAktif = false;
+        }
+
 
         if($angketAktif == true){
             // Ambil Jadwal Mahasiswa
