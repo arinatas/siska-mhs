@@ -49,9 +49,9 @@ class LoginController extends Controller
 
         $response = json_decode($response);
 
-        // dd($response->data[0]->tahun_ajaran);
+        dd($response);
 
-        if ($response->status == true) {
+        if ($response) {
             $angketAktif = $response->status;
         } else
         {
