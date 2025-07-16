@@ -51,7 +51,13 @@ class LoginController extends Controller
 
         // dd($response->data[0]->tahun_ajaran);
 
-        $angketAktif = $response->status;
+        if ($response->status == true) {
+            $angketAktif = $response->status;
+        } else
+        {
+            $angketAktif = false;
+        }
+
 
 
         // using sha512
