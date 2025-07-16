@@ -49,16 +49,12 @@ class LoginController extends Controller
 
         $response = json_decode($response);
 
-        dd($response);
-
         if ($response) {
             $angketAktif = $response->status;
         } else
         {
             $angketAktif = false;
         }
-
-
 
         // using sha512
         $user = User::where([
