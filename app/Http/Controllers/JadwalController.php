@@ -103,7 +103,12 @@ class JadwalController extends Controller
 
         $status = json_decode($response);
 
-        $statusIrs = $status[0]->status;
+        if ($status) {
+            $statusIrs = $status[0]->status;
+        } else {
+            $statusIrs = false;
+        }
+
 
         // dd($statusIrs);
 
